@@ -1,0 +1,270 @@
+﻿ Field ID,Field Label,Entity Name,Field Description / Notes,ENUM Reference Code ,Field Type,Field Size,Multilingual Flag,Occurrence,Searchable,GDPR Flag,Public Access Flag,Business Rules,Updateable,Field Applicable for MDR,Field Applicable for IVDR,DTX Entity,XSD Element Name
+FLD-UDID-01,Issuing Entity Basic UDI-DI,BasicUDIData,"Assigned Issuing Entities that will generate the DI Codes allocated for  all DI`s inside Eudamed (Basic UDI DI, UDI-DI, Unit of Use DI, Secondary Di , Package level DI).
+
+The Commission shall designate one or several entities to operate a system for assignment of UDIs ('issuing entity')",ENUM_MDR_IssuingEntity,Enum,,,1,,,Y,    ,,Y,Y,DIIdentififierType,issuingEntityCode
+FLD-UDID-14,Basic UDI- DI code,BasicUDIData,"Device Identifier code/value (DI Code). Together with the Issuing Entity creates the uniqness of the element to which they are assigned (Basic UDI-DI , UDI-DI, etc.)
+
+The Basic UDI-DI is the primary identifier of a device model.It is the main key for records in the UDI database and is referenced in relevant certificates and EU declarations of conformity",,String,XS,,1,Y,,Y,BR-UDID-003    ,,Y,Y,DIIdentififierType,DICode
+FLD-UDID-10,Legal Manufacturer SRN,BasicUDIData,SRN of the Manufacturer that registers the Device.,,"Actor - Manufacturer - FLD-ACT-001
+[Actor -  Actor]",SRN,,1,Y,,Y,    ,,Y,Y,DeviceBasicUDIType,MFActorCode
+FLD-UDID-11,Applicable regulation,BasicUDIData,"Applicable Legislation of the Device.
+
+The device can have only one Applicable Legislation. Either a Regulation value can be selected/provided (MDR or IVDR) or a Directive Regulation value (MDD, AIMDD or IVDD) - in the case of Directive Devices.","ENUM_MDR_LEG
+",Enum,,,1,Y,,Y,BR-UDID-646,,Y,Y,"Either MDRBasicUDIType or 
+IVDRBasicUDIType submitted in order to define the Applicable Legislation
+",
+FLD-UDID-12,"Is it a System which is  a Device in itself, Procedure pack which is a Device in itself",BasicUDIData,"Property defines if the Basic UDI-DI is refering to a Device , a System which is  a Device in itself or a  Procedure pack which is a Device in itself (in accordance with the Art. 22(4) MDR )
+
+",DevicesSystemProcedurePackTypeEnum (ENUM_UDID_DeviceSystemProcedurePackType),Enum,,,1,Y,,Y,,,Y,,MDRBasicUDIType ,"
+type
+"
+FLD-UDID-356,Is it a Kit,BasicUDIData,"Property defines if the Device is a Kit or not
+
+Option Kit is only applicable in case of IVDR Devices ",,Boolean,,,1,Y,,Y,,,,Y,IVDApplicablePropertiesGroup,kit
+FLD-UDID-13,Special Device Type,BasicUDIData,"Property defines  if the Device is a Special Device Type anf if so , the type of Special device Type. 
+
+In case the Device is  a Standard Device having  the option System or Procedure Pack (which is a Device in itself) or a System or Procedure Pack - field is not supplied.",ENUM_UDID_SpecialDevice,Enum,,,0..1,Y,,Y,"BR-UDID-705
+BR-UDID-737",,Y,Y,"MDRBasicUDIType
+
+IVDRBasicUDIType",specialDevice
+FLD-UDID-15,Authorised Representative,BasicUDIData,"The SRN of the Authorised Representative associated with the Basic UDI-DI.
+
+For Manufacturers which are not established in the Union (NonEU Manufacturers)  providing the Authorised Representative for the Basic UDI-DI is required.",,"Actor - Authorised Representative - FLD-ACT-001
+
+[Actor- Actor]
+",SRN,,"0..1 
+
+Applicable and mandatory only for nonEU MF",Y,,Y,BR-UDID-011,"Y
+(Edit) ",Y,Y,DeviceBasicUDIType,ARActorCode
+FLD-UDID-16,Risk Class,BasicUDIData,"Risk Class of the Device associated with the Basic UDI-DI.
+
+Device Risk Class is dependent directly on the Applicable Legislation of the Device.",ENUM_UDID_RiskClass,Enum,,,1,Y,,Y,,,Y,Y,BasicUDIType,riskClass
+FLD-UDID-18,"Tissues and cells - Presence of animal tissues or Cells, or their derivates",BasicUDIData,Property defines if the Device has presence of animal tissues or cells or their derivates,,Boolean,,,1,Y,,Y,,,Y,Y,DeviceBasicUDIType,animalTissuesCells
+FLD-UDID-34,Tissues and cells - Presence of cells or substances of microbial origin,BasicUDIData,Property defines if the Device  contains presence of substances of microbial origin,,Boolean,,,1,Y,,Y,,,,Y,IVDRBasicUDIType,microbialSubstances
+FLD-UDID-23,"Tissues and cells - presence of human tissues or cells, or their derivates",BasicUDIData,Property defines if the Device has presence of human tissues or cells or their derivates,,Boolean,,,1,Y,,Y,,,Y,Y,DeviceBasicUDIType,humanTissuesCells
+FLD-UDID-20,Device Model ,BasicUDIData,"I nformation allowing the identification of the device - Device Model. 
+
+At least one of the Device identification details (Device Model or the Device Name) have to be provided for a Basic UDI-DI.",,String,S,,"0..1 
+
+Either Device Model or Device Name is required (both can be provided)",Y,,Y,BR-UDID-66    ,"Y
+(Edit; Add; Delete)",Y,Y,"BasicUDIType
+ModelNameGroup","model
+
+In case only the Model is provided for a Device - then BasicUDIType.model property will be provided (no ModelNameGroup in this case).
+
+If both Model and Name are available for the Device - ModelNameGroup has to be provided containing both   properties model and name "
+FLD-UDID-22,Device Name,BasicUDIData,"I nformation allowing the identification of the device - Device Name. 
+
+At least one of the Device identification details (Device Model or the Device Name) have to be provided for a Basic UDI-DI.",,String,S,,"0..1 
+
+Either Device Model or Device Name is required (both can be provided)",Y,,Y,BR-UDID-66    ,"Y
+(Edit; Add; Delete)",Y,Y,ModelNameGroup,"name
+
+In case only the Name is provided for a Device - then ModelNameGroup.name property will be provided
+
+If both Model and Name are available for the Device - ModelNameGroup has to be provided containing both   properties model and name "
+FLD-UDID-28,Active Device,BasicUDIData,"Property defines if the Basic UDI-DI corresponds to an Active device or not.
+
+'Active device' means any device, the operation of which depends on a source of energy other than that generated by the human body for that purpose, or by gravity, and which acts by changing the density of or converting that energy. 
+
+Devices intended to transmit energy, substances or other elements between an active device and the patient, without any significant change, shall not be deemed to be active devices. Software shall also be deemed to be an active device.",,Boolean,,,1,Y,,Y,BR-UDID-07   ,,Y,,MDRApplicablePropertiesGroup,active
+FLD-UDID-29,Device Intended to administer and/or Remove medicinal product,BasicUDIData,Property defines if the  Device  is intended to administer or remove medicinal product,,Boolean,,,1,Y,,Y,,,Y,,MDRApplicablePropertiesGroup,administeringMedicine
+FLD-UDID-30,Implantable,BasicUDIData,"Property defines if the Basic UDI-DI corresponds to a device that is Implantable or not.
+
+Any device intended to be partially introduced into the human body by clinical intervention and intended to remain in place after the procedure for at least 30 days shall also be deemed to be an implantable device.
+
+In case of Devices having the Risck Class "" Class I "" field Implantable has by default value ""False""",,Boolean,,,1,Y,,Y,"BR-UDID-07
+BR-UDID-676",,Y,,MDRApplicablePropertiesGroup,implantable
+FLD-UDID-31,Measuring Function,BasicUDIData,Property defines if the Device has a Measuring Function or not,,Boolean,,,1,Y,,Y,,,Y,,MDRApplicablePropertiesGroup,measuringFunction
+FLD-UDID-32,Reusable Surgical Instruments,BasicUDIData,"Property defines if the Device  is  a Reusable Surgical Instrument or not.
+
+'Reusable surgical instrument' means an instrument intended for surgical use in cutting, drilling, sawing, scratching, scraping, clamping, retracting, clipping or similar procedures, without a connection to an active device and which is intended by the Manufacturer to be reused after appropriate procedures such as cleaning, disinfection and sterilisation have been carried out. 
+
+In case of Devices being marked as Implantable (field ""Implantable"" has value ""True"" )field Reusable Surgical Instruments has by default value ""False""",,Boolean,,,1,Y,,Y,BR-UDID-677,,Y,,MDRApplicablePropertiesGroup,reusable
+FLD-UDID-33,Companion Diagnostic,BasicUDIData,"Property defines if the Device corresponds to a device that has a role of Companion Diagnostic device or not.
+
+'Companion diagnostic’ means a device which is essential for the safe and effective use of a corresponding medicinal product to:
+-  identify, before and/or during treatment, patients who are most likely to benefit from the corresponding medicinal product; or
+- identify, before and/or during treatment, patients likely to be at increased risk of serious adverse reactions as a result of treatment with the corresponding medicinal product. ",,Boolean,,,1,Y,,Y,,,,Y,IVDRApplicablePropertiesGroup,companionDiagnostics
+FLD-UDID-35,Near Patient Testing ,BasicUDIData,"Property defines if the Device  device is Near Patient testing or not.
+
+'Device for near-patient testing’ means any device that is not intended for self-testing but is intended to perform testing outside a laboratory environment, generally near to, or at the side of, the patient by a health professional;",,Boolean,,,1,Y,,Y,,,,Y,IVDRApplicablePropertiesGroup,nearPatientTesting
+FLD-UDID-36,Patient Self Testing,BasicUDIData,"Property defines if the Device  is Self Patient testing device or not. 
+
+'Device for self-testing’ means any device intended by the manufacturer to be used by lay persons, including devices used for testing services offered to lay persons by means of information society services;",,Boolean,,,1,Y,,Y,,,,Y,IVDRApplicablePropertiesGroup,selfTesting
+FLD-UDID-155,"Presence of a substance which , if used separately, may be considered to be a medicinal product derived from human blood or plasma",BasicUDIData,Defines if the Device containes substances which may be considered medicinal product derived from human blood or plasma,,Boolean,,,1,Y,,Y,,,Y,,MDRBasicUDIType,humanProductCheck 
+FLD-UDID-158,"Presence of substance which, if used separately, may be considered to be a medicinal product",BasicUDIData,Defines if the Device containes substances which may be considered medicinal product,,Boolean,,,1,Y,,Y,,,Y,,MDRBasicUDIType,medicinalProductCheck
+FLD-UDID-262,Reagent,BasicUDIData,Property defines if the Device is a reagent or not.,,Boolean,,,1,Y,,Y,,,,Y,IVDRApplicablePropertiesGroup,reagent
+FLD-UDID-263,Professional Testing,BasicUDIData,Property defines if the Device is designed to be used for Professional Testing or not.,,Boolean,,,1,Y,,Y,,,,Y,IVDRApplicablePropertiesGroup,professionalTesting
+FLD-UDID-264,Instrument,BasicUDIData,Property defines  if the Device  is an Instrument or not.,,Boolean,,,1,Y,,Y,,,,Y,IVDRApplicablePropertiesGroup,instrument
+FLD-UDID-265,"Is it Device a suture, staple, dental filling, dental brace (...)?",BasicUDIData,"Property defines if the registered Device is 'sutures', 'staples', 'dental fillings', 'dental braces', 'tooth crowns', 'screws', 'wedges', 'plates wires', 'pins', 'clips and connectors' (these defines are exempted from the regulation imposed to implantable devices).
+
+Property is applicable only for Devices having Risk Class II b and having the property 'Implantable' marked",,Boolean,,,"0..1 
+
+Property is conditional mandatory  only for Devices having Risk Class II b and having the property 'Implantable' ",Y,,Y,BR-UDID-635,,Y,,MDRBasicUDIType,IIb_implantable_exceptions
+FLD-UDID-50,Clinical Investigations associated to the Basic UDI,BasicUDIData,"References the Clinical Investigation Link, storing the details of Clinical Investigations associated to the Basic UDI-DI",,Clink,,,0..n,,,Y,BR-UDID-98 ,"Y 
+
+(Add, Delete)",Y,Y,DeviceBasicUDIType,clinicalInvestigationLinks
+FLD-UDID-39,Device Certificate Information associated with the Device,BasicUDIData,"References the Device Certificate Information completed together with the registration of the Device
+
+When registering the Device , Device Certificate information is required when the Regulation Device is covered by a Product Certificate (required  to provide  the Notified Body and  optional Certificate Number and Certificate Date)",,DeviceCertificateInformation,,,0..1,,,,"BR-UDID-109
+BR-UDID-110",,Y,Y,BasicUDIType,deviceCertificatesLinks
+FLD-UDID-343,Certificates linked to the Device,BasicUDIData,"Reference to existing Certificates in EUDAMED linked to the current Basic UDI
+
+Information is returned only when the Certificates are linked to the Device in EUDAMED .",,CertificateLink,,,0..n,,,,,,Y,Y,BasicUDIType,certificateLinks
+FLD-UDID-40,Version,BasicUDIData,Reference to the version of the Basic UDI DI,,"VersionData
+[EUDAMED- Common Entities]",,,"1 
+Managed by EUDAMED",,,Y,,,Y,Y,Entity,
+FLD-UDID-51,Clinical Investigation/Performance study reference Number,Clink,"When registering the Device -  where applicable, the single identification number of the clinical investigation or investigations conducted in relation to the device,  must be provided.
+
+Field stores the Clinical Investigation Number provided by the user when the Clinical Investigation is not registered in EUDAMED",,String,,,"1
+
+Occurrence applicable if Clinical Investigations are provided (FLD-UDID-50)",,,Y,,,Y,Y,ClinialInvestigationLinkType,clinicalInvestigationReference
+FLD-UDID-300,Countries outside EU where Clinical Investigation is performed,Clink,"List of Countries where the Clinical Investigation has been performed.
+
+Field is optional and can be provided only for Clinical Investigations performed Outside EU (Non EU Countries only).
+
+If provided, the Clinical Investigation is considered to be NonEU Clinical Investigation",ENUM_MDR_COUNTRY,"Country [EUDAMED- Common Entities]
+",,,"0..n 
+
+Occurrence applicable if Clinical Investigations are provided (FLD-UDID-50)",,,Y,,,Y,Y,ClinicalInvestigationLinkType,nonEUApplicableCountries
+FLD-UDID-54,Version,Clink,Reference to the version of the Link,,"VersionData
+[EUDAMED- Common Entities]",,,"1 
+Managed by EUDAMED",,,,,,Y,Y,Entity,
+FLD-UDID-60,"Certificate Type (Technical Documentation, Type Examination, etc)",DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property defines the type of Product Certificate associate with the Device. ",Enum_UDI_Device_Certificate_Info_CertTypes,Enum,,,"1
+
+Occurrence applicable if Device Certificate Inforamtion is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,certificateType
+FLD-UDID-61,Certificate Number,DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property stores the Certificate Number of the Product Certificate",,String,XS,,"0..1
+
+Occurrence applicable   if Device Certificate Inforamtion is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,certificateNumber
+FLD-UDID-62,Revision Number,DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property stores the Certificate Revision Number  of the Product Certificate",,String,XS,,"0..1
+
+Occurrence applicable   if Device Certificate Information is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,certificateRevisionNumber
+FLD-UDID-63,Notified Body,DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property stores the reference to the Notified Body that issued the Product Certificate",,"Actor - Notified Body - FLD-ACT-001
+
+[Actor- Actor]",,,"1
+
+Occurrence applicable   if Device Certificate Information is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,NBActorCode
+FLD-UDID-360,Certificate Type ,CertificateLink,Certificate Type,ENUM_CRF_CertificateType,Enum,,,"1
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,certificateType
+FLD-UDID-344,Certificate Number,CertificateLink,Certificate Number,,String,,,"1
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,certificateNumber
+FLD-UDID-345,Revision Number,CertificateLink,Revision Number,,String,,,"0..1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,certificateRevisionNumber
+FLD-UDID-346,Issue Date,CertificateLink,Issue Date,,Date,,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,issueDate
+FLD-UDID-347,Starting Validity Date,CertificateLink,Starting Validity Date,,Date,,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,startValidityDate
+FLD-UDID-348,Expiry Date,CertificateLink,Expiry Date,,Date,,,"0..1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,expiryDate
+FLD-UDID-349,Notified Body,CertificateLink,Notified Body Code,,"Actor - Notified Body - FLD-ACT-001
+
+[Actor- Actor]",,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,NBActorCode
+FLD-UDID-350,Certificate Status,CertificateLink,Status of Certificates,ENUM_CRF_CertificateStatus,Enum,,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,certificateStatus
+FLD-UDID-357,Decision Date ,CertificateLink,Decision Date for the Certificate,,Date,,,"0..1
+Occurrence applicable   if Certificate Link exists (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,,
+FLD-UDID-361,Starting  Decision Applicability Date ,CertificateLink,Starting  Decision Applicability Date ,,Date,,,"0..1
+Occurrence applicable   if Certificate Link exists (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,,
+FLD-UDID-50,Clinical Investigations associated to the Basic UDI,BasicUDIData,"References the Clinical Investigation Link, storing the details of Clinical Investigations associated to the Basic UDI-DI",,Clink,,,0..n,,,Y,BR-UDID-98 ,"Y 
+
+(Add, Delete)",Y,Y,DeviceBasicUDIType,clinicalInvestigationLinks
+FLD-UDID-39,Device Certificate Information associated with the Device,BasicUDIData,"References the Device Certificate Information completed together with the registration of the Device
+
+When registering the Device , Device Certificate information is required when the Regulation Device is covered by a Product Certificate (required  to provide  the Notified Body and  optional Certificate Number and Certificate Date)",,DeviceCertificateInformation,,,0..1,,,,"BR-UDID-109
+BR-UDID-110",,Y,Y,BasicUDIType,deviceCertificatesLinks
+FLD-UDID-343,Certificates linked to the Device,BasicUDIData,"Reference to existing Certificates in EUDAMED linked to the current Basic UDI
+
+Information is returned only when the Certificates are linked to the Device in EUDAMED .",,CertificateLink,,,0..n,,,,,,Y,Y,BasicUDIType,certificateLinks
+FLD-UDID-40,Version,BasicUDIData,Reference to the version of the Basic UDI DI,,"VersionData
+[EUDAMED- Common Entities]",,,"1 
+Managed by EUDAMED",,,Y,,,Y,Y,Entity,
+FLD-UDID-51,Clinical Investigation/Performance study reference Number,Clink,"When registering the Device -  where applicable, the single identification number of the clinical investigation or investigations conducted in relation to the device,  must be provided.
+
+Field stores the Clinical Investigation Number provided by the user when the Clinical Investigation is not registered in EUDAMED",,String,,,"1
+
+Occurrence applicable if Clinical Investigations are provided (FLD-UDID-50)",,,Y,,,Y,Y,ClinialInvestigationLinkType,clinicalInvestigationReference
+FLD-UDID-300,Countries outside EU where Clinical Investigation is performed,Clink,"List of Countries where the Clinical Investigation has been performed.
+
+Field is optional and can be provided only for Clinical Investigations performed Outside EU (Non EU Countries only).
+
+If provided, the Clinical Investigation is considered to be NonEU Clinical Investigation",ENUM_MDR_COUNTRY,"Country [EUDAMED- Common Entities]
+",,,"0..n 
+
+Occurrence applicable if Clinical Investigations are provided (FLD-UDID-50)",,,Y,,,Y,Y,ClinicalInvestigationLinkType,nonEUApplicableCountries
+FLD-UDID-54,Version,Clink,Reference to the version of the Link,,"VersionData
+[EUDAMED- Common Entities]",,,"1 
+Managed by EUDAMED",,,,,,Y,Y,Entity,
+FLD-UDID-60,"Certificate Type (Technical Documentation, Type Examination, etc)",DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property defines the type of Product Certificate associate with the Device. ",Enum_UDI_Device_Certificate_Info_CertTypes,Enum,,,"1
+
+Occurrence applicable if Device Certificate Inforamtion is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,certificateType
+FLD-UDID-61,Certificate Number,DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property stores the Certificate Number of the Product Certificate",,String,XS,,"0..1
+
+Occurrence applicable   if Device Certificate Inforamtion is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,certificateNumber
+FLD-UDID-62,Revision Number,DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property stores the Certificate Revision Number  of the Product Certificate",,String,XS,,"0..1
+
+Occurrence applicable   if Device Certificate Information is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,certificateRevisionNumber
+FLD-UDID-63,Notified Body,DeviceCertificateInformation,"When registering the Device, for Devices covered by Product certificates, user will have to provide identification details of the Product Certificate covering the Device.
+
+Property stores the reference to the Notified Body that issued the Product Certificate",,"Actor - Notified Body - FLD-ACT-001
+
+[Actor- Actor]",,,"1
+
+Occurrence applicable   if Device Certificate Information is provided (FLD-UDID-39)",,,Y,"BR-UDID-109 
+BR-UDID-110 ",,Y,Y,DeviceCertificateLinkType,NBActorCode
+FLD-UDID-360,Certificate Type ,CertificateLink,Certificate Type,ENUM_CRF_CertificateType,Enum,,,"1
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,certificateType
+FLD-UDID-344,Certificate Number,CertificateLink,Certificate Number,,String,,,"1
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,certificateNumber
+FLD-UDID-345,Revision Number,CertificateLink,Revision Number,,String,,,"0..1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,certificateRevisionNumber
+FLD-UDID-346,Issue Date,CertificateLink,Issue Date,,Date,,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,issueDate
+FLD-UDID-347,Starting Validity Date,CertificateLink,Starting Validity Date,,Date,,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,startValidityDate
+FLD-UDID-348,Expiry Date,CertificateLink,Expiry Date,,Date,,,"0..1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,expiryDate
+FLD-UDID-349,Notified Body,CertificateLink,Notified Body Code,,"Actor - Notified Body - FLD-ACT-001
+
+[Actor- Actor]",,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType.CertificateIdentifierLinkType,NBActorCode
+FLD-UDID-350,Certificate Status,CertificateLink,Status of Certificates,ENUM_CRF_CertificateStatus,Enum,,,"1
+
+Occurrence applicable   if Certificate Link is provided (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,CertificateLinkType,certificateStatus
+FLD-UDID-357,Decision Date ,CertificateLink,Decision Date for the Certificate,,Date,,,"0..1
+Occurrence applicable   if Certificate Link exists (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,,
+FLD-UDID-361,Starting  Decision Applicability Date ,CertificateLink,Starting  Decision Applicability Date ,,Date,,,"0..1
+Occurrence applicable   if Certificate Link exists (FLD-UDID-343)",,,Y,,(Upon the NB action from the Certificates module),Y,Y,,
