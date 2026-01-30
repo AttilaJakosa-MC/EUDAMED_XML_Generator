@@ -389,7 +389,11 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
              else:
                  for particle in group_particle.iter_model():
                      if isinstance(particle, xmlschema.validators.XsdElement):
-                         if particle.min_occurs >= 1:
+                         # Determine visibility: Mandatory OR Configured (Visible/Default)
+                         child_path = f"{current_path}/{particle.local_name}" if current_path else particle.local_name
+                         is_configured = (cv is not None and child_path in cv) or (cd is not None and child_path in cd)
+                         
+                         if particle.min_occurs >= 1 or is_configured:
                             with st.container():
                                 col1, col2 = st.columns([0.5, 9.5])
                                 with col2:

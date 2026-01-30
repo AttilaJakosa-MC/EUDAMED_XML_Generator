@@ -4,6 +4,8 @@
 # defaults: Key-value pairs of XSD paths and their default values.
 
 visible_fields:
+  - MDRDevice/MDRBasicUDI/type
+  - MDRDevice/MDRBasicUDI/specialDevice
   - MDRDevice/MDRBasicUDI/riskClass
   - MDRDevice/MDRBasicUDI/model
   - MDRDevice/MDRBasicUDI/humanTissuesCells
@@ -15,6 +17,7 @@ visible_fields:
   - MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode
 
 defaults:
+  MDRDevice/MDRBasicUDI/type: DEVICE
   MDRDevice/MDRBasicUDI/riskClass: CLASS_IIB
   MDRDevice/MDRBasicUDI/humanTissuesCells: false
   MDRDevice/MDRBasicUDI/animalTissuesCells: false
