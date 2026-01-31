@@ -11,6 +11,7 @@ visible_fields:
   - MDRDevice/MDRBasicUDI/humanTissuesCells
   - MDRDevice/MDRBasicUDI/animalTissuesCells
   - MDRDevice/MDRBasicUDI/MFActorCode
+  - MDRDevice/MDRUDIDIData/tradeNames
   - MDRDevice/MDRUDIDIData/identifier/DICode
   - MDRDevice/MDRUDIDIData/identifier/issuingEntityCode
   - MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode
@@ -24,6 +25,7 @@ defaults:
   MDRDevice/MDRBasicUDI/active: true
   MDRDevice/MDRBasicUDI/implantable: true
   MDRDevice/MDRBasicUDI/MFActorCode: BE-MF-000000001
+  MDRDevice/MDRUDIDIData/tradeNames/name/language: ANY
   MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
   MDRDevice/MDRBasicUDI/identifier/issuingEntityCode: GS1
