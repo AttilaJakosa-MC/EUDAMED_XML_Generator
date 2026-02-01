@@ -25,7 +25,7 @@ def load_config(product_group):
         return None, None # Signal missing file
         
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f) or {}
             return data.get('visible_fields', []), data.get('defaults', {})
     except Exception as e:

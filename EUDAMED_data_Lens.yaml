@@ -20,6 +20,13 @@ visible_fields:
   - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/comments
   - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/comments/name
   - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/comments/name/language
+  - MDRDevice/MDRUDIDIData/criticalWarnings
+  - MDRDevice/MDRUDIDIData/criticalWarnings/warning
+  - MDRDevice/MDRUDIDIData/criticalWarnings/warning/warningValue
+  - MDRDevice/MDRUDIDIData/criticalWarnings/warning/comments
+  - MDRDevice/MDRUDIDIData/criticalWarnings/warning/comments/name
+  - MDRDevice/MDRUDIDIData/criticalWarnings/warning/comments/name/language
+  - MDRDevice/MDRUDIDIData/criticalWarnings/warning/comments/name/textValue
   - MDRDevice/MDRUDIDIData/identifier/DICode
   - MDRDevice/MDRUDIDIData/identifier/issuingEntityCode
   - MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode
@@ -41,6 +48,27 @@ defaults:
   MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/comments/name[0]/textValue: 10
   MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/storageHandlingConditionValue: SHC007
   MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/comments/name[0]/textValue: 25
+  MDRDevice/MDRUDIDIData/criticalWarnings/warning[0]/warningValue: CW010
+  MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/warningValue: CW999
+  MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[0]/language: EN
+  MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[0]/textValue: |
+    The CTR should not be used in:
+    • Zonular damage larger than 4 clock hours
+    • Children under the age of one year
+    • Chronic uveitis
+    • Progressive eye disease (e.g. diabetic retinopathy, uncontrolled glaucoma)
+    • In case of preoperative complications prior to cataract surgery (e.g. vitrous body
+    prolapse, haemorrhage)
+    • Patients with perforated or damaged capsules
+  MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[1]/language: HU
+  MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[1]/textValue: |
+    A CTR nem alkalmazható az alábbi esetekben:
+    • 4 óránál kiterjedtebb zonuláris sérülés
+    • Egy év alatti gyermekek
+    • Krónikus uveitisz
+    • Progresszív szembetegség (pl. diabéteszes retinopátia, nem kontrollált glaukóma)
+    • Szürkehályog-műtétet megelőző komplikációk esetén (pl. üvegtest-előesés, vérzés)
+    • Perforált vagy sérült kapszulával rendelkező betegek
   MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
   MDRDevice/MDRBasicUDI/identifier/issuingEntityCode: GS1
