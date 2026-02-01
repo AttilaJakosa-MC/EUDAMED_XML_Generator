@@ -398,9 +398,39 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                  # Unique key for this choice
                  choice_key = f"{parent_key}_choice_{id(group_particle)}"
                  
-                 st.markdown(f"{'  ' * indent_level}*Choose one required option:*")
-                 # Check if we have a default choice in config? Not supported yet.
-                 selected_label = st.radio("Select type:", option_labels, key=choice_key, horizontal=True, label_visibility="collapsed")
+                 # Auto-selection logic based on visibility config
+                 default_idx = 0
+                 forced_choice = False
+                 
+                 if cv:
+                     visible_candidates = []
+                     for idx, opt in enumerate(options):
+                         if isinstance(opt, xmlschema.validators.XsdElement):
+                             opt_path = f"{current_path}/{opt.local_name}"
+                             # Check precise match or if it's a prefix for other visible fields
+                             # (e.g. modelName vs modelName/name)
+                             is_visible = False
+                             if opt_path in cv:
+                                 is_visible = True
+                             else:
+                                 # Prefix Check
+                                 prefix = opt_path + "/"
+                                 if any(v.startswith(prefix) for v in cv):
+                                     is_visible = True
+                                     
+                             if is_visible:
+                                 visible_candidates.append(idx)
+                     
+                     # If exactly one option is configured to be visible, pick it
+                     if len(visible_candidates) == 1:
+                         default_idx = visible_candidates[0]
+                         forced_choice = True
+
+                 if not forced_choice:
+                     st.markdown(f"{'  ' * indent_level}*Choose one required option:*")
+                     selected_label = st.radio("Select type:", option_labels, index=default_idx, key=choice_key, horizontal=True, label_visibility="collapsed")
+                 else:
+                     selected_label = option_labels[default_idx]
                  
                  # Find selected particle
                  selected_particle = None
