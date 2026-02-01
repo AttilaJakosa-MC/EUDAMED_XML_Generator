@@ -142,7 +142,7 @@ def get_documentation(obj):
         
     return docs
 
-def render_input_fields(element, type_obj, parent_key, state_container, xml_path="", config_visible=None, config_defaults=None, metadata=None):
+def render_input_fields(element, type_obj, parent_key, state_container, xml_path="", config_visible=None, config_defaults=None, metadata=None, path_override=None):
     """
     Recursively renders input fields for an element.
     Returns the value entered/selected by the user.
@@ -150,7 +150,10 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
     indent_level = len(parent_key.split(".")) if parent_key else 0
     key = f"{parent_key}.{element.name}" if parent_key else element.name
     
-    current_path = f"{xml_path}/{element.local_name}" if xml_path else element.local_name
+    if path_override:
+        current_path = path_override
+    else:
+        current_path = f"{xml_path}/{element.local_name}" if xml_path else element.local_name
     
     # Store the structure in session state to rebuild XML later
     if 'xml_structure' not in state_container:
@@ -158,15 +161,22 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
 
     if type_obj.is_simple():
         # Configuration Visibility Check
-        # True if config is not loaded (None) or if path is in visible list
-        # OR if element is mandatory (min_occurs >= 1)
         is_mandatory = getattr(element, 'min_occurs', 1) >= 1
-        is_visible = config_visible is None or current_path in config_visible or is_mandatory
+        
+        # Handle indexed paths (e.g., path/to/elem[0])
+        clean_path_for_check = re.sub(r'\[\d+\]', '', current_path)
+        
+        is_visible = (config_visible is None) or \
+                     (current_path in config_visible) or \
+                     (clean_path_for_check in config_visible) or \
+                     is_mandatory
         
         # Default Value
         default_val = None
         if config_defaults:
             default_val = config_defaults.get(current_path)
+            if default_val is None:
+                default_val = config_defaults.get(clean_path_for_check)
 
         # Logic: If hidden, try to return default, else return None (skip)
         if not is_visible:
@@ -183,6 +193,11 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
         # If it is a list type, try to get enums from the item type
         if not enums and is_list_type and hasattr(type_obj, 'item_type'):
              enums = get_enums_for_type(type_obj.item_type)
+
+        # Handle optional Enum: Add empty option if not mandatory
+        if enums and not is_list_type and not is_mandatory:
+            if "" not in enums:
+                enums = [""] + enums
 
         label = f"{element.local_name}"
         
@@ -252,6 +267,10 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                     default_idx = enums.index(str(default_val))
                     
                 val = st.selectbox(label, options=enums, index=default_idx, key=key, help=help_text)
+                
+                # If empty string selected/defaulted, return None so it is omitted from XML
+                if val == "":
+                    val = None
         elif hasattr(type_obj, 'primitive_type') and type_obj.primitive_type and type_obj.primitive_type.local_name == 'boolean':
              # Handle Boolean
              # Default value check
@@ -410,23 +429,81 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                  for particle in group_particle.iter_model():
                      if isinstance(particle, xmlschema.validators.XsdElement):
                          # Determine visibility: Mandatory OR Configured (Visible/Default)
-                         child_path = f"{current_path}/{particle.local_name}" if current_path else particle.local_name
-                         is_configured = (cv is not None and child_path in cv) or (cd is not None and child_path in cd)
+                         clean_path = f"{current_path}/{particle.local_name}" if current_path else particle.local_name
+                         child_path = clean_path # default to clean path for check
                          
-                         if particle.min_occurs >= 1 or is_configured:
-                            with st.container():
-                                col1, col2 = st.columns([0.5, 9.5])
-                                with col2:
-                                    child_val = render_input_fields(
-                                        particle, 
-                                        particle.type, 
-                                        parent_key, 
-                                        state_container, 
-                                        current_path,
-                                        cv, cd, md
-                                    )
-                                    if child_val is not None:
-                                        group_data[particle.name] = child_val
+                         # Normalize path for checking configuration (remove indices)
+                         clean_path_no_idx = re.sub(r'\[\d+\]', '', clean_path)
+                         
+                         is_configured_clean = (cv is not None and (clean_path in cv or clean_path_no_idx in cv)) or \
+                                               (cd is not None and (clean_path in cd or clean_path_no_idx in cd))
+                         
+                         # Check for repeated element
+                         is_repeated = particle.max_occurs is None or particle.max_occurs > 1
+                         
+                         if is_repeated:
+                             # Default count Logic
+                             count = particle.min_occurs
+                             
+                             # Check for indexed defaults to determine initial count (e.g. key "Path[1]")
+                             if cd:
+                                 idx = 0
+                                 found_index = True
+                                 while found_index:
+                                     # We need to scan keys because they are fully qualified paths
+                                     # Optimized check: try to find any key containing "{clean_path}[{idx}]"
+                                     # Since keys are typically "Path/To/Leaf", checking exact prefix is safer.
+                                     # But default keys are LEAF level. clean_path might be intermediate (complex).
+                                     # If clean_path is "A/B", and we have "A/B[0]/C: val"
+                                     prefix = f"{clean_path}[{idx}]"
+                                     if any(k.startswith(prefix) for k in cd.keys()):
+                                         if (idx + 1) > count:
+                                             count = idx + 1
+                                         idx += 1
+                                     else:
+                                         found_index = False
+
+                             # Ensure we show if any index is configured or clean path is configured
+                             if particle.min_occurs >= 1 or is_configured_clean or count > 0:
+                                 st.markdown(f"{'  ' * indent_level}**{particle.local_name} (List)**")
+                                 count_key = f"{parent_key}_{particle.local_name}_count"
+                                 count_val = st.number_input(f"Number of {particle.local_name} entries", min_value=particle.min_occurs, value=count, key=count_key)
+                                 
+                                 vals = []
+                                 for i in range(count_val):
+                                     with st.expander(f"{particle.local_name} #{i+1}", expanded=True):
+                                         indexed_path = f"{clean_path}[{i}]"
+                                         child_val = render_input_fields(
+                                            particle, 
+                                            particle.type, 
+                                            f"{parent_key}_{i}", 
+                                            state_container, 
+                                            xml_path=None,
+                                            config_visible=cv, 
+                                            config_defaults=cd, 
+                                            metadata=md,
+                                            path_override=indexed_path
+                                         )
+                                         if child_val is not None:
+                                             vals.append(child_val)
+                                 if vals:
+                                     group_data[particle.name] = vals
+
+                         else:
+                             if particle.min_occurs >= 1 or is_configured_clean:
+                                with st.container():
+                                    col1, col2 = st.columns([0.5, 9.5])
+                                    with col2:
+                                        child_val = render_input_fields(
+                                            particle, 
+                                            particle.type, 
+                                            parent_key, 
+                                            state_container, 
+                                            current_path,
+                                            cv, cd, md
+                                        )
+                                        if child_val is not None:
+                                            group_data[particle.name] = child_val
                      
                      elif isinstance(particle, xmlschema.validators.XsdGroup):
                          if particle.min_occurs >= 1:
@@ -448,21 +525,16 @@ def build_xml_element(element_name, xsd_type, form_data):
     elem = ET.Element(tag)
     
     if isinstance(form_data, dict):
-        # Determine the order based on schema to ensure validity? 
-        # For simplicity, we iterate over the form_data keys which were created in order.
-        
-        # We need to map simple names back to schema particles if possible, 
-        # but here our keys in form_data are the fully qualified names (from element.name) 
-        # or we stored them that way.
-        
-        # In render_input_fields for complex types, we returned a dict:
-        # { particle.name : value }
-        
         for child_tag, child_val in form_data.items():
-            if child_val is None: continue # Should not happen for mandatory fields if UI works
-            
-            # Since child_val can be a string (simple) or dict (complex)
-            if isinstance(child_val, (str, dict)):
+            if child_val is None: continue 
+
+            # Handle List of values (maxOccurs > 1)
+            if isinstance(child_val, list):
+                for item in child_val:
+                    if isinstance(item, (str, dict)):
+                         child_elem = build_xml_element_manual_tag(child_tag, item)
+                         elem.append(child_elem)
+            elif isinstance(child_val, (str, dict)):
                 child_elem = build_xml_element_manual_tag(child_tag, child_val)
                 elem.append(child_elem)
     
@@ -475,8 +547,15 @@ def build_xml_element_manual_tag(tag, content):
     elem = ET.Element(tag)
     if isinstance(content, dict):
         for child_tag, child_val in content.items():
-            child_elem = build_xml_element_manual_tag(child_tag, child_val)
-            elem.append(child_elem)
+            if child_val is None: continue
+            
+            if isinstance(child_val, list):
+                for item in child_val:
+                     child_elem = build_xml_element_manual_tag(child_tag, item)
+                     elem.append(child_elem)
+            else:
+                child_elem = build_xml_element_manual_tag(child_tag, child_val)
+                elem.append(child_elem)
     else:
         elem.text = str(content)
     return elem

@@ -5,7 +5,6 @@
 
 visible_fields:
   - MDRDevice/MDRBasicUDI/type
-  - MDRDevice/MDRBasicUDI/specialDevice
   - MDRDevice/MDRBasicUDI/riskClass
   - MDRDevice/MDRBasicUDI/model
   - MDRDevice/MDRBasicUDI/humanTissuesCells
@@ -14,6 +13,13 @@ visible_fields:
   - MDRDevice/MDRUDIDIData/tradeNames
   - MDRDevice/MDRUDIDIData/productionIdentifier
   - MDRDevice/MDRUDIDIData/baseQuantity
+  - MDRDevice/MDRUDIDIData/website
+  - MDRDevice/MDRUDIDIData/storageHandlingConditions
+  - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition
+  - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/storageHandlingConditionValue
+  - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/comments
+  - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/comments/name
+  - MDRDevice/MDRUDIDIData/storageHandlingConditions/condition/comments/name/language
   - MDRDevice/MDRUDIDIData/identifier/DICode
   - MDRDevice/MDRUDIDIData/identifier/issuingEntityCode
   - MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode
@@ -30,6 +36,11 @@ defaults:
   MDRDevice/MDRUDIDIData/tradeNames/name/language: ANY
   MDRDevice/MDRUDIDIData/productionIdentifier: BATCH_NUMBER SERIALISATION_NUMBER EXPIRATION_DATE
   MDRDevice/MDRUDIDIData/baseQuantity: 1
+  MDRDevice/MDRUDIDIData/website: https://medicontur.com/professionals/documents/eifus
+  MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/storageHandlingConditionValue: SHC006
+  MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/comments/name[0]/textValue: 10
+  MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/storageHandlingConditionValue: SHC007
+  MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/comments/name[0]/textValue: 25
   MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
   MDRDevice/MDRBasicUDI/identifier/issuingEntityCode: GS1
