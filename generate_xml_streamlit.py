@@ -109,7 +109,7 @@ def load_eudamed_metadata():
 def load_schema():
     """Load and cache the XML schema."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    xsd_path = os.path.join(base_dir, 'EUDAMED downloaded', 'XSD', 'data', 'Entity', 'DI.xsd')
+    xsd_path = os.path.join(base_dir, 'EUDAMED downloaded', 'XSD', 'service', 'Message.xsd')
     
     if not os.path.exists(xsd_path):
         return None, f"Schema file not found at: {xsd_path}"
@@ -766,6 +766,11 @@ selected_root_element_name = device_type_options[selected_device_type_label]
 mdr_device_element = schema.elements.get(selected_root_element_name)
 if not mdr_device_element:
     mdr_device_element = schema.elements.get(f"{{{namespaces['device']}}}{selected_root_element_name}")
+
+# Look in imported maps if not found in root elements
+if not mdr_device_element and hasattr(schema, 'maps') and schema.maps and schema.maps.elements:
+    mdr_device_element = schema.maps.elements.get(f"{{{namespaces['device']}}}{selected_root_element_name}")
+
 
 if not mdr_device_element:
     st.error(f"Could not find {selected_root_element_name} element definition in schema.")
