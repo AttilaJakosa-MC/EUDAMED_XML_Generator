@@ -167,7 +167,7 @@ def get_documentation(obj):
         
     return docs
 
-def render_input_fields(element, type_obj, parent_key, state_container, xml_path="", config_visible=None, config_defaults=None, metadata=None, path_override=None):
+def render_input_fields(element, type_obj, parent_key, state_container, xml_path="", config_visible=None, config_defaults=None, metadata=None, path_override=None, force_visible=False):
     """
     Recursively renders input fields for an element.
     Returns the value entered/selected by the user.
@@ -175,6 +175,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
     indent_level = len(parent_key.split(".")) if parent_key else 0
     # Use clean name for key generation to avoid duplicates or weird keys
     elem_name_clean = element.name
+
     if hasattr(element, 'name') and element.name and '}' in element.name:
         elem_name_clean = element.name.split('}')[-1]
     
@@ -199,7 +200,8 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
         is_visible = (config_visible is None) or \
                      (current_path in config_visible) or \
                      (clean_path_for_check in config_visible) or \
-                     is_mandatory
+                     is_mandatory or \
+                     force_visible
         
         # Default Value
         default_val = None
@@ -209,6 +211,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                 default_val = config_defaults.get(clean_path_for_check)
 
         # Logic: If hidden, try to return default, else return None (skip)
+        
         if not is_visible:
             if default_val is not None:
                 return str(default_val)
@@ -442,6 +445,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                      for idx, opt in enumerate(options):
                          if isinstance(opt, xmlschema.validators.XsdElement):
                              opt_path = f"{current_path}/{opt.local_name}"
+                             
                              # Check precise match or if it's a prefix for other visible fields
                              # (e.g. modelName vs modelName/name)
                              is_visible = False
@@ -460,36 +464,65 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                      if len(visible_candidates) == 1:
                          default_idx = visible_candidates[0]
                          forced_choice = True
-
+                         
+                 # --- SELECTION LOGIC ---
+                 selected_particle = None
+                 
                  if not forced_choice:
                      st.markdown(f"{'  ' * indent_level}*Choose one required option:*")
                      selected_label = st.radio("Select type:", option_labels, index=default_idx, key=choice_key, horizontal=True, label_visibility="collapsed")
+                     
+                     for opt in options:
+                         if isinstance(opt, xmlschema.validators.XsdElement) and opt.local_name == selected_label:
+                             selected_particle = opt
+                             break
                  else:
-                     selected_label = option_labels[default_idx]
+                     # Explicitly grab the forced option
+                     if 0 <= default_idx < len(options):
+                        selected_particle = options[default_idx]
+                     else:
+                        st.error(f"Index error in forced choice: {default_idx} vs len {len(options)}")
                  
-                 # Find selected particle
-                 selected_particle = None
-                 for opt in options:
-                     if isinstance(opt, xmlschema.validators.XsdElement) and opt.local_name == selected_label:
-                         selected_particle = opt
-                         break
-                 
-                 if selected_particle:
+                 if selected_particle is not None:
                       # Process the selected branch
+                      
                       if isinstance(selected_particle, xmlschema.validators.XsdElement):
-                           with st.container():
-                                col1, col2 = st.columns([0.5, 9.5])
-                                with col2:
-                                    # Recursive call
-                                    val = render_input_fields(
-                                        selected_particle, 
-                                        selected_particle.type, 
-                                        parent_key, 
-                                        state_container, 
-                                        current_path,
-                                        cv, cd, md
-                                    )
-                                    group_data[selected_particle.name] = val
+                           if forced_choice:
+                                # Using standard layout but forcing visibility
+                                # Explicitly calling render_input_fields
+                                
+                                with st.container():
+                                     # Use columns to align with peers (match the visual indentation)
+                                     col1, col2 = st.columns([0.5, 9.5])
+                                     with col2:
+                                         val = render_input_fields(
+                                            selected_particle, 
+                                            selected_particle.type, 
+                                            parent_key, 
+                                            state_container, 
+                                            current_path,
+                                            cv, cd, md,
+                                            path_override=None,
+                                            force_visible=True
+                                        )
+                                # Store result
+                                group_data[selected_particle.name] = val
+                           else:
+                               with st.container():
+                                    col1, col2 = st.columns([0.5, 9.5])
+                                    with col2:
+                                        # Recursive call
+                                        val = render_input_fields(
+                                            selected_particle, 
+                                            selected_particle.type, 
+                                            parent_key, 
+                                            state_container, 
+                                            current_path,
+                                            cv, cd, md
+                                        )
+                                        # Ensure we store it even if it's None (but usually None is skipped)
+                                        # Use qualified name for correct namespace mapping
+                                        group_data[selected_particle.name] = val
              
              # If Sequence or Optional Choice (though optional choice usually doesn't force input)
              else:
@@ -554,10 +587,8 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                          if child_val is not None:
                                              vals.append(child_val)
                                  if vals:
-                                     child_name_clean = particle.name
-                                     if '}' in child_name_clean:
-                                         child_name_clean = child_name_clean.split('}')[-1]
-                                     group_data[child_name_clean] = vals
+                                     # Store with qualified name
+                                     group_data[particle.name] = vals
 
                          else:
                              if particle.min_occurs >= 1 or is_configured_clean:
@@ -573,11 +604,8 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                             cv, cd, md
                                         )
                                         if child_val is not None:
-                                            # Store with clean name (no namespace) for builder to map
-                                            child_name_clean = particle.name
-                                            if '}' in child_name_clean:
-                                                child_name_clean = child_name_clean.split('}')[-1]
-                                            group_data[child_name_clean] = child_val
+                                            # Store with qualified name
+                                            group_data[particle.name] = child_val
                      
                      elif isinstance(particle, xmlschema.validators.XsdGroup):
                          if particle.min_occurs >= 1:
