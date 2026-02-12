@@ -14,6 +14,11 @@ from openpyxl import Workbook
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.styles import Alignment
 from openpyxl.utils import get_column_letter
+import pandas as pd
+from sqlalchemy import create_engine
+import copy
+import uuid
+import zipfile
 
 # Page configuration
 st.set_page_config(page_title="EUDAMED XML Generator", layout="wide")
@@ -695,6 +700,58 @@ def build_xml_element_manual_tag(tag, content):
         elem.text = str(content)
     return elem
 
+# --- Database Integration Functions ---
+
+def get_db_engine():
+    """Establishes connection to the Oracle database using environment variables."""
+    db_user = os.getenv("ORAUSER")
+    db_password = os.getenv("ORAPW")
+    db_alias = "MC9ELES" # Hardcoded alias from provided script
+    
+    if not db_user or not db_password:
+        st.error("Missing environment variables ORAUSER or ORAPW.")
+        return None
+
+    try:
+        connection_string = f"oracle+oracledb://{db_user}:{db_password}@{db_alias}"
+        engine = create_engine(connection_string)
+        return engine
+    except Exception as e:
+        st.error(f"Failed to create DB engine: {e}")
+        return None
+
+def fetch_ifs_data(model, pcode):
+    """Fetches UDI-DI data from IFS database."""
+    engine = get_db_engine()
+    if not engine:
+        return None
+    
+    # Note: Ensure inputs are safe or used in parameters, but given the dynamic table function
+    # usage in the sample, f-string injection was used there too.
+    # We strip and quote carefully.
+    
+    query = f"""
+    with
+       transferable_parts as (select * from table (get_transferable_parts_lens_table ('ALL', '{model}', 'LK')))
+    select
+       dpt,cyl,
+       pcode,
+       get_techspec_info_mcf (part_no, 'ET_GTIN') udi_di
+    from
+       transferable_parts tp
+    where
+       tp.pcode='{pcode}'
+       and get_techspec_info_mcf (part_no, 'ET_GTIN') is not null
+    """
+    
+    try:
+        with engine.connect() as conn:
+            df = pd.read_sql(query, conn)
+        return df
+    except Exception as e:
+        st.error(f"Error executing query: {e}")
+        return None
+
 # --- Main App ---
 
 schema, error_msg = load_schema()
@@ -946,6 +1003,20 @@ else:
 
 
 st.markdown("---")
+
+# --- IFS Integration Controls ---
+use_ifs = st.toggle("Generate UDI-DI by IFS")
+ifs_model = ""
+ifs_pcode = ""
+
+if use_ifs:
+    col_ifs_1, col_ifs_2 = st.columns(2)
+    with col_ifs_1:
+        ifs_model = st.text_input("IFS Model", help="Model parameter for DB Query")
+    with col_ifs_2:
+        ifs_pcode = st.text_input("IFS PCode", help="Package Code parameter for DB Query")
+
+st.markdown("---")
 # Action Buttons in columns
 col_gen, col_export = st.columns([1, 1])
 
@@ -1067,22 +1138,107 @@ if submitted:
     def set_xsi_type(elem, type_name):
         clean_type = clean_xsi_type_name(type_name)
         # Determine prefix based on where the type is usually defined
-        # This is a heuristic.
         prefix = "device"
         if "UDIDI" in clean_type: 
              prefix = "udidi" # e.g. MDRUDIDIDataType
         elif "BasicUDI" in clean_type:
-             prefix = "device" # e.g. MDRBasicUDIType is in Device namespace usually? 
-             # Wait, in DI.xsd: <xs:complexType name="MDRBasicUDIType"> is in Device/v1.
-             # In generated sample: xsi:type="device:MDRBasicUDIType" is correct.
-             pass
+             prefix = "device" 
         
         elem.set(f"{{{namespaces['xsi']}}}type", f"{prefix}:{clean_type}")
+
+    # --- IFS Data Processing ---
+    final_udidi_list = udidi_data_list # Default
+    
+    if use_ifs:
+        if not ifs_model or not ifs_pcode:
+             st.error("Please provide Model and PCode for IFS generation.")
+             st.stop()
+        
+        with st.spinner("Querying IFS Database..."):
+             df = fetch_ifs_data(ifs_model, ifs_pcode)
+             
+        if df is None or df.empty:
+             st.error("No data returned from IFS query.")
+             st.stop()
+             
+        # Normalize columns to lowercase
+        df.columns = [c.lower() for c in df.columns]
+             
+        # Process Data: Sort by DPT ASC, CYL ASC
+        try:
+             # Ensure numeric conversion for correct sorting
+             df['dpt_num'] = pd.to_numeric(df['dpt'], errors='coerce').fillna(999999)
+             df['cyl_num'] = pd.to_numeric(df['cyl'], errors='coerce').fillna(999999)
+             df_sorted = df.sort_values(by=['dpt_num', 'cyl_num'])
+        except Exception as e:
+             st.warning(f"Sorting error: {e}. Using default order.")
+             df_sorted = df
+             
+        min_record = df_sorted.iloc[0]
+        bulk_records = df_sorted.iloc[1:] if len(df_sorted) > 1 else pd.DataFrame()
+        
+        # Helper to safely update DICode and ReferenceNumber
+        def update_udi_values(item_dict, udi_val):
+            if not isinstance(item_dict, dict): return
+            
+            # 1. Update Reference Number (direct child, varying namespaces possible)
+            # Iterate keys to find 'referenceNumber' regardless of namespace prefix
+            ref_num_key = None
+            for k in item_dict.keys():
+                if 'referenceNumber' in k: # e.g. 'udidi:referenceNumber' or just 'referenceNumber'
+                    ref_num_key = k
+                    break
+            
+            if ref_num_key:
+                 item_dict[ref_num_key] = str(udi_val)
+            
+            # 2. Update DICode in identifier
+            # First find identifier key
+            ident_key = None
+            for k in item_dict.keys():
+                if 'identifier' in k and not 'basicUDIIdentifier' in k: # Distinct from basicUDIIdentifier
+                    ident_key = k
+                    break
+            
+            if ident_key and isinstance(item_dict[ident_key], dict):
+                ident_dict = item_dict[ident_key]
+                # Now look for DICode inside
+                di_code_key = None
+                for k in ident_dict.keys():
+                    if 'DICode' in k:
+                        di_code_key = k
+                        break
+                
+                if di_code_key:
+                    ident_dict[di_code_key] = str(udi_val)
+                    
+        # 1. DEVICE / POST
+        if service_op_mode.startswith("POST") and (service_id_override == "DEVICE" or post_type.startswith("Full")):
+              template = copy.deepcopy(udidi_data_list[0]) if udidi_data_list else {}
+              
+              update_udi_values(template, min_record['udi_di'])
+
+              final_udidi_list = [template] 
+        
+        # 2. UDI_DI / POST or PATCH (Bulk Logic)
+        elif (service_op_mode.startswith("POST") and service_id_override == "UDI_DI") or \
+             (service_op_mode.startswith("PATCH") and 'UDIDI' in target_scope):
+              
+              template = copy.deepcopy(udidi_data_list[0]) if udidi_data_list else {}
+              new_list = []
+              
+              for idx, row in bulk_records.iterrows():
+                   new_item = copy.deepcopy(template)
+                   
+                   update_udi_values(new_item, row['udi_di'])
+                   
+                   new_list.append(new_item)
+              
+              final_udidi_list = new_list
 
     generation_tasks = []
 
     if service_op_mode.startswith("POST"):
-        # Single Task
         task = {
             'mode': 'POST',
             'target': post_type,
@@ -1093,118 +1249,103 @@ if submitted:
         # PATCH - Check Scopes
         if 'BasicUDI' in target_scope:
             generation_tasks.append({'mode': 'PATCH', 'target': 'BasicUDI', 'service_id': 'BASIC_UDI'})
-        if 'UDIDI' in target_scope:
+        if 'UDIDI' in target_scope: # If using IFS, this will use the generated list
             generation_tasks.append({'mode': 'PATCH', 'target': 'UDIDI', 'service_id': 'UDI_DI'})
 
     created_files = []
 
     for idx, task in enumerate(generation_tasks):
-        # 1. Build Payload
-        payload_root = None
+        payload_blocks = [] # List of blocks to generate separate files
         
-        if task['mode'] == 'POST':
-            if task['service_id'] == 'DEVICE': # Full Device
-                # <device:Device xsi:type="device:MDRDeviceType">
-                payload_root = ET.Element(f"{{{namespaces['device']}}}Device")
-                
-                # Clean type name
+        if task['service_id'] == 'DEVICE': # Full Device
+             # Single block with Minimum UDI-DI (if IFS) or whatever is in list
+             payload_blocks.append({'type': 'DEVICE', 'budi': basic_udi_data, 'udidis': final_udidi_list})
+             
+        elif task['service_id'] == 'UDI_DI': # UDI-DI POST or PATCH
+             # Bulk Chunking
+             chunk_size = 300
+             all_items = final_udidi_list if final_udidi_list else []
+             
+             # Create chunks
+             if not all_items:
+                 # Handle case with no items (empty file? or skip?)
+                 payload_blocks.append({'type': 'UDIDI_BULK', 'items': [], 'index': 0})
+             else:
+                 for i in range(0, len(all_items), chunk_size):
+                      chunk = all_items[i:i + chunk_size]
+                      payload_blocks.append({'type': 'UDIDI_BULK', 'items': chunk, 'index': i})
+                  
+        elif task['target'] == 'BasicUDI':
+             payload_blocks.append({'type': 'BasicUDI', 'data': basic_udi_data})
+
+        # Generate separate file for each block
+        for block_idx, block in enumerate(payload_blocks):
+        
+            # Root Payload for this file
+            payload_elements = [] 
+
+            if block['type'] == 'DEVICE':
+                p_root = ET.Element(f"{{{namespaces['device']}}}Device")
                 type_name = clean_xsi_type_name(mdr_device_element.type.name)
-                set_xsi_type(payload_root, type_name) # e.g. MDRDeviceType
+                set_xsi_type(p_root, type_name)
                 
                 # Add Basic UDI
-                if basic_udi_data:
-                    # Basic UDI element name
+                if block['budi']:
                     budi_name = clean_xsi_type_name(basic_udi_def.name)
-                    # Use device namespace for MDRBasicUDI
-                    basic_udi_elem = build_xml_element_manual_tag(f"{{{namespaces['device']}}}{budi_name}", basic_udi_data)
-                    payload_root.append(basic_udi_elem)
+                    basic_udi_elem = build_xml_element_manual_tag(f"{{{namespaces['device']}}}{budi_name}", block['budi'])
+                    p_root.append(basic_udi_elem)
                     
                 # Add UDI-DIs
-                for udi_data in udidi_data_list:
+                for udi_data in block['udidis']:
                     if udi_data:
-                         # <device:MDRUDIDIData>
                          udidi_name = clean_xsi_type_name(udidi_data_def.name)
                          udidi_elem = build_xml_element_manual_tag(f"{{{namespaces['device']}}}{udidi_name}", udi_data)
-                         payload_root.append(udidi_elem)
+                         p_root.append(udidi_elem)
+                
+                payload_elements.append(p_root)
 
-            elif task['service_id'] == 'UDI_DI': # UDI-DI Only POST
-                # <device:UDIDIData xsi:type="udidi:MDRUDIDIDataType">
-                # We iterate because udidi_data_list might have multiple? 
-                # Usually separate messages, but let's take the first one or loop?
-                # EUDAMED requires one payload usually. If multiple, assume user entered 1. 
-                # If multiple entered, we might need multiple messages. 
-                # For simplicity, we stick to the first one or generate multiple files?
-                # Let's generate one message per UDI-DI entry if multiple.
-                pass # Handled in loop below?
-        
-        # We need to handle the "Multiple UDI-DI entries" case for Single-Entity services
-        # If UDI-DI POST/PATCH and multiple entries, we should generate multiple messages?
-        # Let's assume 1 for now or wrap in loop.
-        
-        sub_tasks_data = []
-        if task['target'] == 'UDIDI' or (task['mode'] == 'POST' and task['service_id'] == 'UDI_DI'):
-             for i, d in enumerate(udidi_data_list):
-                 sub_tasks_data.append( {'data': d, 'type': 'UDIDI', 'index': i} )
-        elif task['target'] == 'BasicUDI':
-             sub_tasks_data.append( {'data': basic_udi_data, 'type': 'BasicUDI', 'index': 0} )
-        else:
-             # DEVICE POST (Composite) - single payload
-             sub_tasks_data.append( {'data': None, 'type': 'DEVICE', 'index': 0} )
+            elif block['type'] == 'UDIDI_BULK':
+                # Generate multiple UDIDIData elements
+                type_name = udidi_data_def.type.name if hasattr(udidi_data_def.type, 'name') else "MDRUDIDIDataType"
+                
+                for item in block['items']:
+                     p_root = ET.Element(f"{{{namespaces['device']}}}UDIDIData")
+                     set_xsi_type(p_root, f"udidi:{type_name}")
+                     
+                     if task['mode'] == 'PATCH':
+                         # Add Version for PATCH
+                         # Check availability of patch_version
+                         ver_val = str(patch_version) if 'patch_version' in locals() else "1"
+                         ver_elem = ET.Element(f"{{{namespaces['e']}}}version")
+                         ver_elem.text = ver_val
+                         p_root.insert(0, ver_elem)
 
-        for sub_task in sub_tasks_data:
-            # Build specific payload element
-            if sub_task['type'] == 'DEVICE':
-                # Already built payload_root above
-                pass
-            elif sub_task['type'] == 'UDIDI':
-                 # <device:UDIDIData xsi:type="udidi:MDRUDIDIDataType">
-                 # Needs to verify the Type name. 
-                 # udidi_data_def.type.name is likely MDRUDIDIDataType
-                 payload_root = ET.Element(f"{{{namespaces['device']}}}UDIDIData")
-                 
-                 # Determine Type (MDR vs Legacy vs IVDR)
-                 # udidi_data_def.type.name helps.
-                 type_name = udidi_data_def.type.name if hasattr(udidi_data_def.type, 'name') else "MDRUDIDIDataType"
-                 # Prefix? The type is defined in 'udidi' namespace usually for MDR
-                 # The sample uses xsi:type="udidi:MDRUDIDIDataType"
-                 set_xsi_type(payload_root, f"udidi:{type_name}")
-                 
-                 if task['mode'] == 'PATCH':
-                     ver_elem = ET.Element(f"{{{namespaces['e']}}}version")
-                     ver_elem.text = str(patch_version)
-                     payload_root.insert(0, ver_elem)
+                     temp_elem = build_xml_element_manual_tag("TEMP", item)
+                     for child in temp_elem:
+                          p_root.append(child)
+                     
+                     payload_elements.append(p_root)
 
-                 # Populate children
-                 # Use build_xml_element_manual_tag but we need to inject data
-                 # sub_task['data'] contains the fields.
-                 temp_elem = build_xml_element_manual_tag("TEMP", sub_task['data'])
-                 for child in temp_elem:
-                      payload_root.append(child)
-
-            elif sub_task['type'] == 'BasicUDI':
-                 # <device:BasicUDI xsi:type="device:MDRBasicUDIType">
-                 payload_root = ET.Element(f"{{{namespaces['device']}}}BasicUDI")
-                 
-                 # Determine Type
+            elif block['type'] == 'BasicUDI':
+                 p_root = ET.Element(f"{{{namespaces['device']}}}BasicUDI")
                  type_name = basic_udi_def.type.name if hasattr(basic_udi_def.type, 'name') else "MDRBasicUDIType"
-                 # Define type prefix. 'MDRBasicUDIType' is in 'device' namespace in DI.xsd?
-                 # 'MDRBasicUDIType' in DI.xsd is type="device:MDRBasicUDIType".
-                 set_xsi_type(payload_root, f"device:{type_name}")
-
-                 if task['mode'] == 'PATCH':
-                     ver_elem = ET.Element(f"{{{namespaces['e']}}}version")
-                     ver_elem.text = str(patch_version)
-                     payload_root.insert(0, ver_elem)
+                 set_xsi_type(p_root, f"device:{type_name}")
                  
-                 temp_elem = build_xml_element_manual_tag("TEMP", sub_task['data'])
+                 if task['mode'] == 'PATCH':
+                     ver_val = str(patch_version) if 'patch_version' in locals() else "1"
+                     ver_elem = ET.Element(f"{{{namespaces['e']}}}version")
+                     ver_elem.text = ver_val
+                     p_root.insert(0, ver_elem)
+                 
+                 temp_elem = build_xml_element_manual_tag("TEMP", block['data'])
                  for child in temp_elem:
-                      payload_root.append(child)
+                      p_root.append(child)
+                 
+                 payload_elements.append(p_root)
 
-            if payload_root is None: continue
+            if not payload_elements: continue
 
             # 3. Build Envelope
-            
-            # Defaults from config
             sec_token = ""
             actor_code = ""
             party_id = ""
@@ -1214,41 +1355,29 @@ if submitted:
                 party_id = config_envelope.get('party_id', '')
 
             m_ns = f"{{{namespaces['m']}}}"
-            ns2_ns = f"{{{namespaces['s']}}}" # Changed from ns2 to s in dict, but conceptually ns2
+            ns2_ns = f"{{{namespaces['s']}}}"
             
-            # Root Push Element
             root = ET.Element(f"{m_ns}Push")
             
-            # Add Schema Location
-            # https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1 https://webgate.ec.europa.eu/tools/eudamed/dtx/service/Message.xsd
             root.set(f"{{{namespaces['xsi']}}}schemaLocation", 
                      f"{namespaces['m']} https://webgate.ec.europa.eu/tools/eudamed/dtx/service/Message.xsd")
-
-            # Add version attribute (Required by MessageType)
             root.set("version", "3.0.25")
             
-            # <m:correlationID>
             corr_id = ET.SubElement(root, f"{m_ns}correlationID")
             corr_id.text = str(uuid.uuid4())
             
-            # <m:creationDateTime>
             create_dt = ET.SubElement(root, f"{m_ns}creationDateTime")
             create_dt.text = datetime.datetime.now(datetime.timezone.utc).isoformat().replace('+00:00', 'Z')
             
-            # <m:messageID>
             msg_id = ET.SubElement(root, f"{m_ns}messageID")
             msg_id.text = str(uuid.uuid4())
             
-            # <m:recipient>
             recipient = ET.SubElement(root, f"{m_ns}recipient")
             node = ET.SubElement(recipient, f"{m_ns}node")
-            node_actor = ET.SubElement(node, f"{ns2_ns}nodeActorCode") # ns2
+            node_actor = ET.SubElement(node, f"{ns2_ns}nodeActorCode")
             node_actor.text = "EUDAMED"
-            # <ns2:nodeID> is not in sample? Sample: <ns2:nodeActorCode>EUDAMED</ns2:nodeActorCode>. No nodeID.
-            # remove nodeID if unused
             
             service = ET.SubElement(recipient, f"{m_ns}service")
-             # Sample: serviceID, serviceOperation. NO serviceAccessToken in sample.
             svc_id = ET.SubElement(service, f"{ns2_ns}serviceID")
             svc_id.text = task['service_id']
             svc_op = ET.SubElement(service, f"{ns2_ns}serviceOperation")
@@ -1256,14 +1385,14 @@ if submitted:
             
             # <m:payload>
             payload = ET.SubElement(root, f"{m_ns}payload")
-            payload.append(payload_root)
+            # Append all elements for this block
+            for pe in payload_elements:
+                payload.append(pe)
             
-            # <m:sender>
             sender = ET.SubElement(root, f"{m_ns}sender")
             s_node = ET.SubElement(sender, f"{m_ns}node")
             s_node_actor = ET.SubElement(s_node, f"{ns2_ns}nodeActorCode")
             s_node_actor.text = actor_code
-            # Sample for Sender: NO nodeID?
             
             s_service = ET.SubElement(sender, f"{m_ns}service")
             s_site_id = ET.SubElement(s_service, f"{ns2_ns}serviceID")
@@ -1271,20 +1400,16 @@ if submitted:
             s_svc_op = ET.SubElement(s_service, f"{ns2_ns}serviceOperation")
             s_svc_op.text = task['mode']
 
-            # Generate String
             rough_string = ET.tostring(root, encoding="utf-8")
             reparsed = xml.dom.minidom.parseString(rough_string)
             final_xml = reparsed.toprettyxml(indent="  ", encoding="utf-8").decode("utf-8")
             
-            # Helper to swap s to ns2 if needed
             final_xml = final_xml.replace('xmlns:s=', 'xmlns:ns2=')
             final_xml = final_xml.replace('<s:', '<ns2:')
             final_xml = final_xml.replace('</s:', '</ns2:')
 
-            # Cleanup multiple newlines if any
             final_xml = re.sub(r'\n\s*\n', '\n', final_xml)
 
-            # Validate against schema
             validation_status = "Unknown"
             validation_details = ""
             try:
@@ -1301,15 +1426,15 @@ if submitted:
                  validation_status = "Error"
                  validation_details = f"⚠️ Validation Process Failed: {e}"
 
-            # Generate Filename
             fname = f"EUDAMED_{task['service_id']}_{task['mode']}_{uuid.uuid4().hex[:8]}.xml"
-            if sub_task.get('index') is not None and sub_task['type'] == 'UDIDI':
-                 fname = f"EUDAMED_{task['service_id']}_{task['mode']}_UDI_{sub_task['index']}_{uuid.uuid4().hex[:8]}.xml"
+            if block.get('index') is not None and block['type'] == 'UDIDI_BULK':
+                 # Add part suffix/index to filename
+                 fname = f"EUDAMED_{task['service_id']}_{task['mode']}_Bulk_Part{block_idx+1}_{uuid.uuid4().hex[:8]}.xml"
             
             created_files.append({
                 'name': fname, 
                 'content': final_xml, 
-                'label': f"{task['service_id']} {task['mode']} ({sub_task['type']})",
+                'label': f"{task['service_id']} {task['mode']} ({block['type']})",
                 'validation_status': validation_status,
                 'validation_details': validation_details
             })
@@ -1317,7 +1442,7 @@ if submitted:
     st.subheader("Generated XML Files")
     
     for cfile in created_files:
-        with st.expander(f"{cfile['name']} ({cfile['validation_status']})", expanded=True):
+        with st.expander(f"{cfile['name']} ({cfile['validation_status']})", expanded=False):
              if cfile['validation_status'] == "Valid":
                  st.success(cfile['validation_details'])
              elif cfile['validation_status'] == "Invalid":
@@ -1334,6 +1459,21 @@ if submitted:
                 key=cfile['name']
             )
 
-    # Note: Validation disabled/simplified as we changed the structure significantly 
-    # and might not have the full schema loaded for Message envelope validation in this context
+    # --- Bulk Download ---
+    if len(created_files) > 0:
+        with col_gen:
+             # Create a Zip File in memory
+             zip_buffer = io.BytesIO()
+             with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+                 for cfile in created_files:
+                     zip_file.writestr(cfile['name'], cfile['content'])
+             
+             st.download_button(
+                 label="Download All XMLs (ZIP)",
+                 data=zip_buffer.getvalue(),
+                 file_name=f"EUDAMED_Bulk_{uuid.uuid4().hex[:8]}.zip",
+                 mime="application/zip",
+                 type="secondary"
+             )
+
 
