@@ -911,17 +911,18 @@ if 'UDIDI' in target_scope:
     with st.expander("UDI-DI Data Entries", expanded=True):
         st.info("Fill in the mandatory fields for the UDI-DI. You can add multiple entries.")
 
-        # Determins if multiple UDI-DIs are allowed (maxOccurs > 1 or unbounded)
-        max_occurs = getattr(udidi_data_def, 'max_occurs', 1)
-        is_multiple_allowed = max_occurs is None or max_occurs > 1
+        # Determine limit based on service type
+        max_udis = 50
+        help_msg = "You can add multiple entries."
+        if service_id_override == "DEVICE":
+             max_udis = 1
+             help_msg = "Restricted to 1 entry for Full Device Registration (Device Service)."
 
-        if is_multiple_allowed:
-            col_count, col_dummy = st.columns([2, 8])
-            with col_count:
-                num_udis = st.number_input("Number of UDI-DI entries", min_value=1, max_value=10, value=1)
-        else:
-            st.warning("This device type allows only 1 UDI-DI Data entry.")
-            num_udis = 1
+        # Always allow multiple UDI-DIs for generation, regardless of schema maxOccurs in the container.
+        # This supports "Add UDI-DI" scenarios (multiple messages) and bulk generation.
+        col_count, col_dummy = st.columns([2, 8])
+        with col_count:
+            num_udis = st.number_input("Number of UDI-DI entries", min_value=1, max_value=max_udis, value=1, help=help_msg)
 
         udidi_data_list = []
         udidi_base_path = f"{mdr_device_element.local_name}"
