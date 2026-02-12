@@ -540,8 +540,30 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                          # Normalize path for checking configuration (remove indices)
                          clean_path_no_idx = re.sub(r'\[\d+\]', '', clean_path)
                          
-                         is_configured_clean = (cv is not None and (clean_path in cv or clean_path_no_idx in cv)) or \
-                                               (cd is not None and (clean_path in cd or clean_path_no_idx in cd))
+                         # Visibility Check:
+                         # 1. Exact match in config
+                         # 2. Key prefix match (if children are configured, parent must be visible)
+                         
+                         is_in_config = False
+                         if cv:
+                             if clean_path in cv or clean_path_no_idx in cv:
+                                 is_in_config = True
+                             else:
+                                 # Prefix Check (are there visible children?)
+                                 prefix = clean_path_no_idx + "/"
+                                 if any(v.startswith(prefix) for v in cv):
+                                     is_in_config = True
+                                     
+                         if not is_in_config and cd:
+                              if clean_path in cd or clean_path_no_idx in cd:
+                                  is_in_config = True
+                              else:
+                                  # Prefix Check for defaults
+                                  prefix = clean_path_no_idx + "/"
+                                  if any(k.startswith(prefix) for k in cd):
+                                      is_in_config = True
+                         
+                         is_configured_clean = is_in_config
                          
                          # Check for repeated element
                          is_repeated = particle.max_occurs is None or particle.max_occurs > 1
@@ -561,12 +583,32 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                      # But default keys are LEAF level. clean_path might be intermediate (complex).
                                      # If clean_path is "A/B", and we have "A/B[0]/C: val"
                                      prefix = f"{clean_path}[{idx}]"
-                                     if any(k.startswith(prefix) for k in cd.keys()):
+                                     # Need to check against absolute keys in defaults
+                                     # Note: 'cd' keys are usually full paths. 'clean_path' is full path so far.
+                                     # But check if suffix matches? 
+                                     # The keys in defaults are "MDRDevice/..."
+                                     # content of 'clean_path' is "MDRDevice/..." (current path joined)
+                                     
+                                     # Check for exact prefix match in defaults keys
+                                     # Check if any key starts with prefix
+                                     found_start = False
+                                     combined_prefix = prefix + "/"
+                                     if any(k.startswith(combined_prefix) or k == prefix for k in cd.keys()):
+                                         found_start = True
+                                     
+                                     if found_start:
                                          if (idx + 1) > count:
                                              count = idx + 1
                                          idx += 1
                                      else:
                                          found_index = False
+                                 
+                                 # Check if specific fields inside the list item are visible (CV)
+                                 # (handle case where no default value is set but field is visible)
+                                 # If visible_fields has "Path/Item/Field", we should at least show 1 item?
+                                 # Current logic: 'is_configured_clean' is true if children are visible.
+                                 if is_configured_clean and count == 0:
+                                      count = 1
 
                              # Ensure we show if any index is configured or clean path is configured
                              if particle.min_occurs >= 1 or is_configured_clean or count > 0:
