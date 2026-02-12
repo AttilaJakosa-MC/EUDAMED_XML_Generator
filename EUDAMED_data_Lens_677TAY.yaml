@@ -43,8 +43,8 @@ visible_fields:
 defaults:
   MDRDevice/MDRBasicUDI/type: DEVICE
   MDRDevice/MDRBasicUDI/riskClass: CLASS_IIB
-  MDRDevice/MDRBasicUDI/model: Test-Mini-677TAY
-  MDRDevice/MDRBasicUDI/identifier/DICode: 599302677TAXU9
+  MDRDevice/MDRBasicUDI/model: 677TAY
+  MDRDevice/MDRBasicUDI/identifier/DICode: 599302677TAYU3
   MDRDevice/MDRBasicUDI/identifier/issuingEntityCode: GS1
   MDRDevice/MDRBasicUDI/humanTissuesCells: false
   MDRDevice/MDRBasicUDI/animalTissuesCells: false
@@ -64,9 +64,9 @@ defaults:
   MDRDevice/MDRUDIDIData/identifier/DICode: "05993029999996"
   MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/status/code: ON_THE_MARKET
-  MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: 599302677TAXU9
+  MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: 599302677TAYU3
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
-  MDRDevice/MDRUDIDIData/MDNCodes: P030102090201
+  MDRDevice/MDRUDIDIData/MDNCodes: P030102090302
   MDRDevice/MDRUDIDIData/productionIdentifier: BATCH_NUMBER SERIALISATION_NUMBER EXPIRATION_DATE
   MDRDevice/MDRUDIDIData/referenceNumber: "05993029999996"
   MDRDevice/MDRUDIDIData/sterile: true
@@ -80,5 +80,5 @@ defaults:
 
 envelope_settings:
   security_token: "YOUR_SECURITY_TOKEN"
-  actor_code: "YOUR_ACTOR_CODE"
+  actor_code: "HU-MF-000026801"
   party_id: "YOUR_PARTY_ID"
