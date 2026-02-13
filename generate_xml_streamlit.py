@@ -1296,6 +1296,7 @@ if submitted:
              
          try:
              start_int = int(gen_start_code)
+             original_len = len(gen_start_code)
          except:
              st.error("Starting Base must be numeric.")
              st.stop()
@@ -1303,7 +1304,7 @@ if submitted:
          with st.spinner("Generating Sequence..."):
              count = int(gen_count)
              for i in range(count):
-                  base = str(start_int + i)
+                  base = str(start_int + i).zfill(original_len)
                   chk = calculate_mod10_checksum(base)
                   if chk:
                       generated_udi_strings.append(base + chk)
