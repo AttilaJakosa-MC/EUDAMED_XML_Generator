@@ -1,5 +1,8 @@
-# Configuration for EUDAMED XML Generation - Refactored
+﻿# Configuration for EUDAMED XML Generation - Refactored
 # 'defaults' section defines both visibility (presence of key) and default values.
 
-defaults: {}
-envelope_settings: {}
+defaults:
+  # Envelope / Header Settings
+  Push/sender/node/nodeActorCode: HU-MF-000026801
+  Push/header/security_token: YOUR_SECURITY_TOKEN
+  Push/header/party_id: YOUR_PARTY_ID
