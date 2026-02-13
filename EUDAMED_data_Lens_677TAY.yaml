@@ -1,45 +1,5 @@
-# Configuration for EUDAMED XML Generation - Product Group: Lens
-# 
-# visible_fields: List of XSD paths that should be displayed to the user.
-# defaults: Key-value pairs of XSD paths and their default values.
-
-visible_fields:
-  - MDRDevice/MDRBasicUDI/type
-  - MDRDevice/MDRBasicUDI/riskClass
-  - MDRDevice/MDRBasicUDI/model
-  - MDRDevice/MDRBasicUDI/identifier/DICode
-  - MDRDevice/MDRBasicUDI/identifier/issuingEntityCode
-  - MDRDevice/MDRBasicUDI/humanTissuesCells
-  - MDRDevice/MDRBasicUDI/animalTissuesCells
-  - MDRDevice/MDRBasicUDI/humanProductCheck
-  - MDRDevice/MDRBasicUDI/IIb_implantable_exceptions
-  - MDRDevice/MDRBasicUDI/medicinalProductCheck
-  - MDRDevice/MDRBasicUDI/active
-  - MDRDevice/MDRBasicUDI/administeringMedicine
-  - MDRDevice/MDRBasicUDI/implantable
-  - MDRDevice/MDRBasicUDI/measuringFunction
-  - MDRDevice/MDRBasicUDI/reusable
-  - MDRDevice/MDRBasicUDI/MFActorCode
-  - MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink/NBActorCode
-  - MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink/certificateType
-  
-  - MDRDevice/MDRUDIDIData/identifier/DICode
-  - MDRDevice/MDRUDIDIData/identifier/issuingEntityCode
-  - MDRDevice/MDRUDIDIData/status/code
-  - MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode
-  - MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode
-  - MDRDevice/MDRUDIDIData/MDNCodes
-  - MDRDevice/MDRUDIDIData/productionIdentifier
-  - MDRDevice/MDRUDIDIData/referenceNumber
-  - MDRDevice/MDRUDIDIData/sterile
-  - MDRDevice/MDRUDIDIData/sterilization
-  - MDRDevice/MDRUDIDIData/numberOfReuses
-  - MDRDevice/MDRUDIDIData/marketInfos
-  - MDRDevice/MDRUDIDIData/marketInfos/marketInfo/country
-  - MDRDevice/MDRUDIDIData/marketInfos/marketInfo/originalPlacedOnTheMarket
-  - MDRDevice/MDRUDIDIData/baseQuantity
-  - MDRDevice/MDRUDIDIData/latex
-  - MDRDevice/MDRUDIDIData/reprocessed
+# Configuration for EUDAMED XML Generation - Refactored
+# 'defaults' section defines both visibility (presence of key) and default values.
 
 defaults:
   MDRDevice/MDRBasicUDI/type: DEVICE
@@ -58,18 +18,16 @@ defaults:
   MDRDevice/MDRBasicUDI/measuringFunction: false
   MDRDevice/MDRBasicUDI/reusable: false
   MDRDevice/MDRBasicUDI/MFActorCode: HU-MF-000026801
-  
-  MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode: "0483"
+  MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode: 0483
   MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/certificateType: MDR_TYPE_EXAMINATION
-
-  MDRDevice/MDRUDIDIData/identifier/DICode: "05993029999996"
+  MDRDevice/MDRUDIDIData/identifier/DICode: 05993029999996
   MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/status/code: ON_THE_MARKET
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: 599302677TAYU3
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/MDNCodes: P030102090302
   MDRDevice/MDRUDIDIData/productionIdentifier: BATCH_NUMBER SERIALISATION_NUMBER EXPIRATION_DATE
-  MDRDevice/MDRUDIDIData/referenceNumber: "05993029999996"
+  MDRDevice/MDRUDIDIData/referenceNumber: 05993029999996
   MDRDevice/MDRUDIDIData/sterile: true
   MDRDevice/MDRUDIDIData/sterilization: false
   MDRDevice/MDRUDIDIData/numberOfReuses: 0
@@ -78,8 +36,7 @@ defaults:
   MDRDevice/MDRUDIDIData/baseQuantity: 1
   MDRDevice/MDRUDIDIData/latex: false
   MDRDevice/MDRUDIDIData/reprocessed: false
-
 envelope_settings:
-  security_token: "YOUR_SECURITY_TOKEN"
-  actor_code: "HU-MF-000026801"
-  party_id: "YOUR_PARTY_ID"
+  security_token: YOUR_SECURITY_TOKEN
+  actor_code: HU-MF-000026801
+  party_id: YOUR_PARTY_ID

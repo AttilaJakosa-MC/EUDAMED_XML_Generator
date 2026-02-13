@@ -1,8 +1,5 @@
-# Configuration for EUDAMED XML Generation - Product Group: ViscoMC
-visible_fields:
-  # Add visible paths here, e.g.:
-  # - MDRDevice/MDRBasicUDI/riskClass
+# Configuration for EUDAMED XML Generation - Refactored
+# 'defaults' section defines both visibility (presence of key) and default values.
 
-defaults:
-  # Add default values here, e.g.:
-  # MDRDevice/MDRBasicUDI/riskClass: CLASS_III
+defaults: {}
+envelope_settings: {}

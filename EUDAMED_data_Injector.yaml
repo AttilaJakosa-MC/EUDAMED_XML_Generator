@@ -1,6 +1,5 @@
-# Configuration for EUDAMED XML Generation - Product Group: Injector
-visible_fields:
-  # Add visible paths here
+# Configuration for EUDAMED XML Generation - Refactored
+# 'defaults' section defines both visibility (presence of key) and default values.
 
-defaults:
-  # Add default values here
+defaults: {}
+envelope_settings: {}

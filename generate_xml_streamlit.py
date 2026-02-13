@@ -57,10 +57,11 @@ def load_config(product_group):
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f) or {}
-            return data.get('visible_fields', []), data.get('defaults', {}), data.get('envelope_settings', {})
+            # 'defaults' now handles both visibility (presence of key) and value (value of key)
+            return data.get('defaults', {}), data.get('envelope_settings', {})
     except Exception as e:
         st.error(f"Error loading config {filename}: {e}")
-        return [], {}, {}
+        return {}, {}
 
 @st.cache_resource
 def load_eudamed_metadata():
@@ -172,7 +173,7 @@ def get_documentation(obj):
         
     return docs
 
-def render_input_fields(element, type_obj, parent_key, state_container, xml_path="", config_visible=None, config_defaults=None, metadata=None, path_override=None, force_visible=False):
+def render_input_fields(element, type_obj, parent_key, state_container, xml_path="", config_defaults=None, metadata=None, path_override=None, force_visible=False):
     """
     Recursively renders input fields for an element.
     Returns the value entered/selected by the user.
@@ -202,11 +203,13 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
         # Handle indexed paths (e.g., path/to/elem[0])
         clean_path_for_check = re.sub(r'\[\d+\]', '', current_path)
         
-        is_visible = (config_visible is None) or \
-                     (current_path in config_visible) or \
-                     (clean_path_for_check in config_visible) or \
-                     is_mandatory or \
-                     force_visible
+        # Visibility based on presence in config_defaults keys (if config is active)
+        is_visible = False
+        if config_defaults is None:
+            is_visible = True
+        else:
+             if (current_path in config_defaults) or (clean_path_for_check in config_defaults) or force_visible or is_mandatory:
+                 is_visible = True
         
         # Default Value
         default_val = None
@@ -423,7 +426,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
         children_data = {}
         
         # Helper to process model groups (Sequence/Choice)
-        def process_group(group_particle, parent_key, current_path, indent_level, cv, cd, md):
+        def process_group(group_particle, parent_key, current_path, indent_level, cd, md):
              group_data = {}
              
              # If it's a Choice with minOccurs >= 1, we must force a made selection
@@ -445,7 +448,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                  default_idx = 0
                  forced_choice = False
                  
-                 if cv:
+                 if cd:
                      visible_candidates = []
                      for idx, opt in enumerate(options):
                          if isinstance(opt, xmlschema.validators.XsdElement):
@@ -454,12 +457,12 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                              # Check precise match or if it's a prefix for other visible fields
                              # (e.g. modelName vs modelName/name)
                              is_visible = False
-                             if opt_path in cv:
+                             if opt_path in cd:
                                  is_visible = True
                              else:
                                  # Prefix Check
                                  prefix = opt_path + "/"
-                                 if any(v.startswith(prefix) for v in cv):
+                                 if any(k.startswith(prefix) for k in cd):
                                      is_visible = True
                                      
                              if is_visible:
@@ -506,7 +509,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                             parent_key, 
                                             state_container, 
                                             current_path,
-                                            cv, cd, md,
+                                            cd, md,
                                             path_override=None,
                                             force_visible=True
                                         )
@@ -523,7 +526,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                             parent_key, 
                                             state_container, 
                                             current_path,
-                                            cv, cd, md
+                                            cd, md
                                         )
                                         # Ensure we store it even if it's None (but usually None is skipped)
                                         # Use qualified name for correct namespace mapping
@@ -545,23 +548,16 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                          # 2. Key prefix match (if children are configured, parent must be visible)
                          
                          is_in_config = False
-                         if cv:
-                             if clean_path in cv or clean_path_no_idx in cv:
+                         if cd is None:
+                             is_in_config = True
+                         else:
+                             if clean_path in cd or clean_path_no_idx in cd:
                                  is_in_config = True
                              else:
                                  # Prefix Check (are there visible children?)
                                  prefix = clean_path_no_idx + "/"
-                                 if any(v.startswith(prefix) for v in cv):
+                                 if any(k.startswith(prefix) for k in cd):
                                      is_in_config = True
-                                     
-                         if not is_in_config and cd:
-                              if clean_path in cd or clean_path_no_idx in cd:
-                                  is_in_config = True
-                              else:
-                                  # Prefix Check for defaults
-                                  prefix = clean_path_no_idx + "/"
-                                  if any(k.startswith(prefix) for k in cd):
-                                      is_in_config = True
                          
                          is_configured_clean = is_in_config
                          
@@ -626,7 +622,6 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                             f"{parent_key}_{i}", 
                                             state_container, 
                                             xml_path=None,
-                                            config_visible=cv, 
                                             config_defaults=cd, 
                                             metadata=md,
                                             path_override=indexed_path
@@ -648,7 +643,7 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                             parent_key, 
                                             state_container, 
                                             current_path,
-                                            cv, cd, md
+                                            cd, md
                                         )
                                         if child_val is not None:
                                             # Store with qualified name
@@ -657,14 +652,14 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                      elif isinstance(particle, xmlschema.validators.XsdGroup):
                          if particle.min_occurs >= 1:
                              # Recurse for nested group
-                             nested_data = process_group(particle, parent_key, current_path, indent_level, cv, cd, md)
+                             nested_data = process_group(particle, parent_key, current_path, indent_level, cd, md)
                              group_data.update(nested_data)
                              
              return group_data
 
         # Start processing the top-level group
         # The top level content of a complex type is a Group (usually sequence)
-        children_data = process_group(group, key, current_path, 0, config_visible, config_defaults, metadata)
+        children_data = process_group(group, key, current_path, 0, config_defaults, metadata)
         
         if not children_data: return None
         return children_data
@@ -835,13 +830,12 @@ if default_target in product_groups:
 
 selected_group = st.sidebar.selectbox("Select Product Group", ["None"] + product_groups, index=default_ix)
 
-config_visible = None
 config_defaults = None
 config_envelope = None
 
 if selected_group != "None":
-    config_visible, config_defaults, config_envelope = load_config(selected_group)
-    if config_visible or config_defaults:
+    config_defaults, config_envelope = load_config(selected_group)
+    if config_defaults:
         st.sidebar.success(f"Loaded configuration for {selected_group}")
         
         # Display current YAML in main area
@@ -999,7 +993,6 @@ if 'BasicUDI' in target_scope:
             basic_udi_key_prefix, 
             data_collection_container, 
             basic_udi_path, 
-            config_visible, 
             config_defaults,
             metadata_csv
         )
@@ -1035,7 +1028,6 @@ if 'UDIDI' in target_scope:
                     group_key_prefix, 
                     data_collection_container, 
                     udidi_base_path,
-                    config_visible,
                     config_defaults,
                     metadata_csv
                 )
@@ -1347,8 +1339,14 @@ if submitted:
             if service_id_override == "DEVICE":
                  source_list_for_bulk = bulk_udi_values
             else:
-                 # If UDI_DI service, we use everything
-                 source_list_for_bulk = generated_udi_strings
+                 # If UDI_DI service
+                 if service_op_mode.startswith("POST"):
+                      # For POST, we assume the first record (min_udi) is the Primary UDI-DI linked to the Device
+                      # So we only generate the bulk (rest) for UDI-DI registration to avoid duplication.
+                      source_list_for_bulk = bulk_udi_values
+                 else:
+                      # For PATCH or other modes, we include everything by default
+                      source_list_for_bulk = generated_udi_strings
             
             for udi_val in source_list_for_bulk:
                 new_item = copy.deepcopy(template)

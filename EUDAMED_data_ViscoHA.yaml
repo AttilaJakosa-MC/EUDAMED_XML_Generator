@@ -1,8 +1,9 @@
-# Configuration for EUDAMED XML Generation - Product Group: ViscoHA
-visible_fields:
-  - MDRDevice/MDRBasicUDI/riskClass
-  - MDRDevice/MDRBasicUDI/model
-  - MDRDevice/MDRBasicUDI/MFActorCode
-  - MDRDevice/MDRUDIDIData/identifier/DICode
+# Configuration for EUDAMED XML Generation - Refactored
+# 'defaults' section defines both visibility (presence of key) and default values.
+
 defaults:
   MDRDevice/MDRBasicUDI/riskClass: CLASS_III
+  MDRDevice/MDRBasicUDI/model: null
+  MDRDevice/MDRBasicUDI/MFActorCode: null
+  MDRDevice/MDRUDIDIData/identifier/DICode: null
+envelope_settings: {}

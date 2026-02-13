@@ -2,32 +2,29 @@
 # 'defaults' section defines both visibility (presence of key) and default values.
 
 defaults:
-  MDRDevice/MDRBasicUDI/type: DEVICE
-  MDRDevice/MDRBasicUDI/riskClass: CLASS_IIB
-  MDRDevice/MDRBasicUDI/model: 877PAY
-  MDRDevice/MDRBasicUDI/identifier/DICode: 599302877PAYU9
+  MDRDevice/MDRBasicUDI/riskClass: CLASS_I
+  MDRDevice/MDRBasicUDI/model: Test-677TAV
+  MDRDevice/MDRBasicUDI/identifier/DICode: 599302677TAVTV
   MDRDevice/MDRBasicUDI/identifier/issuingEntityCode: GS1
-  MDRDevice/MDRBasicUDI/humanTissuesCells: false
   MDRDevice/MDRBasicUDI/animalTissuesCells: false
+  MDRDevice/MDRBasicUDI/humanTissuesCells: false
+  MDRDevice/MDRBasicUDI/MFActorCode: HU-MF-000026801
   MDRDevice/MDRBasicUDI/humanProductCheck: false
-  MDRDevice/MDRBasicUDI/IIb_implantable_exceptions: false
   MDRDevice/MDRBasicUDI/medicinalProductCheck: false
+  MDRDevice/MDRBasicUDI/type: DEVICE
   MDRDevice/MDRBasicUDI/active: false
   MDRDevice/MDRBasicUDI/administeringMedicine: false
-  MDRDevice/MDRBasicUDI/implantable: true
+  MDRDevice/MDRBasicUDI/implantable: false
   MDRDevice/MDRBasicUDI/measuringFunction: false
   MDRDevice/MDRBasicUDI/reusable: false
-  MDRDevice/MDRBasicUDI/MFActorCode: HU-MF-000026801
-  MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode: 0483
-  MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/certificateType: MDR_TYPE_EXAMINATION
-  MDRDevice/MDRUDIDIData/identifier/DICode: 05993029999996
+  MDRDevice/MDRUDIDIData/identifier/DICode: 05993026538013
   MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/status/code: ON_THE_MARKET
-  MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: 599302877PAYU9
+  MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: 599302677TAVTV
   MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
   MDRDevice/MDRUDIDIData/MDNCodes: P030102090201
   MDRDevice/MDRUDIDIData/productionIdentifier: BATCH_NUMBER SERIALISATION_NUMBER EXPIRATION_DATE
-  MDRDevice/MDRUDIDIData/referenceNumber: 05993029999996
+  MDRDevice/MDRUDIDIData/referenceNumber: 05993026538013
   MDRDevice/MDRUDIDIData/sterile: true
   MDRDevice/MDRUDIDIData/sterilization: false
   MDRDevice/MDRUDIDIData/numberOfReuses: 0
