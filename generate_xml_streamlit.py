@@ -1046,17 +1046,29 @@ else:
 
 st.markdown("---")
 
-# --- IFS Integration Controls ---
-use_ifs = st.toggle("Generate UDI-DI by IFS")
+# --- Data Source Controls ---
+data_source = st.radio("UDI-DI Source", ["Manual Form Entry", "IFS Database", "Sequence Generator"], horizontal=True)
+
+use_ifs = (data_source == "IFS Database") # Backward computability for filename logic below
+
 ifs_model = ""
 ifs_pcode = ""
+gen_start_code = ""
+gen_count = 1
 
-if use_ifs:
+if data_source == "IFS Database":
     col_ifs_1, col_ifs_2 = st.columns(2)
     with col_ifs_1:
         ifs_model = st.text_input("IFS Model", help="Model parameter for DB Query")
     with col_ifs_2:
         ifs_pcode = st.text_input("IFS PCode", help="Package Code parameter for DB Query")
+
+elif data_source == "Sequence Generator":
+    col_gen_1, col_gen_2 = st.columns(2)
+    with col_gen_1:
+        gen_start_code = st.text_input("Starting UDI-DI Base", help="Enter the GTIN base without the checksum digit.")
+    with col_gen_2:
+        gen_count = st.number_input("Count", min_value=1, value=10, help="Number of UDI-DIs to generate.")
 
 st.markdown("---")
 # Action Buttons in columns
@@ -1173,6 +1185,24 @@ def clean_xsi_type_name(element_name):
         return element_name.split('}')[-1]
     return element_name
 
+def calculate_mod10_checksum(number_str):
+    """Calculates the GS1/GTIN Modulo 10 Check Digit."""
+    if not number_str.isdigit():
+        return None
+    
+    digits = [int(d) for d in str(number_str)]
+    # Reverse to handle weighting from right to left
+    total = 0
+    reversed_digits = digits[::-1]
+    
+    for i, d in enumerate(reversed_digits):
+        weight = 3 if i % 2 == 0 else 1
+        total += d * weight
+        
+    nearest_10 = (total + 9) // 10 * 10 
+    check_digit = nearest_10 - total
+    return str(check_digit)
+
 if submitted:
     st.success("Generating XML...")
     
@@ -1188,10 +1218,47 @@ if submitted:
         
         elem.set(f"{{{namespaces['xsi']}}}type", f"{prefix}:{clean_type}")
 
-    # --- IFS Data Processing ---
-    final_udidi_list = udidi_data_list # Default
+    # --- Data Processing (IFS/Generator) ---
+    final_udidi_list = udidi_data_list # Default Manual
     
-    if use_ifs:
+    # helper to safely update DICode and ReferenceNumber
+    def update_udi_values(item_dict, udi_val):
+        if not isinstance(item_dict, dict): return
+        
+        # 1. Update Reference Number (direct child, varying namespaces possible)
+        # Iterate keys to find 'referenceNumber' regardless of namespace prefix
+        ref_num_key = None
+        for k in item_dict.keys():
+            if 'referenceNumber' in k: # e.g. 'udidi:referenceNumber' or just 'referenceNumber'
+                ref_num_key = k
+                break
+        
+        if ref_num_key:
+                item_dict[ref_num_key] = str(udi_val)
+        
+        # 2. Update DICode in identifier
+        # First find identifier key
+        ident_key = None
+        for k in item_dict.keys():
+            if 'identifier' in k and not 'basicUDIIdentifier' in k: # Distinct from basicUDIIdentifier
+                ident_key = k
+                break
+        
+        if ident_key and isinstance(item_dict[ident_key], dict):
+            ident_dict = item_dict[ident_key]
+            # Now look for DICode inside
+            di_code_key = None
+            for k in ident_dict.keys():
+                if 'DICode' in k:
+                    di_code_key = k
+                    break
+            
+            if di_code_key:
+                ident_dict[di_code_key] = str(udi_val)
+    
+    generated_udi_strings = [] # Flat list of UDI codes from source
+    
+    if data_source == "IFS Database":
         if not ifs_model or not ifs_pcode:
              st.error("Please provide Model and PCode for IFS generation.")
              st.stop()
@@ -1219,68 +1286,75 @@ if submitted:
         except Exception as e:
              st.warning(f"Sorting error: {e}. Using default order.")
              df_sorted = df
-             
-        min_record = df_sorted.iloc[0]
-        bulk_records = df_sorted.iloc[1:] if len(df_sorted) > 1 else pd.DataFrame()
         
-        # Helper to safely update DICode and ReferenceNumber
-        def update_udi_values(item_dict, udi_val):
-            if not isinstance(item_dict, dict): return
-            
-            # 1. Update Reference Number (direct child, varying namespaces possible)
-            # Iterate keys to find 'referenceNumber' regardless of namespace prefix
-            ref_num_key = None
-            for k in item_dict.keys():
-                if 'referenceNumber' in k: # e.g. 'udidi:referenceNumber' or just 'referenceNumber'
-                    ref_num_key = k
-                    break
-            
-            if ref_num_key:
-                 item_dict[ref_num_key] = str(udi_val)
-            
-            # 2. Update DICode in identifier
-            # First find identifier key
-            ident_key = None
-            for k in item_dict.keys():
-                if 'identifier' in k and not 'basicUDIIdentifier' in k: # Distinct from basicUDIIdentifier
-                    ident_key = k
-                    break
-            
-            if ident_key and isinstance(item_dict[ident_key], dict):
-                ident_dict = item_dict[ident_key]
-                # Now look for DICode inside
-                di_code_key = None
-                for k in ident_dict.keys():
-                    if 'DICode' in k:
-                        di_code_key = k
-                        break
-                
-                if di_code_key:
-                    ident_dict[di_code_key] = str(udi_val)
-                    
+        generated_udi_strings = df_sorted['udi_di'].tolist()
+        
+    elif data_source == "Sequence Generator":
+         if not gen_start_code:
+             st.error("Please provide a starting UDI-DI base.")
+             st.stop()
+             
+         try:
+             start_int = int(gen_start_code)
+         except:
+             st.error("Starting Base must be numeric.")
+             st.stop()
+             
+         with st.spinner("Generating Sequence..."):
+             count = int(gen_count)
+             for i in range(count):
+                  base = str(start_int + i)
+                  chk = calculate_mod10_checksum(base)
+                  if chk:
+                      generated_udi_strings.append(base + chk)
+                  else:
+                      st.warning(f"Could not calculate checksum for {base}")
+
+    if data_source in ["IFS Database", "Sequence Generator"]:
+        if not generated_udi_strings:
+             st.error("No UDI-DI codes generated/fetched.")
+             st.stop()
+             
+        min_udi_value = generated_udi_strings[0]
+        bulk_udi_values = generated_udi_strings[1:] if len(generated_udi_strings) > 1 else []
+        
+        # Apply to templates
         # 1. DEVICE / POST
         if service_op_mode.startswith("POST") and (service_id_override == "DEVICE" or post_type.startswith("Full")):
-              template = copy.deepcopy(udidi_data_list[0]) if udidi_data_list else {}
-              
-              update_udi_values(template, min_record['udi_di'])
+            template = copy.deepcopy(udidi_data_list[0]) if udidi_data_list else {}
+            
+            update_udi_values(template, min_udi_value)
 
-              final_udidi_list = [template] 
+            final_udidi_list = [template] 
         
         # 2. UDI_DI / POST or PATCH (Bulk Logic)
         elif (service_op_mode.startswith("POST") and service_id_override == "UDI_DI") or \
-             (service_op_mode.startswith("PATCH") and 'UDIDI' in target_scope):
-              
-              template = copy.deepcopy(udidi_data_list[0]) if udidi_data_list else {}
-              new_list = []
-              
-              for idx, row in bulk_records.iterrows():
-                   new_item = copy.deepcopy(template)
-                   
-                   update_udi_values(new_item, row['udi_di'])
-                   
-                   new_list.append(new_item)
-              
-              final_udidi_list = new_list
+            (service_op_mode.startswith("PATCH") and 'UDIDI' in target_scope):
+            
+            template = copy.deepcopy(udidi_data_list[0]) if udidi_data_list else {}
+            new_list = []
+            
+            # Note: For PATCH operations we typically just want to generate updates for these UDIs.
+            # If "Sequence Generator" is used for PATCH, we assume we are patching these generated UDIs.
+            
+            # We process ALL generated items (including the first one if we are in UDI_DI mode, or if min_udi was used for Device but we want bulk for others).
+            # Wait, if mode is UDI_DI POST, we use ALL generated strings. 
+            # If DEVICE POST, we used the first one for the Device, so bulk_udi_values are the REST.
+            
+            # Logic check:
+            source_list_for_bulk = []
+            if service_id_override == "DEVICE":
+                 source_list_for_bulk = bulk_udi_values
+            else:
+                 # If UDI_DI service, we use everything
+                 source_list_for_bulk = generated_udi_strings
+            
+            for udi_val in source_list_for_bulk:
+                new_item = copy.deepcopy(template)
+                update_udi_values(new_item, udi_val)
+                new_list.append(new_item)
+            
+            final_udidi_list = new_list
 
     generation_tasks = []
 
@@ -1481,6 +1555,8 @@ if submitted:
             model_val = str(ifs_model).strip() if 'ifs_model' in locals() and ifs_model else "NOMODEL"
             pcode_val = str(ifs_pcode).strip() if 'ifs_pcode' in locals() and ifs_pcode else "NOPCODE"
 
+            target_val = post_type if 'post_type' in locals() else "PATCH"
+            
             # Sanitization
             model_val = "".join([c for c in model_val if c.isalnum() or c in ('-','_')])
             pcode_val = "".join([c for c in pcode_val if c.isalnum() or c in ('-','_')])
