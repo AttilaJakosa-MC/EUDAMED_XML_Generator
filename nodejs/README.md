@@ -45,6 +45,20 @@ This tool generates EUDAMED XML files based on YAML configuration and XSD Schema
 | `UDI_DI` | `POST`, `PATCH` | UDI-DI registration or update. |
 | `BASIC_UDI` | `PATCH` | Basic UDI-DI updates. |
 
+### Multi-Entity Distribution Logic
+
+The tool filters and distributes data from the YAML configuration across the four primary scenarios to match the EUDAMED migration workflow:
+
+| Scenario | Service Type | Mode | Represented YAML Entities |
+| :--- | :--- | :--- | :--- |
+| **Initial Registration** | `DEVICE` | `POST` | **Index `[0]` Only**. Includes the `BasicUDI` and the first primary `UDI_DI` record. |
+| **Secondary Registration** | `UDI_DI` | `POST` | **Indices `[1], [2], ...`**. All secondary UDI-DI records (excluding index 0) generated as batch siblings. |
+| **UDI-DI Update** | `UDI_DI` | `PATCH` | **Indices `[0], [1], [2], ...`**. All specified UDI-DI records for batch modification. |
+| **Basic UDI Update** | `BASIC_UDI` | `PATCH` | The single `BasicUDI` branch (independent of UDI-DI indices). |
+
+#### Batch Behavior
+For the `UDI_DI` services (`POST` and `PATCH`), multiple entities are bundled into a single XML message. Each index in the YAML results in a sibling `<device:UDIDIData>` tag within the `<m:payload>` element.
+
 ## Logic
 
 - **Schema Resolution**: The tool parses the XSD to understand the structure. It automatically resolves recursive imports and merges namespaces.
