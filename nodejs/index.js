@@ -151,18 +151,37 @@ async function main() {
         try {
             let xmlObj = null;
             
-            if (options.mode === 'PATCH') {
-                if (target === 'BasicUDI') {
-                     // PATCH BasicUDI -> Root BasicUDI using MDRBasicUDIType
-                     // Config path: Push/payload/MDRDevice/MDRBasicUDI
-                     xmlObj = currentGenerator.generate('BasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
-                } else if (target === 'UDIDI') {
-                     // PATCH UDIDI -> Root UDIDIData using MDRUDIDIDataType
-                     // Config path: Push/payload/MDRDevice/MDRUDIDIData
-                     xmlObj = currentGenerator.generate('UDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
-                }
-                
-                // Wrap in Push Envelope manually since we bypassed 'Push' generation
+            // Determine Root Element based on Service ID and Mode
+            // DEVICE -> device:Device (MDRDevice)
+            // BASIC_UDI -> device:BasicUDI (MDRBasicUDI) - usually PATCH
+            // UDI-DI -> device:UDIDIData (MDRUDIDIData) - POST or PATCH?
+            
+            // Logic derived from user requests:
+            // DEVICE/POST -> Device
+            // BASIC_UDI/PATCH -> BasicUDI
+            // UDI-DI/POST -> UDIDIData (User says only UDI_DI block needed)
+            // UDI-DI/PATCH -> UDIDIData
+            
+            const serviceID = options.type === 'UDIDI' ? 'UDI-DI' : options.type;
+
+            if (serviceID === 'BASIC_UDI' || (options.mode === 'PATCH' && target === 'BasicUDI')) {
+                 // BasicUDI is the payload
+                 // Config path: Push/payload/MDRDevice/MDRBasicUDI
+                 xmlObj = currentGenerator.generate('BasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
+            } else if (serviceID === 'UDI-DI' || serviceID === 'UDI_DI' || (options.mode === 'PATCH' && target === 'UDIDI')) {
+                 // UDIDIData is the payload
+                 // Config path: Push/payload/MDRDevice/MDRUDIDIData
+                 xmlObj = currentGenerator.generate('UDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
+            } else if (serviceID === 'DEVICE') {
+                 // Full Device is the payload
+                 xmlObj = currentGenerator.generate('Push', 'Push');
+            } else {
+                 // Fallback to default Push generation (Device)
+                 xmlObj = currentGenerator.generate('Push', 'Push');
+            }
+            
+            // If we generated a fragmentary payload (not starting from Push), wrap it manually
+            if (serviceID !== 'DEVICE') { // Assuming DEVICE uses standard Push gen
                 if (xmlObj) {
                      // Need headers
                      const pushContent = {
@@ -173,7 +192,7 @@ async function main() {
                              'm:recipient': {
                                  'm:node': { 's:nodeActorCode': config['Push/recipient/node/nodeActorCode'] },
                                  'm:service': { 
-                                     's:serviceID': config['Push/recipient/service/serviceID'],
+                                     's:serviceID': serviceID,
                                      's:serviceOperation': options.mode 
                                  }
                              },
@@ -192,11 +211,8 @@ async function main() {
                      };
                 }
             } else {
-                // POST / Default
-                // Pass 'Push' as explicit startPath
-                xmlObj = currentGenerator.generate('Push', 'Push');
-
-                // Inject extracted namespaces into the generated root element for POST/Default
+                // For DEVICE/Push generation, allow standard flow but we might need to fix root namespaces if not already there
+                // Inject extracted namespaces into the generated root element for POST/Default (DEVICE)
                 if (xmlObj && extractedNamespaces) {
                     const rootKey = Object.keys(xmlObj)[0];
                     if (rootKey && xmlObj[rootKey] && typeof xmlObj[rootKey] === 'object') {
