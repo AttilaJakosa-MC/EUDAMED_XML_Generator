@@ -14,26 +14,52 @@ This tool generates EUDAMED XML files based on YAML configuration and XSD Schema
    npm install
    ```
 
-2. Run the generator:
+2. Run the generator for the 4 supported scenarios:
 
    ```bash
-   node index.js --config "path/to/config.yaml" --out "output" --type "BasicUDI" --mode "POST"
+   # Full Device Registration
+   node index.js --config "./EUDAMED_data_Lens_877PAY-test.yaml" --out "output" --type "DEVICE" --mode "POST"
+
+   # UDI-DI Registration (New)
+   node index.js --config "./EUDAMED_data_Lens_877PAY-test.yaml" --out "output" --type "UDI_DI" --mode "POST"
+
+   # UDI-DI Update (Update existing)
+   node index.js --config "./EUDAMED_data_Lens_877PAY-test.yaml" --out "output" --type "UDI_DI" --mode "PATCH"
+
+   # Basic UDI-DI Update
+   node index.js --config "./EUDAMED_data_Lens_877PAY-test.yaml" --out "output" --type "BASIC_UDI" --mode "PATCH"
    ```
 
    Arguments:
-   - `-c, --config`: Path to the YAML configuration file (e.g., `EUDAMED_data_Lens_877PAY.yaml`).
+   - `-c, --config`: Path to the YAML configuration file (default: `./EUDAMED_data_Lens_877PAY-test.yaml`).
    - `-s, --schema`: Path to `Message.xsd` (default: `../EUDAMED downloaded/XSD/service/Message.xsd`).
-   - `-o, --out`: Output directory.
-   - `--type`: Type of XML to generate: `BasicUDI`, `UDIDI`, or `All`.
-   - `--mode`: `POST` or `PATCH`.
+   - `-o, --out`: Output directory (default: `output`).
+   - `--type`: Type of XML to generate: `DEVICE`, `UDI_DI`, or `BASIC_UDI`. (Mandatory)
+   - `--mode`: Operation mode: `POST` or `PATCH`. (Default: `POST`)
+
+### Supported Combinations
+
+| Type | Mode | Description |
+| :--- | :--- | :--- |
+| `DEVICE` | `POST` | Full device registration (Bulk/Push). |
+| `UDI_DI` | `POST`, `PATCH` | UDI-DI registration or update. |
+| `BASIC_UDI` | `PATCH` | Basic UDI-DI updates. |
 
 ## Logic
 
-- The tool parses the XSD to understand the structure of the EUDAMED message.
-- It recursively traverses the structure starting from `Push`.
-- For each element, it checks the YAML configuration (under `defaults`) for a value at the corresponding path.
-- It validates the structure implicitly by following the XSD.
-- It generates XML files in the output directory.
+- **Schema Resolution**: The tool parses the XSD to understand the structure. It automatically resolves recursive imports and merges namespaces.
+- **Path Mapping**: It traverses the XSD and matches elements against flat keys in the YAML `defaults` section (e.g., `Push/payload/MDRDevice/...`).
+- **Optimization**: The generator skips schema branches that have no corresponding data in the configuration, significantly improving performance for large EUDAMED XSDs.
+- **Structural Fixes**:
+  - **Substitution**: Automatically handles abstract elements (e.g., replacing `MDRDevice` with `Device` and injecting `xsi:type`).
+  - **Sequencing**: Enforces strict XSD element ordering (Base types before extension types).
+  - **Header Support**: Generates fragmentary payloads (UDI_DI, BASIC_UDI) and wraps them in a compliant `m:Push` message with automated `messageID`, `correlationID`, and timestamp.
+  - **Metadata Handling**: Automatically strips versioning info (`version`, `state`) for `POST` operations to ensure clean registrations.
+
+## Output
+
+Generated files are saved in the output directory using the naming convention:
+`{TYPE}-{MODE}.xml` (e.g., `UDI_DI-POST.xml`).
 
 ## Validation
 
