@@ -1,7 +1,22 @@
+/**
+ * @file generator.js
+ * @description Provides the XMLGenerator class for mapping YAML configuration to XSD-compliant XML objects.
+ * Handles complex type inheritance, sequences, choices, and namespaces.
+ */
+
 const { XMLBuilder } = require('fast-xml-parser');
 const SchemaContext = require('./schema');
 
+/**
+ * XMLGenerator recursively traverses XSD definitions and matches them with configuration keys.
+ */
 class XMLGenerator {
+    /**
+     * @param {SchemaContext} schemaContext - Loaded schema registry.
+     * @param {Object} config - Flat map of paths to values (e.g., {"Push/payload/MDRDevice/model": "X"}).
+     * @param {Object} nsMap - Map of namespace URIs to prefixes.
+     * @param {Object} substitutions - Mapping for abstract elements (e.g., {"device:Device": "MDRDevice"}).
+     */
     constructor(schemaContext, config, nsMap = {}, substitutions = {}) {
         this.ctx = schemaContext;
         this.config = config;
@@ -10,7 +25,13 @@ class XMLGenerator {
         this.debug = true;
     }
 
-    // Main entry point
+    /**
+     * Main entry point to generate an XML object starting from a root element.
+     * @param {string} rootElementName - The element to start generation from.
+     * @param {string} startPath - The logical path in the config used as root.
+     * @param {string} filterPath - Optional path filter.
+     * @param {string} typeOverride - Force a specific type (used for xsi:type).
+     */
     generate(rootElementName, startPath = "Push", filterPath = null, typeOverride = null) {
         let rootEl = this.ctx.getElement(rootElementName);
         if (!rootEl) {
@@ -46,22 +67,31 @@ class XMLGenerator {
         if (content === null) return null;
 
         const result = {};
-        // If the processed element content is an object and contains attributes (starting with @_),
-        // we might want to ensure the root key handles them correctly but logic handles deeply.
         result[rootKey] = content;
         return result;
     }
 
+    /**
+     * Resolves a namespace URI to its configured prefix.
+     */
     getPrefix(ns) {
         if (!ns) return null;
         return this.nsMap[ns] || null;
     }
 
+    /**
+     * Processes an element definition, resolving its type and fetching data from config.
+     */
     processElement(elementDef, currentPath, filterPath) {
-        // Optimized: currentPath is passed fully constructed by caller
-        
-        // Config Check:
-        
+        // Filter Check: Prevent generation if path is outside the allowed filter
+        if (filterPath && !currentPath.startsWith(filterPath)) return null;
+
+        // Optimization: Skip schema branches that have no corresponding data in configuration.
+        // This significantly speeds up generation for large XSDs like EUDAMED.
+        if (!this.hasConfigPrefix(currentPath)) {
+            return null;
+        }
+
         // Determine type
         let typeName = elementDef['@_type'];
         let typeDef = null;
@@ -79,25 +109,20 @@ class XMLGenerator {
         }
 
         if (!typeDef) {
-            // Might be simple type (string) implicitly if no type declared? 
             const val = this.getValueFromConfig(currentPath);
             return val !== undefined ? val : null;
         }
 
         if (typeDef.builtIn) {
-            // It's a simple type like xs:string, xs:date
             const val = this.getValueFromConfig(currentPath);
             return val !== undefined ? val : null;
         }
 
         // Check if it is a SimpleType (enumeration, restriction)
         const isSimple = Object.keys(typeDef).some(k => k.includes('simpleType') || k.includes('restriction') || k.includes('simpleContent'));
-        // Note: simpleContent is complexType with simple content (attributes + text)
         
-        // If simply simpleType
         if (!typeDef.complexContent && (Object.keys(typeDef).some(k => k.includes('restriction') || k.includes('union') || k.includes('list')))) {
              const val = this.getValueFromConfig(currentPath);
-             // TODO: Validate value against constraints
              return val !== undefined ? val : null;
         }
         
@@ -105,6 +130,9 @@ class XMLGenerator {
         return this.processComplexType(typeDef, currentPath, filterPath);
     }
     
+    /**
+     * Processes a complexType, including base type extensions (inheritance).
+     */
     processComplexType(typeDef, currentPath, filterPath) {
         let result = {};
         
@@ -130,7 +158,6 @@ class XMLGenerator {
                 this.processAttributes(extension, currentPath, result);
 
                 // Process extension content (sequence/choice)
-                // Pass schema context to extension group
                 const extensionWithSchema = { ...extension, _schema: typeDef._schema };
                 const extInfo = this.processGroup(extensionWithSchema, currentPath, filterPath);
                 Object.assign(result, extInfo);
@@ -145,6 +172,9 @@ class XMLGenerator {
         return Object.keys(result).length > 0 ? result : null;
     }
 
+    /**
+     * Extracts attributes from schema definition and looks them up in config.
+     */
     processAttributes(parentDef, currentPath, resultObj) {
         const attributes = this.ctx.ensureArray(parentDef, 'attribute');
         attributes.forEach(attr => {
@@ -157,23 +187,19 @@ class XMLGenerator {
                 return;
             }
 
-            // Check config for attribute value
-            // Prefer attribute specific key (@name)
             let val = this.getValueFromConfig(`${currentPath}/@${name}`);
-            
-            // If not found, try simple key (name) but this is risky for attributes that share name with elements
-            // Only do fallback if no element conflict... but we can't easily know here.
-            
             if (val !== undefined) {
                 resultObj[`@_${name}`] = val;
             }
         });
     }
 
+    /**
+     * Processes sequences, choices, and all groups.
+     */
     processGroup(parentDef, currentPath, filterPath) {
         const result = {};
         
-        // Find sequence, choice, all
         const keys = Object.keys(parentDef);
         const sequence = keys.find(k => k.endsWith(':sequence') || k === 'sequence');
         const choice = keys.find(k => k.endsWith(':choice') || k === 'choice');
@@ -196,11 +222,6 @@ class XMLGenerator {
             if (ref && this.substitutions[ref]) {
                  console.log(`Substituting ${ref} -> ${this.substitutions[ref]}`);
                  ref = this.substitutions[ref];
-                 
-                 // If substitution is a simple name (no prefix), might need lookup in same context or global
-                 if (!ref.includes(':') && !this.ctx.getElement(ref) && this.ctx.types[ref]) {
-                     // Sometimes substitution targets a TYPE? No, element substitution targets ELEMENT.
-                 }
             }
 
             let elementDef = el;
@@ -215,7 +236,7 @@ class XMLGenerator {
                          elementDef = this.ctx.getElement(local);
                     }
                     if (!elementDef) {
-                        console.warn(`Definition not found for ref: ${ref}`); // Added Debug
+                        console.warn(`Definition not found for ref: ${ref}`);
                         return;
                     }
                 }
@@ -224,29 +245,24 @@ class XMLGenerator {
             
             if (!elName) return;
 
-            // Ensure inline elements have schema context from parent
             if (!elementDef._schema && parentDef._schema) {
                 elementDef = { ...elementDef, _schema: parentDef._schema };
             }
 
-             // Determine namespace for key
             const ns = elementDef['@_targetNamespace'] || (elementDef._schema ? elementDef._schema['@_targetNamespace'] : null);
             const prefix = this.getPrefix(ns);
             const key = prefix ? `${prefix}:${elName}` : elName;
 
-            // Handle maxOccurs="unbounded" -> Array
             const maxOccurs = el['@_maxOccurs'];
             const isArray = maxOccurs === 'unbounded' || parseInt(maxOccurs) > 1;
             
             if (isArray) {
-                // Look for array items in config (path[0], path[1]...)
                 const items = [];
                 let idx = 0;
                 while (true) {
                     let itemPath = `${currentPath}/${elName}[${idx}]`;
                     let isSingleton = false;
                     
-                    // Fallback to singleton path (no index) for first item if [0] not found
                     if (idx === 0 && !this.hasConfigPrefix(itemPath)) {
                         const singletonPath = `${currentPath}/${elName}`;
                         if (this.hasConfigPrefix(singletonPath)) {
@@ -262,7 +278,6 @@ class XMLGenerator {
                     if (childContent) {
                         items.push(childContent);
                     } else if (this.isMandatory(el)) {
-                         // Missing mandatory array item
                          break;
                     } else {
                         break; 

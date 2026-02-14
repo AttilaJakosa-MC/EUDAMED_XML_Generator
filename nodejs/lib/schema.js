@@ -1,12 +1,25 @@
+/**
+ * @file schema.js
+ * @description Provides the SchemaContext class for loading, parsing, and indexing XSD schemas.
+ * Uses fast-xml-parser to convert XML to JSON for easier traversal.
+ */
+
 const fs = require('fs');
 const path = require('path');
 const { XMLParser } = require('fast-xml-parser');
 
+/**
+ * Configure fast-xml-parser to preserve attributes.
+ */
 const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: "@_"
 });
 
+/**
+ * SchemaContext acts as a registry and lookup service for XSD components (elements, types, groups).
+ * It handles recursive loading of imports and includes.
+ */
 class SchemaContext {
     constructor(basePath) {
         this.basePath = basePath;
@@ -17,6 +30,10 @@ class SchemaContext {
         this.processedFiles = new Set();
     }
 
+    /**
+     * Recursively loads an XSD file and its referenced imports/includes.
+     * @param {string} filePath - Path to the root XSD file.
+     */
     loadSchema(filePath) {
         const fullPath = path.resolve(this.basePath, filePath);
         if (this.processedFiles.has(fullPath)) return;
@@ -32,7 +49,6 @@ class SchemaContext {
         
         // Find root xs:schema element
         // It might be 'xs:schema', 'xsd:schema', or just 'schema' depending on prefix.
-        // We need to handle namespaces loosely or check keys.
         const keys = Object.keys(json);
         const schemaKey = keys.find(k => k.endsWith(':schema') || k === 'schema');
         
@@ -108,6 +124,10 @@ class SchemaContext {
         });
     }
 
+    /**
+     * Extracts prefix-to-URI mappings from all loaded schemas.
+     * @returns {Object} Map of prefix -> namespace URI.
+     */
     getNamespaces() {
         // Collect all xmlns attributes from all loaded schemas
         let namespaces = {};
@@ -129,6 +149,11 @@ class SchemaContext {
         return namespaces;
     }
 
+    /**
+     * Helper to ensure a schema property is treated as an array even if it has a single item.
+     * @param {Object} root - The parent object.
+     * @param {string} keySuffix - The element name (e.g., 'element', 'attribute').
+     */
     ensureArray(root, keySuffix) {
         // keySuffix might be 'element', but in JSON it could be 'xs:element'
         const keys = Object.keys(root);
@@ -138,6 +163,10 @@ class SchemaContext {
         return Array.isArray(val) ? val : [val];
     }
     
+    /**
+     * Retrieves an element definition by name or reference.
+     * @param {string} name - Element name or prefix:name.
+     */
     getElement(name) {
         if (!name) return null;
         
@@ -153,28 +182,30 @@ class SchemaContext {
         return key ? this.elements[key] : null;
     }
 
+    /**
+     * Retrieves a group definition by name.
+     */
     getGroup(name) {
         if (!name) return null;
         if (this.groups[name]) return this.groups[name];
         
-        const localName = name.includes(':') ? name.split(':')[1] : name;
+        const localName = name.includes(':') ? name.split(':') [1] : name;
         const key = Object.keys(this.groups).find(k => k.endsWith('}' + localName) || k === localName);
         return key ? this.groups[key] : null;
     }
 
-
+    /**
+     * Retrieves a type definition (simple or complex) by name.
+     */
     getType(name) {
-        // Name might have prefix 'tns:Type'
-        if (name.includes(':')) {
-           // We need to resolve prefix to namespace. 
-           // This requires keeping track of xmlns definitions in the schema file where this type is referenced.
-           // This is complex in a flattened view. 
-           // Better approach: Pass context of *where* the reference was found.
-        }
         return this.types[name];
     }
     
-    // Simplification: Try to find by local name if prefix resolution fails
+    /**
+     * Specialized type lookup that attempts prefix resolution and falls back to local name.
+     * @param {string} name - Type name (e.g., 'tns:MyType').
+     * @param {Object} currentSchema - The schema context where the type reference was found.
+     */
     findType(name, currentSchema) {
          if (!name) return null;
          
