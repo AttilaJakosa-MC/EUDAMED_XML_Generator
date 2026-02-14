@@ -166,11 +166,11 @@ async function main() {
             if (serviceID === 'UDIDI' || serviceID === 'UDI-DI') serviceID = 'UDI_DI';
 
             if (serviceID === 'BASIC_UDI' || (options.mode === 'PATCH' && target === 'BasicUDI')) {
-                 // Use exact element name from MDRDevice sequence
-                 xmlObj = currentGenerator.generate('MDRBasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
+                 // Use EXACT element name from MessageType.xsd choice (BasicUDI)
+                 xmlObj = currentGenerator.generate('BasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
             } else if (serviceID === 'UDI_DI' || (options.mode === 'PATCH' && target === 'UDIDI')) {
-                 // Use exact element name from MDRDevice sequence
-                 xmlObj = currentGenerator.generate('MDRUDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
+                 // Use EXACT element name from MessageType.xsd choice (UDIDIData)
+                 xmlObj = currentGenerator.generate('UDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
             } else if (serviceID === 'DEVICE') {
                  // Full Device is the payload
                  xmlObj = currentGenerator.generate('Push', 'Push');
@@ -339,30 +339,45 @@ async function main() {
                     }
 
                     // Fix 3: Sequence Order
-                    if (key.endsWith('BasicUDI')) {
+                    if (key.endsWith('BasicUDI') || key.endsWith('UDIDIData')) {
                         const udi = obj[key];
                         if (udi && typeof udi === 'object') {
-                            // Define full sequence order based on inheritance hierarchy:
-                            // 1. BasicUDIType (Base)
-                            // 2. DeviceBasicUDIType (Extension)
-                            // 3. MDRBasicUDIType (Extension)
-                            
-                            const newUdi = {}; // Initialize new object for reordering
+                            const newUdi = {};
+                            let correctOrder = [];
 
-                            const correctOrder = [
-                                // BasicUDIType
-                                'riskClass', 'model', 'modelName', 'identifier', 'certificateLinks',
-                                // DeviceBasicUDIType
-                                'animalTissuesCells', 'ARActorCode', 'humanTissuesCells', 'MFActorCode', 'ARComments',
-                                'clinicalInvestigationLinks', 'deviceCertificateLinks',
-                                // MDRBasicUDIType
-                                'humanProductCheck', 'IIb_implantable_exceptions', 'medicinalProductCheck', 'specialDevice', 'type',
-                                // MDApplicablePropertiesGroup
-                                'active', 'administeringMedicine', 'implantable', 'measuringFunction', 'reusable'
-                            ];
+                            if (key.endsWith('BasicUDI')) {
+                                correctOrder = [
+                                    // Entity (Base)
+                                    'state', 'version', 'versionDate',
+                                    // BasicUDIType
+                                    'riskClass', 'model', 'modelName', 'identifier', 'certificateLinks',
+                                    // DeviceBasicUDIType
+                                    'animalTissuesCells', 'ARActorCode', 'humanTissuesCells', 'MFActorCode', 'ARComments',
+                                    'clinicalInvestigationLinks', 'deviceCertificateLinks',
+                                    // MDRBasicUDIType
+                                    'humanProductCheck', 'IIb_implantable_exceptions', 'medicinalProductCheck', 'specialDevice', 'type',
+                                    // MDApplicablePropertiesGroup
+                                    'active', 'administeringMedicine', 'implantable', 'measuringFunction', 'reusable'
+                                ];
+                            } else {
+                                // UDIDIData
+                                correctOrder = [
+                                    // Entity (Base)
+                                    'state', 'version', 'versionDate',
+                                    // UDIDIType
+                                    'identifier', 'status',
+                                    // UDIDIDataType
+                                    'additionalDescription', 'basicUDIIdentifier', 'MDNCodes', 'productionIdentifier',
+                                    'referenceNumber', 'secondaryIdentifier', 'sterile', 'sterilization', 'tradeNames', 'website',
+                                    'storageHandlingConditions', 'packages', 'criticalWarnings', 'substatuses',
+                                    // DeviceUDIDIDataType
+                                    'numberOfReuses', 'relatedUDILink', 'marketInfos', 'deviceMarking', 'baseQuantity', 'productDesignerActor',
+                                    // MDRUDIDIDataType
+                                    'annexXVINonMedicalDeviceTypes', 'annexXVIApplicable', 'latex', 'reprocessed'
+                                ];
+                            }
 
                             correctOrder.forEach(prop => {
-                                // Match property ending with name
                                 const propKey = Object.keys(udi).find(k => k.endsWith(`:${prop}`) || k === prop);
                                 if (propKey) {
                                     newUdi[propKey] = udi[propKey];
@@ -374,7 +389,6 @@ async function main() {
                             Object.assign(newUdi, udi);
                             obj[key] = newUdi;
                             
-                            // Continue recursion explicitly on the new object
                             recursiveFix(newUdi);
                             return;
                         }
