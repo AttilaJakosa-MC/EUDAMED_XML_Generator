@@ -1,3 +1,10 @@
+/**
+ * @file index.js
+ * @description Main entry point for the EUDAMED XML Generator.
+ * Handles CLI arguments, configuration loading, schema resolution, and orchestration
+ * of the XML generation and post-processing fixes.
+ */
+
 const fs = require('fs');
 const path = require('path');
 const { program } = require('commander');
@@ -7,14 +14,17 @@ const SchemaContext = require('./lib/schema');
 const XMLGenerator = require('./lib/generator');
 const crypto = require('crypto');
 
-// Initial NS_MAP with common overrides if needed, valid defaults.
-// We will augment this with extracted namespaces from schema.
+/**
+ * Initial Namespace Map for common EUDAMED/XSD prefixes.
+ * This is augmented dynamically from the loaded XSD schemas.
+ */
 const BASE_NS_MAP = {
     'http://www.w3.org/2001/XMLSchema-instance': 'xsi',
     'https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1': 'm',
     'https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1': 's'
 };
 
+// --- CLI CONFIGURATION ---
 program
   .option('-c, --config <path>', 'Path to YAML configuration file', 'EUDAMED_data_Lens_877PAY.yaml')
   .option('-s, --schema <path>', 'Path to XSD schema file', '../EUDAMED downloaded/XSD/service/Message.xsd')
@@ -27,6 +37,7 @@ program.parse(process.argv);
 const options = program.opts();
 
 // --- INPUT VALIDATION ---
+// Enforce mandatory parameters and valid service/mode combinations
 if (!options.type) {
     console.error('Error: --type parameter is required (DEVICE, UDI_DI, or BASIC_UDI)');
     process.exit(1);
@@ -48,7 +59,7 @@ if (!validModes.includes(mode)) {
     process.exit(1);
 }
 
-// Check valid combinations
+// Check valid EUDAMED business combinations
 const validCombinations = {
     'DEVICE': ['POST'],
     'UDI_DI': ['POST', 'PATCH'],
@@ -61,14 +72,17 @@ if (!validCombinations[normalizedType].includes(mode)) {
     process.exit(1);
 }
 
-// Update options with normalized values
+// Update options with normalized values for downstream consistency
 options.type = normalizedType;
 options.mode = mode;
 
+/**
+ * Main orchestration function.
+ */
 async function main() {
     console.log('--- EUDAMED XML Generator (Node.js) ---');
     
-    // 1. Load Config
+    // 1. LOAD CONFIGURATION
     if (!fs.existsSync(options.config)) {
         // Try relative to previous cwd if fail
          if (!fs.existsSync(path.resolve(__dirname, options.config))) {
@@ -81,41 +95,35 @@ async function main() {
     const configRaw = yaml.load(fs.readFileSync(options.config, 'utf8'));
     const config = configRaw.defaults || {};
     
-    // Header Auto-generation
-    // If config is missing these keys, generate random ones.
+    // Auto-generate unique identifiers if missing in the YAML
     if (!config['Push/messageID']) config['Push/messageID'] = crypto.randomUUID();
     if (!config['Push/correlationID']) config['Push/correlationID'] = crypto.randomUUID();
     if (!config['Push/creationDateTime']) config['Push/creationDateTime'] = new Date().toISOString();
     
-    // Recipient Hardcoding if missing (Common pattern)
+    // Standard recipient settings for EUDAMED B2B exchange
     if (!config['Push/recipient/node/nodeActorCode']) config['Push/recipient/node/nodeActorCode'] = 'EUDAMED';
     
-    // Recipient service setup
+    // Set service metadata based on CLI arguments
     if (!config['Push/recipient/service/serviceID']) config['Push/recipient/service/serviceID'] = options.type;
     if (!config['Push/recipient/service/serviceOperation']) config['Push/recipient/service/serviceOperation'] = options.mode;
     
     console.log(`Loaded configuration from ${options.config}`);
 
-    // 2. Load Schema
+    // 2. LOAD SCHEMA CONTEXT
     const schemaLoader = new SchemaContext(process.cwd());
     schemaLoader.loadSchema(options.schema);
     const extractedNamespaces = schemaLoader.getNamespaces();
     
-    // 3. Setup Generator
-    // Construct dynamic NS_MAP from extracted namespaces (URI -> Prefix)
-    // Preference given to BASE_NS_MAP
+    // 3. SETUP GENERATOR
+    // Merge base namespace prefixes with those found in the XSD files
     const nsMap = { ...BASE_NS_MAP };
     if (extractedNamespaces) {
         Object.entries(extractedNamespaces).forEach(([prefix, uri]) => {
-            // If the URI is NOT already mapped, add it.
             if (!nsMap[uri]) {
                  nsMap[uri] = prefix;
             }
         });
     }
-
-    // Also ensure the hardcoded ones from original map are covered if extraction failed or was incomplete?
-    // The previous hardcoded list had many. Let's trust the schema extraction now plus base overrides.
 
     const generator = new XMLGenerator(schemaLoader, config, nsMap);
     
@@ -123,52 +131,44 @@ async function main() {
         fs.mkdirSync(options.out, { recursive: true });
     }
 
-    // Define substitutions (Device abstract element -> MDRDevice concrete element)
-    // We assume MDRDevice is available in the schema context (loaded via imports)
-
-    // 4. Generate
+    // 4. GENERATION PHASE
     console.log(`Generating ${options.type} (${options.mode})...`);
     
-    // Use substitutions to force generation of concrete MDRDevice content
-    // Then post-processing will rename it back to Device with xsi:type
+    // Element mapping to handle abstract 'device:Device' in EUDAMED schema
     const substitutions = {
         'device:Device': 'MDRDevice'
     };
 
     const targetConfig = { ...config };
-    
-    // Re-init generator with config for this run
     const currentGenerator = new XMLGenerator(schemaLoader, targetConfig, nsMap, substitutions);
 
     try {
         let xmlObj = null;
         
-        // Determine Root Element based on Service ID and Mode
-        // DEVICE -> device:Device (MDRDevice)
-        // BASIC_UDI -> device:BasicUDI (MDRBasicUDI)
-        // UDI_DI -> device:UDIDIData (MDRUDIDIData)
-        
-        const serviceID = options.type; // Already normalized to 'DEVICE', 'UDI_DI', 'BASIC_UDI'
+        // Target specific payload fragments based on the EUDAMED service type
+        const serviceID = options.type;
 
         if (serviceID === 'BASIC_UDI') {
-             // Use EXACT element name from MessageType.xsd choice (BasicUDI)
+             // Generate MDRBasicUDI fragment and override type to allow patching
              xmlObj = currentGenerator.generate('BasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
         } else if (serviceID === 'UDI_DI') {
-             // Use EXACT element name from MessageType.xsd choice (UDIDIData)
+             // Generate MDRUDIDIData fragment
              xmlObj = currentGenerator.generate('UDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
         } else if (serviceID === 'DEVICE') {
-             // Full Device is the payload
+             // Generate full Push message (Bulk registration)
              xmlObj = currentGenerator.generate('Push', 'Push');
         }
         
-        // If we generated a fragmentary payload (not starting from Push), wrap it manually
+        // 5. WRAPPING (for fragmentary payloads)
+        // If the service is not 'DEVICE' (full registration), we wrap the generated fragment
+        // in a standard 'm:Push' envelope with corrected headers.
         if (serviceID !== 'DEVICE') { 
             if (xmlObj) {
-                     // Need headers - Order matters for XSD validation!
                      const pushContent = {
                              '@_version': '3.0.25'
                      };
                      
+                     // Header ordering is critical for schema validation
                      if (config['Push/conversationID']) pushContent['m:conversationID'] = config['Push/conversationID'];
                      pushContent['m:correlationID'] = config['Push/correlationID'];
                      pushContent['m:creationDateTime'] = config['Push/creationDateTime'];
@@ -180,7 +180,6 @@ async function main() {
                      if (config['Push/recipient/node/nodeID']) {
                          recipientNode['s:nodeID'] = config['Push/recipient/node/nodeID'];
                      } else if (serviceID !== 'DEVICE') {
-                         // Keep the standard default for EUDAMED node if not DEVICE mode
                          recipientNode['s:nodeID'] = 'eDelivery:EUDAMED';
                      }
 
@@ -199,7 +198,7 @@ async function main() {
                      
                      pushContent['m:payload'] = xmlObj;
                      
-                     // Sender block
+                     // Sender block initialization
                      const senderNode = {};
                      if (config['Push/sender/node/nodeActorCode']) {
                          senderNode['s:nodeActorCode'] = config['Push/sender/node/nodeActorCode'];
@@ -216,7 +215,7 @@ async function main() {
                          }
                      };
 
-                     // Inject extracted namespaces dynamically
+                     // Dynamic namespace injection into the Push element
                      if (extractedNamespaces) {
                          Object.entries(extractedNamespaces).forEach(([prefix, uri]) => {
                              pushContent[`@_xmlns:${prefix}`] = uri;
@@ -228,8 +227,7 @@ async function main() {
                      };
                 }
             } else {
-                // For DEVICE/Push generation, allow standard flow but we might need to fix root namespaces if not already there
-                // Inject extracted namespaces into the generated root element for POST/Default (DEVICE)
+                // For DEVICE registrations, inject namespaces directly into the root generated object
                 if (xmlObj && extractedNamespaces) {
                     const rootKey = Object.keys(xmlObj)[0];
                     if (rootKey && xmlObj[rootKey] && typeof xmlObj[rootKey] === 'object') {
@@ -246,16 +244,17 @@ async function main() {
                 return;
             }
 
-            // --- POST-PROCESSING FIXES ---
-            // 1. Rename 'MDRDevice' to 'Device' and add xsi:type
-            // 2. Ensure 'sender' has 'service'
-            // 3. Fix property order for BasicUDI (schema requires specific sequence)
+            // --- 6. POST-PROCESSING FIXES ---
+            // This function handles structural fixes that are difficult to express in the recursive generator:
+            // - Substitution of abstract elements (MDRDevice -> Device with xsi:type)
+            // - Mandatory element ordering (Base fields before extensions)
+            // - Removal of versioning info for POST operations
             
             function recursiveFix(obj) {
                 if (!obj || typeof obj !== 'object') return;
                 
                 Object.keys(obj).forEach(key => {
-                    // Fix 0: Remove version info for POST services (schemas allow 0 minOccurs, usually not allowed/needed in POST)
+                    // Fix: Remove internal metadata versioning for initial POST registrations
                     if (options.mode === 'POST') {
                         const localKey = key.includes(':') ? key.split(':')[1] : key;
                         if (['version', 'state', 'versionDate'].includes(localKey)) {
@@ -264,72 +263,56 @@ async function main() {
                         }
                     }
 
-                    // Fix 1: Root Element Substitution
+                    // Fix: Element Substitution for Device hierarchy
                     if (key.endsWith('MDRDevice')) {
                         const val = obj[key];
-                        // Prefix might vary, but let's assume 'device' or matching prefix
                         const prefix = key.split(':')[0];
                         const newKey = prefix && prefix !== key ? `${prefix}:Device` : 'Device';
                         
-                        // Handle Array vs Object for unbounded elements
                         const items = Array.isArray(val) ? val : [val];
                         
                         items.forEach(item => {
                             if (item && typeof item === 'object') {
-                                // Explicitly remove any existing type (unlikely but safe)
                                 if (item['@_xsi:type']) delete item['@_xsi:type'];
-                                
-                                // Set specific type
                                 item['@_xsi:type'] = `${prefix || 'device'}:MDRDeviceType`;
-                                
                                 recursiveFix(item);
                             }
                         });
                         
-                        // Force assignment - although mutate-in-place works for objects
                         obj[newKey] = Array.isArray(val) ? val : val; 
                         delete obj[key];
                         return; 
                     }
                     
-                    // Fix 2: Sender Service
+                    // Fix: Ensure Sender node has its mandatory Service block
                     if (key.endsWith('sender')) {
-                        console.log('DEBUG: Found sender key:', key);
                         const sender = obj[key];
-                        // Ensure sender has service block using 'm:service' not 's:service' (element mismatch fix)
                         const hasService = Object.keys(sender).some(k => k.endsWith('service') && !k.endsWith('erviceOperation') && !k.endsWith('erviceID'));
                         
-                        console.log('DEBUG: sender keys:', Object.keys(sender));
-
                         if (!hasService && typeof sender === 'object') {
                              sender['m:service'] = {
-                                's:serviceID': options.type, // Map input type directly to Service ID
+                                's:serviceID': options.type,
                                 's:serviceOperation': options.mode
-                                // Namespace s is usually at root, but can be here if needed
                             };
-                            // If we generated 's:service' before, remove it if it exists and is wrong
                             if (sender['s:service']) delete sender['s:service'];
                         } else if (sender['s:service']) {
-                             console.log('DEBUG: Renaming s:service to m:service');
-                             // Correct existing bad key s:service -> m:service
                              sender['m:service'] = sender['s:service'];
-                             
-                             // Overwrite service ID with input type
                              sender['m:service']['s:serviceID'] = options.type;
-
                              delete sender['s:service'];
                         } else if (sender['service']) {
                             // If it exists as 'service', rename to 'm:service'
                             sender['m:service'] = sender['service'];
                             
-                             // Overwrite service ID with input type
-                             sender['m:service']['s:serviceID'] = options.type;
+                            // Overwrite service ID with input type
+                            sender['m:service']['s:serviceID'] = options.type;
 
                             delete sender['service'];
                         }
                     }
 
-                    // Fix 3: Sequence Order
+                    // Fix: SEQUENCE ORDERING
+                    // EUDAMED XSD requires elements in a specific order (base before extension).
+                    // This logic maintains the correct sequence for UDI types.
                     if (key.endsWith('BasicUDI') || key.endsWith('UDIDIData')) {
                         const udi = obj[key];
                         if (udi && typeof udi === 'object') {
@@ -338,36 +321,37 @@ async function main() {
 
                             if (key.endsWith('BasicUDI')) {
                                 correctOrder = [
-                                    // Entity (Base)
+                                    // Entity.xsd (Base)
                                     'state', 'version', 'versionDate',
-                                    // BasicUDIType
+                                    // BasicUDIType.xsd
                                     'riskClass', 'model', 'modelName', 'identifier', 'certificateLinks',
-                                    // DeviceBasicUDIType
+                                    // DeviceBasicUDIType.xsd
                                     'animalTissuesCells', 'ARActorCode', 'humanTissuesCells', 'MFActorCode', 'ARComments',
                                     'clinicalInvestigationLinks', 'deviceCertificateLinks',
-                                    // MDRBasicUDIType
+                                    // MDRBasicUDIType.xsd
                                     'humanProductCheck', 'IIb_implantable_exceptions', 'medicinalProductCheck', 'specialDevice', 'type',
-                                    // MDApplicablePropertiesGroup
+                                    // MDApplicablePropertiesGroup.xsd
                                     'active', 'administeringMedicine', 'implantable', 'measuringFunction', 'reusable'
                                 ];
                             } else {
-                                // UDIDIData
+                                // UDIDIData Sequence
                                 correctOrder = [
-                                    // Entity (Base)
+                                    // Entity.xsd (Base)
                                     'state', 'version', 'versionDate',
-                                    // UDIDIType
+                                    // UDIDIType.xsd
                                     'identifier', 'status',
-                                    // UDIDIDataType
+                                    // UDIDIDataType.xsd
                                     'additionalDescription', 'basicUDIIdentifier', 'MDNCodes', 'productionIdentifier',
                                     'referenceNumber', 'secondaryIdentifier', 'sterile', 'sterilization', 'tradeNames', 'website',
                                     'storageHandlingConditions', 'packages', 'criticalWarnings', 'substatuses',
-                                    // DeviceUDIDIDataType
+                                    // DeviceUDIDIDataType.xsd
                                     'numberOfReuses', 'relatedUDILink', 'marketInfos', 'deviceMarking', 'baseQuantity', 'productDesignerActor',
-                                    // MDRUDIDIDataType
+                                    // MDRUDIDIDataType.xsd
                                     'annexXVINonMedicalDeviceTypes', 'annexXVIApplicable', 'latex', 'reprocessed'
                                 ];
                             }
 
+                            // Re-insert properties into a new object in the specified order
                             correctOrder.forEach(prop => {
                                 const propKey = Object.keys(udi).find(k => k.endsWith(`:${prop}`) || k === prop);
                                 if (propKey) {
@@ -376,7 +360,7 @@ async function main() {
                                 }
                             });
                             
-                            // Add remaining
+                            // Append any remaining/dynamic properties (e.g., xsi:type)
                             Object.assign(newUdi, udi);
                             obj[key] = newUdi;
                             
@@ -385,14 +369,15 @@ async function main() {
                         }
                     }
                     
-                    // Recurse
+                    // Recursive call for nested structures
                     if (obj[key]) recursiveFix(obj[key]);
                 });
             }
             
+            // Execute post-processing
             recursiveFix(xmlObj);
 
-            // Build XML String
+            // 7. XML BUILDING
             const builder = new XMLBuilder({
                 ignoreAttributes: false,
                 format: true,
@@ -400,17 +385,12 @@ async function main() {
                 attributeNamePrefix: "@_" 
             });
             
-            // Debug: Check if attributes are present in final object
-            // Log payload structure deeply
-            if (options.mode === 'POST' && options.type === 'BASIC_UDI') {
-                console.log('DEBUG: Full Push structure before build:', JSON.stringify(xmlObj, null, 2));
-            }
-
             const xmlContent = builder.build(xmlObj);
             console.log(`--- Generated XML Content (${options.type}) ---`);
-            console.log(xmlContent.substring(0, 1000)); // Log first 1000 chars
+            console.log(xmlContent.substring(0, 1000));
             
-            // Use CLI type for filename as requested (e.g. DEVICE-POST.xml)
+            // 8. FINAL OUTPUT
+            // Generate filename based on type and mode (e.g., UDI_DI-POST.xml)
             const safeType = options.type.replace(/[^a-zA-Z0-9_\-]/g, '');
             const fileName = `${safeType}-${options.mode}.xml`;
             const outPath = path.join(options.out, fileName);
@@ -424,4 +404,5 @@ async function main() {
         }
 }
 
+// Global error handler for the main execution pipeline
 main().catch(err => console.error(err));
