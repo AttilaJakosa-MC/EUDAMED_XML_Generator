@@ -119,22 +119,6 @@ async function main() {
 
     const generator = new XMLGenerator(schemaLoader, config, nsMap);
     
-    // Direct mapping: The user provides the TYPE (Service ID) directly.
-    // e.g., 'DEVICE' (for BasicUDI POST), 'UDI-DI' (for UDI POST), 'BASIC_UDI' (for BasicUDI PATCH)
-    // We map this to our internal generation targets.
-    
-    let internalTarget = 'BasicUDI'; // Default fallback
-    if (options.type === 'UDI-DI' || options.type === 'UDI_DI') {
-        internalTarget = 'UDIDI';
-    } else if (options.type === 'DEVICE' || options.type === 'BASIC_UDI') {
-        internalTarget = 'BasicUDI'; // DEVICE usually implies BasicUDI context in simple mode
-    } else {
-        // Fallback for direct internal names if used
-        internalTarget = options.type;
-    }
-
-    const targets = [internalTarget];
-    
     if (!fs.existsSync(options.out)) {
         fs.mkdirSync(options.out, { recursive: true });
     }
@@ -143,80 +127,43 @@ async function main() {
     // We assume MDRDevice is available in the schema context (loaded via imports)
 
     // 4. Generate
-    for (const target of targets) {
-        console.log(`Generating ${target} from input type '${options.type}' (${options.mode})...`);
-        
-        // Use substitutions to force generation of concrete MDRDevice content
-        // Then post-processing will rename it back to Device with xsi:type
-        const substitutions = {
-            'device:Device': 'MDRDevice'
-        };
+    console.log(`Generating ${options.type} (${options.mode})...`);
+    
+    // Use substitutions to force generation of concrete MDRDevice content
+    // Then post-processing will rename it back to Device with xsi:type
+    const substitutions = {
+        'device:Device': 'MDRDevice'
+    };
 
-        // Config filtering to isolate payloads
-        // optimization: For 'BasicUDI', we generally want MDRDevice which might include UDIDI data for a Full Device Post.
-        // We will only strictly filter if the user explicitly requested a split (not implemented here) or if we want to enforce separation.
-        // Given the user feedback, we'll allow UDIDI data in BasicUDI generation if present in config.
+    const targetConfig = { ...config };
+    
+    // Re-init generator with config for this run
+    const currentGenerator = new XMLGenerator(schemaLoader, targetConfig, nsMap, substitutions);
+
+    try {
+        let xmlObj = null;
         
-        const targetConfig = { ...config };
+        // Determine Root Element based on Service ID and Mode
+        // DEVICE -> device:Device (MDRDevice)
+        // BASIC_UDI -> device:BasicUDI (MDRBasicUDI)
+        // UDI_DI -> device:UDIDIData (MDRUDIDIData)
         
-        /* 
-           Disabled filtering to allow full Device payloads.
-           The generator will only generate what is in the config map.
-           If the user supplies config for UDIDI, it will appear in the output if the Schema allows it (MDRDevice allows both).
-        */
-        if (target === 'BasicUDI' && false) {
-             // ... kept for reference but disabled
+        const serviceID = options.type; // Already normalized to 'DEVICE', 'UDI_DI', 'BASIC_UDI'
+
+        if (serviceID === 'BASIC_UDI') {
+             // Use EXACT element name from MessageType.xsd choice (BasicUDI)
+             xmlObj = currentGenerator.generate('BasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
+        } else if (serviceID === 'UDI_DI') {
+             // Use EXACT element name from MessageType.xsd choice (UDIDIData)
+             xmlObj = currentGenerator.generate('UDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
+        } else if (serviceID === 'DEVICE') {
+             // Full Device is the payload
+             xmlObj = currentGenerator.generate('Push', 'Push');
         }
         
-        /*
-        if (target === 'UDIDI') {
-            // Remove BasicUDI keys
-            Object.keys(targetConfig).forEach(k => {
-                if (k.includes('/MDRBasicUDI') || k.includes('/MDRBasicUDI/')) {
-                    delete targetConfig[k];
-                }
-            });
-        }
-        */
-        
-        // Re-init generator with filtered config for this run
-        const currentGenerator = new XMLGenerator(schemaLoader, targetConfig, nsMap, substitutions);
-
-        try {
-            let xmlObj = null;
-            
-            // Determine Root Element based on Service ID and Mode
-            // DEVICE -> device:Device (MDRDevice)
-            // BASIC_UDI -> device:BasicUDI (MDRBasicUDI) - usually PATCH
-            // UDI-DI -> device:UDIDIData (MDRUDIDIData) - POST or PATCH?
-            
-            // Logic derived from user requests:
-            // DEVICE/POST -> Device
-            // BASIC_UDI/PATCH -> BasicUDI
-            // UDI_DI/POST -> UDIDIData (User says only UDI_DI block needed)
-            // UDI_DI/PATCH -> UDIDIData
-            
-            let serviceID = options.type.toUpperCase();
-            if (serviceID === 'BASICUDI' || serviceID === 'BASIC-UDI') serviceID = 'BASIC_UDI';
-            if (serviceID === 'UDIDI' || serviceID === 'UDI-DI') serviceID = 'UDI_DI';
-
-            if (serviceID === 'BASIC_UDI' || (options.mode === 'PATCH' && target === 'BasicUDI')) {
-                 // Use EXACT element name from MessageType.xsd choice (BasicUDI)
-                 xmlObj = currentGenerator.generate('BasicUDI', 'Push/payload/MDRDevice/MDRBasicUDI', null, 'basicudi:MDRBasicUDIType');
-            } else if (serviceID === 'UDI_DI' || (options.mode === 'PATCH' && target === 'UDIDI')) {
-                 // Use EXACT element name from MessageType.xsd choice (UDIDIData)
-                 xmlObj = currentGenerator.generate('UDIDIData', 'Push/payload/MDRDevice/MDRUDIDIData', null, 'udidi:MDRUDIDIDataType');
-            } else if (serviceID === 'DEVICE') {
-                 // Full Device is the payload
-                 xmlObj = currentGenerator.generate('Push', 'Push');
-            } else {
-                 // Fallback to default Push generation (Device)
-                 xmlObj = currentGenerator.generate('Push', 'Push');
-            }
-            
-            // If we generated a fragmentary payload (not starting from Push), wrap it manually
-            if (serviceID !== 'DEVICE') { // Assuming DEVICE uses standard Push gen
-                if (xmlObj) {
+        // If we generated a fragmentary payload (not starting from Push), wrap it manually
+        if (serviceID !== 'DEVICE') { 
+            if (xmlObj) {
                      // Need headers - Order matters for XSD validation!
                      const pushContent = {
                              '@_version': '3.0.25'
@@ -295,8 +242,8 @@ async function main() {
             }
             
             if (!xmlObj) {
-                console.warn(`No content generated for ${target}. Check config and schema.`);
-                continue;
+                console.warn(`No content generated for ${options.type}. Check config and schema.`);
+                return;
             }
 
             // --- POST-PROCESSING FIXES ---
@@ -455,12 +402,12 @@ async function main() {
             
             // Debug: Check if attributes are present in final object
             // Log payload structure deeply
-            if (options.mode === 'POST' && target === 'BasicUDI') {
+            if (options.mode === 'POST' && options.type === 'BASIC_UDI') {
                 console.log('DEBUG: Full Push structure before build:', JSON.stringify(xmlObj, null, 2));
             }
 
             const xmlContent = builder.build(xmlObj);
-            console.log(`--- Generated XML Content (${target}) ---`);
+            console.log(`--- Generated XML Content (${options.type}) ---`);
             console.log(xmlContent.substring(0, 1000)); // Log first 1000 chars
             
             // Use CLI type for filename as requested (e.g. DEVICE-POST.xml)
@@ -473,9 +420,8 @@ async function main() {
             console.log(`Preview: ${xmlContent.substring(0, 200)}...`);
             
         } catch (err) {
-            console.error(`Error generating ${target}:`, err);
+            console.error(`Error generating ${options.type}:`, err);
         }
-    }
 }
 
 main().catch(err => console.error(err));
