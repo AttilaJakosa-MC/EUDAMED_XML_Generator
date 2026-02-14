@@ -1,7 +1,7 @@
 <m:Push version="3.0.25">
-  <m:messageID>087f3bc9-7523-4409-b600-13047af18546</m:messageID>
-  <m:correlationID>705e134d-0653-4ea0-86a5-b05c5cdc1022</m:correlationID>
-  <m:creationDateTime>2026-02-14T09:46:42.043Z</m:creationDateTime>
+  <m:messageID>206cee40-58e1-49b0-b1d6-9359adc16147</m:messageID>
+  <m:correlationID>47c24b41-7f0b-4802-91ea-28601c36bbf7</m:correlationID>
+  <m:creationDateTime>2026-02-14T10:03:39.992Z</m:creationDateTime>
   <m:recipient>
     <m:node>
       <s:nodeActorCode>EUDAMED</s:nodeActorCode>
@@ -15,10 +15,10 @@
     <device:BasicUDI xsi:type="basicudi:MDRBasicUDIType">
       <basicudi:riskClass>CLASS_IIB</basicudi:riskClass>
       <basicudi:identifier>
-        <commondi:DICode>599302877PAYU9</commondi:DICode>
+        <commondi:DICode>599302877PAXU7</commondi:DICode>
         <commondi:issuingEntityCode>GS1</commondi:issuingEntityCode>
       </basicudi:identifier>
-      <basicudi:model>877PAY</basicudi:model>
+      <basicudi:model>877PAY-Test</basicudi:model>
       <basicudi:animalTissuesCells>false</basicudi:animalTissuesCells>
       <basicudi:humanTissuesCells>false</basicudi:humanTissuesCells>
       <basicudi:MFActorCode>HU-MF-000026801</basicudi:MFActorCode>

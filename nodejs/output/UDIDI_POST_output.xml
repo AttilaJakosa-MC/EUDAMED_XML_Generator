@@ -1,7 +1,7 @@
 <m:Push version="3.0.25">
-  <m:correlationID>4779a916-b9a3-4faa-9bc1-5fa7987d45af</m:correlationID>
-  <m:creationDateTime>2026-02-14T09:31:14.163Z</m:creationDateTime>
-  <m:messageID>d948c16b-3bbd-41d2-b111-7882a614eae3</m:messageID>
+  <m:correlationID>ef4acc6d-afe8-4c42-9456-643d0fc06250</m:correlationID>
+  <m:creationDateTime>2026-02-14T10:01:29.343Z</m:creationDateTime>
+  <m:messageID>a6f28db6-3e55-4839-96be-c17535c3ce36</m:messageID>
   <m:recipient>
     <m:node>
       <s:nodeActorCode>EUDAMED</s:nodeActorCode>
@@ -16,10 +16,10 @@
       <device:MDRBasicUDI>
         <basicudi:riskClass>CLASS_IIB</basicudi:riskClass>
         <basicudi:identifier>
-          <commondi:DICode>599302877PAYU9</commondi:DICode>
+          <commondi:DICode>599302877PAXU7</commondi:DICode>
           <commondi:issuingEntityCode>GS1</commondi:issuingEntityCode>
         </basicudi:identifier>
-        <basicudi:model>877PAY</basicudi:model>
+        <basicudi:model>877PAY-Test</basicudi:model>
         <basicudi:animalTissuesCells>false</basicudi:animalTissuesCells>
         <basicudi:humanTissuesCells>false</basicudi:humanTissuesCells>
         <basicudi:MFActorCode>HU-MF-000026801</basicudi:MFActorCode>
@@ -41,19 +41,19 @@
       </device:MDRBasicUDI>
       <device:MDRUDIDIData>
         <udidi:identifier>
-          <commondi:DICode>05993029999996</commondi:DICode>
+          <commondi:DICode>05993029999903</commondi:DICode>
           <commondi:issuingEntityCode>GS1</commondi:issuingEntityCode>
         </udidi:identifier>
         <udidi:status>
           <commondi:code>ON_THE_MARKET</commondi:code>
         </udidi:status>
         <udidi:basicUDIIdentifier>
-          <commondi:DICode>599302877PAYU9</commondi:DICode>
+          <commondi:DICode>599302877PAXU7</commondi:DICode>
           <commondi:issuingEntityCode>GS1</commondi:issuingEntityCode>
         </udidi:basicUDIIdentifier>
         <udidi:MDNCodes>P030102090201</udidi:MDNCodes>
         <udidi:productionIdentifier>BATCH_NUMBER SERIALISATION_NUMBER EXPIRATION_DATE</udidi:productionIdentifier>
-        <udidi:referenceNumber>05993029999996</udidi:referenceNumber>
+        <udidi:referenceNumber>05993029999903</udidi:referenceNumber>
         <udidi:sterile>true</udidi:sterile>
         <udidi:sterilization>false</udidi:sterilization>
         <udidi:numberOfReuses>0</udidi:numberOfReuses>
