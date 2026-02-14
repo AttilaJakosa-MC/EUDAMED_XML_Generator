@@ -273,7 +273,16 @@ async function main() {
                 if (!obj || typeof obj !== 'object') return;
                 
                 Object.keys(obj).forEach(key => {
-                        // Fix 1: Root Element Substitution
+                    // Fix 0: Remove version info for POST services (schemas allow 0 minOccurs, usually not allowed/needed in POST)
+                    if (options.mode === 'POST') {
+                        const localKey = key.includes(':') ? key.split(':')[1] : key;
+                        if (['version', 'state', 'versionDate'].includes(localKey)) {
+                            delete obj[key];
+                            return;
+                        }
+                    }
+
+                    // Fix 1: Root Element Substitution
                     if (key.endsWith('MDRDevice')) {
                         const val = obj[key];
                         // Prefix might vary, but let's assume 'device' or matching prefix
