@@ -23,14 +23,14 @@ defaults:
   Push/payload/MDRDevice/MDRBasicUDI/implantable: false
   Push/payload/MDRDevice/MDRBasicUDI/measuringFunction: false
   Push/payload/MDRDevice/MDRBasicUDI/reusable: false
-  Push/payload/MDRDevice/MDRUDIDIData/identifier/DICode: 05993026538013
+  Push/payload/MDRDevice/MDRUDIDIData/identifier/DICode: "05993026538013"
   Push/payload/MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   Push/payload/MDRDevice/MDRUDIDIData/status/code: ON_THE_MARKET
-  Push/payload/MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: 599302677TAVTV
+  Push/payload/MDRDevice/MDRUDIDIData/basicUDIIdentifier/DICode: "599302677TAVTV"
   Push/payload/MDRDevice/MDRUDIDIData/basicUDIIdentifier/issuingEntityCode: GS1
   Push/payload/MDRDevice/MDRUDIDIData/MDNCodes: P030102090201
   Push/payload/MDRDevice/MDRUDIDIData/productionIdentifier: BATCH_NUMBER SERIALISATION_NUMBER EXPIRATION_DATE
-  Push/payload/MDRDevice/MDRUDIDIData/referenceNumber: 05993026538013
+  Push/payload/MDRDevice/MDRUDIDIData/referenceNumber: "05993026538013"
   Push/payload/MDRDevice/MDRUDIDIData/sterile: true
   Push/payload/MDRDevice/MDRUDIDIData/sterilization: false
   Push/payload/MDRDevice/MDRUDIDIData/numberOfReuses: 0
