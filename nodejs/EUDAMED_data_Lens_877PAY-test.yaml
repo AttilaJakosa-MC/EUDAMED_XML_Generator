@@ -25,6 +25,7 @@ defaults:
   Push/payload/MDRDevice/MDRBasicUDI/MFActorCode: HU-MF-000026801
   Push/payload/MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode: "0483"
   Push/payload/MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/certificateType: MDR_TYPE_EXAMINATION
+  
   Push/payload/MDRDevice/MDRUDIDIData[0]/version: 2
   Push/payload/MDRDevice/MDRUDIDIData[0]/identifier/DICode: "05993029999903"
   Push/payload/MDRDevice/MDRUDIDIData[0]/identifier/issuingEntityCode: GS1
