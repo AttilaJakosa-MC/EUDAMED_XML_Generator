@@ -370,7 +370,9 @@ async function main() {
             console.log(`--- Generated XML Content (${target}) ---`);
             console.log(xmlContent.substring(0, 1000)); // Log first 1000 chars
             
-            const fileName = `${target}_${options.mode}_output.xml`;
+            // Use CLI type for filename as requested (e.g. DEVICE-POST.xml)
+            const safeType = options.type.replace(/[^a-zA-Z0-9_\-]/g, '');
+            const fileName = `${safeType}-${options.mode}.xml`;
             const outPath = path.join(options.out, fileName);
             
             fs.writeFileSync(outPath, xmlContent);
