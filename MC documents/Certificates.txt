@@ -1,0 +1,45 @@
+HL IOL:
+
+EU technical documentation assessment certificate: 2023-MDR/TD-048/A
+
+revision: 01
+
+EU quality management system certificate: 2023-MDR/QS-048/A
+
+revision: 01
+
+ 
+
+POB-MA:
+
+EU technical documentation assessment certificate: 2023-MDR/TD-046/A
+
+revision: 01
+
+EU quality management system certificate: 2023-MDR/QS-046/A
+
+revision: 01
+
+ 
+
+HB IOL:
+
+EU technical documentation assessment certificate: 2023-MDR/TD-047/A
+
+revision: 01
+
+EU quality management system certificate: 2023-MDR/QS-047/A
+
+revision: 01
+
+ 
+
+AddOn:
+
+EU technical documentation assessment certificate: 2024-MDR/TD-070
+
+revision: 00
+
+EU quality management system certificate: 2024-MDR/QS-070
+
+revision: 00
