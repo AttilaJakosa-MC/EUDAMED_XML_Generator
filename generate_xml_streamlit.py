@@ -753,8 +753,21 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
         # Start processing the top-level group
         # The top level content of a complex type is a Group (usually sequence)
         children_data = process_group(group, key, current_path, 0, config_defaults, metadata)
-        
+
         if not children_data: return None
+
+        # Inject xsi:type for abstract types so the XML builder can set the attribute
+        if effective_type is not type_obj:
+            type_qname = str(effective_type.name)
+            if '}' in type_qname:
+                uri = type_qname.split('{')[1].split('}')[0]
+                local = type_qname.split('}')[1]
+                prefix = next((p for p, u in namespaces.items() if u == uri), None)
+                xsi_type_val = f"{prefix}:{local}" if prefix else local
+            else:
+                xsi_type_val = type_qname
+            children_data['__xsi_type__'] = xsi_type_val
+
         return children_data
 
 def build_xml_element(element_name, xsd_type, form_data):
@@ -784,18 +797,13 @@ def build_xml_element(element_name, xsd_type, form_data):
 def build_xml_element_manual_tag(tag, content):
     elem = ET.Element(tag)
     if isinstance(content, dict):
-        # We need to apply correct namespaces to children based on where they belong.
-        # This is tricky without the full schema context at this level.
-        # Heuristic: 
-        # - Common Device fields -> 'commondi'
-        # - Basic UDI specific -> 'basicudi'
-        # - UDI-DI specific -> 'udidi'
-        # - Market Info -> 'marketinfo'
-        # - Links -> 'links'
-        
-        # Or, we can look at the key name itself.
+        # Handle xsi:type for abstract types (e.g. ClinicalSizeType -> RangeClinicalSizeType)
+        xsi_type = content.get('__xsi_type__')
+        if xsi_type:
+            elem.set(f"{{{namespaces['xsi']}}}type", xsi_type)
+
         for child_tag, child_val in content.items():
-            if child_val is None: continue
+            if child_val is None or child_tag == '__xsi_type__': continue
             
             # Determine namespace for child_tag if not present
             final_tag = child_tag
