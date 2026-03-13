@@ -136,6 +136,33 @@ def get_enums_for_type(type_obj):
              enums = type_obj.base_type.enumeration
     return [str(e) for e in enums] if enums else None
 
+def get_enum_labels(type_obj):
+    """Extract human-readable labels for enumeration values from XSD annotations."""
+    labels = {}
+    # Find the type that holds the enumerations
+    target = type_obj
+    if not (hasattr(target, 'enumeration') and target.enumeration):
+        if hasattr(target, 'base_type') and hasattr(target.base_type, 'enumeration') and target.base_type.enumeration:
+            target = target.base_type
+        else:
+            return labels
+
+    # Access the underlying XSD element tree to read annotations
+    if hasattr(target, 'elem') and target.elem is not None:
+        ns = '{http://www.w3.org/2001/XMLSchema}'
+        restriction = target.elem.find(f'{ns}restriction')
+        if restriction is None:
+            restriction = target.elem
+        for enum_elem in restriction.findall(f'{ns}enumeration'):
+            value = enum_elem.get('value')
+            if value:
+                annotation = enum_elem.find(f'{ns}annotation')
+                if annotation is not None:
+                    doc = annotation.find(f'{ns}documentation')
+                    if doc is not None and doc.text:
+                        labels[value] = doc.text.strip()
+    return labels
+
 def get_type_constraints_help(type_obj):
     """Generate a help string for type constraints."""
     constraints = []
@@ -231,9 +258,14 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
         is_list_type = getattr(type_obj, 'is_list', lambda: False)()
 
         enums = get_enums_for_type(type_obj)
+        enum_labels = {}
         # If it is a list type, try to get enums from the item type
         if not enums and is_list_type and hasattr(type_obj, 'item_type'):
              enums = get_enums_for_type(type_obj.item_type)
+             if enums:
+                 enum_labels = get_enum_labels(type_obj.item_type)
+        elif enums:
+             enum_labels = get_enum_labels(type_obj)
 
         # Handle optional Enum: Add empty option if not mandatory
         if enums and not is_list_type and not is_mandatory:
@@ -298,7 +330,8 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                     # Filter valid enums only to prevent errors
                     default_selections = [x for x in default_selections if x in enums]
                 
-                selected = st.multiselect(label, options=enums, default=default_selections, key=key, help=help_text)
+                fmt = (lambda x: f"{x} - {enum_labels[x]}" if enum_labels.get(x) else x)
+                selected = st.multiselect(label, options=enums, default=default_selections, key=key, help=help_text, format_func=fmt)
                 # XML List types are space-separated strings
                 val = " ".join(selected) if selected else None
             else:
@@ -307,7 +340,8 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                 if default_val and str(default_val) in enums:
                     default_idx = enums.index(str(default_val))
                     
-                val = st.selectbox(label, options=enums, index=default_idx, key=key, help=help_text)
+                fmt = (lambda x: f"{x} - {enum_labels[x]}" if enum_labels.get(x) else x)
+                val = st.selectbox(label, options=enums, index=default_idx, key=key, help=help_text, format_func=fmt)
                 
                 # If empty string selected/defaulted, return None so it is omitted from XML
                 if val == "":
@@ -353,10 +387,18 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
             max_o = getattr(element, 'max_occurs', '1')
             if max_o is None: max_o = "unbounded"
 
+            # Resolve enum label for display
+            value_label = enum_labels.get(val, '') if enum_labels else ''
+            # For list types, resolve each code
+            if not value_label and enum_labels and is_list_type and val:
+                parts = [enum_labels.get(v, v) for v in val.split()]
+                value_label = ' | '.join(parts)
+
             # Base entry
             csv_entry = {
                 'XMLPath': current_path,
                 'value': val,
+                'value_label': value_label,
                 'xsd_min': str(min_o),
                 'xsd_max': str(max_o),
                 'FLD_code': fld_code_str,
@@ -418,9 +460,59 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
             st.markdown(label)
             
         st.caption(f"Path: `{current_path}`")
-        
-        group = type_obj.content
-        if not group: 
+
+        # Handle abstract types - resolve to concrete derived type
+        effective_type = type_obj
+        if getattr(type_obj, 'abstract', False):
+            derived_types = []
+            if schema and hasattr(schema, 'maps') and schema.maps:
+                for tname, tdef in schema.maps.types.items():
+                    if (hasattr(tdef, 'base_type') and tdef.base_type is type_obj
+                         and not getattr(tdef, 'abstract', False)):
+                        derived_types.append(tdef)
+
+            if derived_types:
+                # Get base type field names to identify extension-only fields
+                base_fields = set()
+                if type_obj.content:
+                    for p in type_obj.content.iter_model():
+                        if isinstance(p, xmlschema.validators.XsdElement):
+                            base_fields.add(p.local_name)
+
+                # Auto-detect concrete type from config by checking extension-only fields
+                selected_derived = None
+                if config_defaults:
+                    for dt in derived_types:
+                        if dt.content:
+                            for p in dt.content.iter_model():
+                                if isinstance(p, xmlschema.validators.XsdElement) and p.local_name not in base_fields:
+                                    test_path = f"{current_path}/{p.local_name}"
+                                    clean_test = re.sub(r'\[\d+\]', '', test_path)
+                                    if test_path in config_defaults or clean_test in config_defaults:
+                                        selected_derived = dt
+                                        break
+                        if selected_derived:
+                            break
+
+                if selected_derived:
+                    effective_type = selected_derived
+                elif len(derived_types) == 1:
+                    effective_type = derived_types[0]
+                else:
+                    # Show selector for user to choose concrete type
+                    type_names = []
+                    for dt in derived_types:
+                        n = str(dt.name)
+                        if '}' in n:
+                            n = n.split('}')[-1]
+                        type_names.append(n)
+                    choice_key = f"{key}_abstract_type"
+                    selected_name = st.radio(f"Select {element.local_name} type:", type_names, key=choice_key, horizontal=True)
+                    idx = type_names.index(selected_name)
+                    effective_type = derived_types[idx]
+
+        group = effective_type.content
+        if not group:
             return None
 
         children_data = {}
@@ -460,9 +552,9 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                              if opt_path in cd:
                                  is_visible = True
                              else:
-                                 # Prefix Check
+                                 # Prefix Check - strip indices from keys for consistent matching
                                  prefix = opt_path + "/"
-                                 if any(k.startswith(prefix) for k in cd):
+                                 if any(re.sub(r'\[\d+\]', '', k).startswith(prefix) for k in cd):
                                      is_visible = True
                                      
                              if is_visible:
@@ -555,8 +647,9 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                                  is_in_config = True
                              else:
                                  # Prefix Check (are there visible children?)
+                                 # Strip indices from config keys too, so condition[0]/comments/ matches condition/comments/
                                  prefix = clean_path_no_idx + "/"
-                                 if any(k.startswith(prefix) for k in cd):
+                                 if any(re.sub(r'\[\d+\]', '', k).startswith(prefix) for k in cd):
                                      is_in_config = True
                          
                          is_configured_clean = is_in_config
@@ -1098,6 +1191,7 @@ with col_export:
     
     # Standard fixed columns
     final_columns_def.append(('value', 'value'))
+    final_columns_def.append(('Value Description', 'value_label'))
     final_columns_def.append(('FLD_code', 'FLD_code'))
     final_columns_def.append(('tooltip', 'tooltip'))
 

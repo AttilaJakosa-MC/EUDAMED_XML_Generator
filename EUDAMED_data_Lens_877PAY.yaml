@@ -26,6 +26,7 @@ defaults:
   Push/payload/MDRDevice/MDRBasicUDI/MFActorCode: HU-MF-000026801
   Push/payload/MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode: "0483"
   Push/payload/MDRDevice/MDRBasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/certificateType: MDR_TYPE_EXAMINATION
+
   Push/payload/MDRDevice/MDRUDIDIData/identifier/DICode: "05993029999996"
   Push/payload/MDRDevice/MDRUDIDIData/identifier/issuingEntityCode: GS1
   Push/payload/MDRDevice/MDRUDIDIData/status/code: ON_THE_MARKET
@@ -42,3 +43,28 @@ defaults:
   Push/payload/MDRDevice/MDRUDIDIData/baseQuantity: 1
   Push/payload/MDRDevice/MDRUDIDIData/latex: false
   Push/payload/MDRDevice/MDRUDIDIData/reprocessed: false
+
+  # EIFU Link (Electronic Instructions for Use)
+  Push/payload/MDRDevice/MDRUDIDIData/website: https://medicontur.com/professionals/documents/eifus
+
+  # Clinical Sizes - Optical Power (Dioptre)
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/clinicalSizeType: CST38
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/minimum: 0.0
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/maximum: 30.0
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/valueUnit: MU104
+
+  # Storage Handling Conditions (Temperature min/max)
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/storageHandlingConditionValue: SHC006
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/comments/name[0]/textValue: 10
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/storageHandlingConditionValue: SHC007
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/comments/name[0]/textValue: 25
+
+  # Critical Warnings
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[0]/warningValue: CW010
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[0]/comments/name[0]/language: ANY
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[0]/comments/name[0]/textValue: "Consult instructions for use"
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/warningValue: CW999
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[0]/language: EN
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[0]/textValue: "The IOL should not be used in: Zonular damage larger than 4 clock hours; Children under the age of one year; Chronic uveitis; Progressive eye disease (e.g. diabetic retinopathy, uncontrolled glaucoma); In case of preoperative complications prior to cataract surgery (e.g. vitrous body prolapse, haemorrhage); Patients with perforated or damaged capsules"
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[1]/language: HU
+  Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[1]/comments/name[1]/textValue: "Az IOL nem alkalmazható az alábbi esetekben: 4 óránál kiterjedtebb zonuláris sérülés; Egy év alatti gyermekek; Krónikus uveitisz; Progresszív szembetegség (pl. diabéteszes retinopátia, nem kontrollált glaukóma); Szürkehályog-műtétet megelőző komplikációk esetén (pl. üvegtest-előesés, vérzés); Perforált vagy sérült kapszulával rendelkező betegek"
