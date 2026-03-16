@@ -52,6 +52,7 @@ WITH
         NULL                            AS plant,
         '33'                            AS distchain,
         NULL                            AS lang,
+        NULL                            AS prver,
         'sender/node/NodeActorCode'     AS name,
         NULL                            AS dpt_l,
         NULL                            AS dpt_h,
@@ -62,8 +63,7 @@ WITH
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
-        NULL                            AS ifs_name
+        NULL                            AS validfrom
     FROM DUAL
 
 UNION ALL
@@ -80,6 +80,7 @@ UNION ALL
         NULL                            AS plant,
         '40'                            AS distchain,
         NULL                            AS lang,
+        NULL                            AS prver,
         'sender/node/NodeActorCode'     AS name,
         NULL                            AS dpt_l,
         NULL                            AS dpt_h,
@@ -90,9 +91,150 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
-        NULL                            AS ifs_name
+        NULL                            AS validfrom
     FROM DUAL
+
+UNION ALL
+
+    -- Risk class for IOL-s
+    SELECT
+        'EUD_DEV'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        '01'                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'MDRBasicUDI/riskClass'         AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        'CLASS_IIB'                     AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- Risk class for OVD-s
+    SELECT
+        'EUD_DEV'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        '10'                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'MDRBasicUDI/riskClass'         AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        '?part_no_ovd'                  AS partno,
+        'CLASS_IIB'                     AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- Risk class for CTR-s
+    SELECT
+        'EUD_DEV'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        '11'                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'MDRBasicUDI/riskClass'         AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        '?part_no_ctr'                  AS partno,
+        'CLASS_IIB'                     AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+    UNION ALL
+
+    -- Risk class for PILMA-s
+    SELECT
+        'EUD_DEV'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        '12'                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'MDRBasicUDI/riskClass'         AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        '?part_no_pilma'                AS partno,
+        'CLASS_IIA'                     AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+    -- Risk class for MDJ-s
+    SELECT
+        'EUD_DEV'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        '12'                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'MDRBasicUDI/riskClass'         AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        '?part_no_pilma'                AS partno,
+        'CLASS_IIA'                     AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+
+
+
 
 --FROM portfolio_data pd
 --WHERE pd.model IN (SELECT model FROM filtered_models)
