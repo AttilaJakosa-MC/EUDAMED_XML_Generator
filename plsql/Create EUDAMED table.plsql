@@ -40,6 +40,65 @@ WITH
         GROUP BY model
     )
 
+    -- UDI-DI limit for one xml file, Eudamed
+    SELECT
+        'EUDAMED'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        NULL                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        '01'                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'UDI_DI_LIMIT'                  AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        NULL                            AS valtext,
+        300                             AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- Eudamed XSD schema version. Mandatory for upload
+    SELECT
+        'EUDAMED'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        NULL                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        '01'                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'XSD_VERSION'                   AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        TO_CLOB('3.0.28')               AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+
+
+
     -- Device create envelope for Medicontur HQ International Distribution Channel
     SELECT
         'EUDAMED'                       AS rowtype,
