@@ -1,0 +1,175 @@
+value,description
+MU01,%
+MU02,/litre (/L)
+MU03,/millilitre (/mL)
+MU04,/millimole (/mmol)
+MU05,international unit [IU]
+MU06,international unit per day [IU]/day ([IU]/d)
+MU07,international unit per litre [IU]/litre [IU]/L
+MU08,international unit per millilitre [IU]/millilitre [IU]/mL
+MU09,centilitre (cL)
+MU10,centimetre (cm)
+MU11,centimetre per second (cm/s)
+MU12,cubic centimetre (cu cm or cm3)
+MU13,cubic millimetre (cu mm or mm3)
+MU14,cup
+MU15,day (d)
+MU16,decilitre (dL)
+MU17,decimetre (dm)
+MU18,degree Celsius (°C)
+MU19,micromoles per minute (=1 μmol/min)
+MU20,femtometre (fm)
+MU21,femtolitre (fL)
+MU22,femtomole/litre (fmol/L)
+MU23,foot (ft)
+MU24,gram (g)
+MU25,gram per litre (g/L)
+MU26,hour (h)
+MU27,hertz (Hz)
+MU28,inch (in)
+MU29,kilogram (kg)
+MU30,kilolitre (KL)
+MU31,kilometre (km)
+MU32,kilopascal (kPa)
+MU33,kiloU per litre (kU/L)
+MU34,litre (L)
+MU35,milli international unit per litre (m[iU]/L)
+MU36,metre (m)
+MU37,milligram (mg)
+MU38,milligram per litre (mg/L)
+MU39,milligram per millilitre (mg/mL)
+MU40,microgram (µg)
+MU41,microgram per minute (µg/min)
+MU42,microlitre (µL or µl)
+MU43,micrometre (µm)
+MU44,micromole (µmol)
+MU45,micromole per litre (µmol/L)
+MU46,millibar (mbar)
+MU47,milliequivalent (mEq)
+MU48,millilitre (mL)
+MU49,millilitre per second (mL/s)
+MU50,millimetre (mm)
+MU51,millimetre of mercury (mm Hg)
+MU52,millimole (mmol)
+MU53,millimoles per litre (mmol/L)
+MU54,millisecond (ms)
+MU55,minute (min)
+MU56,millilitre per day (mL/d)
+MU57,millilitre per minute (mL or ml/min)
+MU58,millimetre per hour (mm/h)
+MU59,millimole per gram (mmol/g)
+MU60,millimole per kilogram (mmol/kg)
+MU61,millimole per kilogram[H2O] (mmol/kg[H2O])
+MU62,mole (mol)
+MU63,month
+MU64,nanogram (ng)
+MU65,nanolitre (nL)
+MU66,nanometre (nm)
+MU67,nanogram per litre (ng/L)
+MU68,nanogram per millilitre (ng/mL)
+MU69,nanomole per day (nmol/d)
+MU70,nanomole per gram (nmol/g)
+MU71,nanomole per hour per millilitre (nmol/h/mL or nmol/h/ml)
+MU72,nanomole per litre (nmol/L)
+MU73,picogram (pg)
+MU74,picogram per millilitre (pg/mL)
+MU75,picolitre (pL)
+MU76,picometre (pm)
+MU77,picomole per gram (pmol/g)
+MU78,picomole per hour per milligram (pmol/h/mg)
+MU79,picomole per hour per millilitre (pmol/h/mL or pmol/h/ml)
+MU80,picomole per litre (pmol/L)
+MU81,second (s)
+MU82,square centimetre (sq cm or cm2)
+MU83,square foot (sq ft)
+MU84,square inch (sq in)
+MU85,square metre (sq m or m2)
+MU86,square millimetre (sq mm or mm2)
+MU87,atomic mass unit: u
+MU88,atomic mass unit: u per 1h
+MU89,atomic mass unit: u per 12h
+MU90,atomic mass unit: u per 2h
+MU91,atomic mass unit: u per d
+MU92,atomic mass unit: u per g
+MU93,atomic mass unit: u per kg
+MU94,atomic mass unit: u per mL
+MU95,micro[iU] per millilitre (µ[iU]/mL or µ[iU]/ml)
+MU96,microgram per day (µg/d)
+MU97,microgram per litre (µg/L)
+MU98,microgram per millilitre (µg/mL)
+MU99,micrometre per second (µm/s)
+MU100,micromole per gram (µmol/g)
+MU101,week
+MU102,year
+MU103,watt (W)
+MU104,dioptre (D)
+MU105,degree (°)
+MU106,lumen (lm)
+MU107,ampere (A)
+MU108,kelvin (K)
+MU109,candela (cd)
+MU110,newton (N)
+MU111,pascal (Pa)
+MU112,joule (J)
+MU113,coulomb (C)
+MU114,volt (V)
+MU115,ohm (Ω)
+MU116,siemens (S)
+MU117,farad (F)
+MU118,weber (Wb)
+MU119,tesla (T)
+MU120,henry (H)
+MU121,lux (lx)
+MU122,becquerel (Bq)
+MU123,gray (Gy)
+MU124,sievert (Sv)
+MU125,katal (kat)
+MU126,bar (bar)
+MU127,electronvolt (eV)
+MU128,unified atomic mass unit (u)
+MU129,hectare (ha)
+MU130,tonne (metric ton)
+MU131,dalton (Da)
+MU132,neper (Np)
+MU133,bel (B)
+MU134,decibel (dB)
+MU135,microgram per decilitre µg/dL
+MU136,milligram per decilitre (mg/dL)
+MU137,Passive
+MU138,Active
+MU139,Straight
+MU140,Angled
+MU141,J-tip
+MU142,Soft straight
+MU143,Stiff straight
+MU144,Soft angled
+MU145,Stiff angled
+MU146,Stiff J-tip
+MU147,Mini
+MU148,Sacral
+MU149,Multishape
+MU150,Heel
+MU151,Contour
+MU152,Square
+MU153,Rectangular
+MU154,Belt
+MU156,Convex
+MU157,Convex light
+MU158,Concave
+MU159,Flat
+MU160,Extra small (XS)
+MU161,Small (S)
+MU162,Medium (M)
+MU163,Large (L)
+MU164,Extra large (XL)
+MU165,Neonate
+MU166,Infant
+MU167,Child
+MU168,Adult
+MU169,pH (pH)
+MU170,French (F)
+MU172,left
+MU173,right
+MU175,Curved
+MU176,Standard
+MU999,OTHER

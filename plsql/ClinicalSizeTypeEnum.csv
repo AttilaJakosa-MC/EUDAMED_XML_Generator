@@ -1,0 +1,68 @@
+value,description
+CST1,Acidity
+CST2,Amount of fingers
+CST3,Angle
+CST4,Bevel
+CST5,Concentration
+CST6,Cannula wall
+CST7,Capacity
+CST8,Coating
+CST9,Diameter
+CST10,Diameter (inner)
+CST11,Diameter (outer)
+CST12,Pole distance
+CST13,Flow rate
+CST14,Gauge
+CST15,Guide wire type
+CST16,Inflation volume
+CST17,Body side
+CST18,Balloon length (nominal)
+CST19,Length
+CST20,Luminous flux
+CST21,Particle size
+CST22,Nominal capacity
+CST23,Number of electrodes
+CST24,Pore size
+CST25,Pressure
+CST26,Shape/form
+CST27,Size
+CST28,Stiffness
+CST29,Strength
+CST30,Surface area
+CST31,Tip fixation/anchoring
+CST32,Volume
+CST33,Width
+CST34,Weight
+CST35,Type of patient
+CST36,Wavelength
+CST37,Frequency
+CST38,Optical power
+CST39,Cylinder power
+CST40,Addition power (Optical)
+CST41,Cylinder axis
+CST42,Base curve (B.C. or R0)
+CST43,Optical zone diameter
+CST44,Power profile (optical)
+CST45,Colour
+CST46,Edge lift
+CST47,Prism
+CST48,Cel
+CST49,Radius
+CST50,Tangent
+CST51,Height
+CST52,Centre thickness
+CST53,Truncation
+CST54,Truncation axis
+CST55,Edge radius
+CST56,Body weight [kg]
+CST57,Back cylinder power
+CST58,Back cylinder axis
+CST59,Optical zone diameter back
+CST60,Prism axis
+CST61,Tangent steep
+CST62,Height steep
+CST63,Direction of view
+CST65,Circumference
+CST66,Depth
+CST67,Enzyme catalytic activity
+CST999,OTHER

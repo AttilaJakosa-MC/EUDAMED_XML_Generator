@@ -1,0 +1,424 @@
+value,description
+CW001,Do not resterilize
+CW006,Defibrillation-proof type B applied part
+CW007,Do not use if package is damaged
+CW008,Biological risks
+CW009,Do not re-use
+CW010,Consult instructions for use
+CW011,Caution
+CW012,"Caution: Electrostatic sensitive, do not touch directly."
+CW013,Radiation of laser apparatus
+CW014,Type BF applied part
+CW015,Defibrillation-proof type BF applied part
+CW016,Type B applied part
+CW017,Defibrillation-proof type CF applied part
+CW018,Refer to instruction manual/booklet
+CW020,Do not sterilize
+CW022,Do not cut
+CW023,Consider hazards from magnetic fields
+CW024,Do not store near magnets or magnetic devices
+CW025,MR SAFE
+CW026,MR CONDITIONAL
+CW027,MR UNSAFE
+CW028,Exposure to radiation when using the device
+CW029,"Caution, sharp edges"
+CW030,Consult healthcare professional before use
+CW031,Implant timeframe limitations
+CW032,Do not use past indicated date
+CW035,"Restriction in use of des infectors,"
+CW036,Restrictions in use for combination of other devices
+CW037,"GHS01 - Danger - Unstable, Explosive"
+CW038,GHS02 - Danger or Warning - Flammable
+CW039,GHS03- Danger or Warning -Oxidising
+CW040,GHS04- Warning -Compressed gas
+CW041,GHS05 -Danger or Warning -Corrosive cat. 1
+CW042,GHS06 - Danger -Toxic cat. 1 - 3
+CW043,"GHS07 - Warning -Toxic cat. 4, Irritant cat. 2 or 3, Lower systemic health hazards"
+CW044,GHS08 - Danger or Warning - Systemic health hazards
+CW045,GHS09 - Warning (for cat. 1)- (for cat. 2 no signal word) Environment
+CW046,H200 - Unstable explosives.
+CW047,H201 - Explosive; mass explosion hazard.
+CW048,"H202 - Explosive, severe projection hazard."
+CW049,"H203 - Explosive; fire, blast or projection hazard."
+CW050,H204 - Fire or projection hazard.
+CW051,H205 - May mass explode in fire.
+CW052,H220 - Extremely flammable gas.
+CW053,H221 - Flammable gas.
+CW054,H222 - Extremely flammable aerosol.
+CW055,H223 - Flammable aerosol.
+CW056,H224 - Extremely flammable liquid and vapour.
+CW057,H225 - Highly flammable liquid and vapour.
+CW058,H226 - Flammable liquid and vapour.
+CW059,H228 - Flammable solid.
+CW060,H240 - Heating may cause an explosion.
+CW061,H241 - Heating may cause a fire or explosion.
+CW062,H242 - Heating may cause a fire.
+CW063,H250 - Catches fire spontaneously if exposed to air.
+CW064,H251 - Self-heating: may catch fire.
+CW065,H252 - Self-heating in large quantities; may catch fire.
+CW066,H260 - In contact with water releases flammable gases which may ignite spontaneously.
+CW067,H261 - In contact with water releases flammable gases.
+CW068,H270 - May cause or intensify fire; oxidiser.
+CW069,H271 - May cause fire or explosion; strong oxidiser.
+CW070,H272 - May intensify fire; oxidiser.
+CW071,H280 - Contains gas under pressure; may explode if heated.
+CW072,H281 - Contains refrigerated gas; may cause cryogenic burns or injury.
+CW073,H290 - May be corrosive to metals.
+CW074,H300 - Fatal if swallowed.
+CW075,H301 - Toxic if swallowed.
+CW076,H302 - Harmful if swallowed.
+CW077,H304 - May be fatal if swallowed and enters airways.
+CW078,H310 - Fatal in contact with skin.
+CW079,H311 - Toxic in contact with skin.
+CW080,H312 - Harmful in contact with skin.
+CW081,H314 - Causes severe skin burns and eye damage.
+CW082,H315 - Causes skin irritation.
+CW083,H317 - May cause an allergic skin reaction.
+CW084,H318 - Causes serious eye damage.
+CW085,H319 - Causes serious eye irritation.
+CW086,H330 - Fatal if inhaled.
+CW087,H331 - Toxic if inhaled.
+CW088,H332 - Harmful if inhaled.
+CW089,H334 - May cause allergy or asthma symptoms or breathing difficulties if inhaled.
+CW090,H335 - May cause respiratory irritation.
+CW091,H336 - May cause drowsiness or dizziness.
+CW092,H340 - May cause genetic defects exposure cause the hazard>.
+CW093,H341 - Suspected of causing genetic defects.
+CW094,H350 - May cause cancer.
+CW095,H351 - Suspected of causing cancer.
+CW096,H360 - May damage fertility or the unborn child.
+CW097,H361 - Suspected of damaging fertility or the unborn child.
+CW098,H362 - May cause harm to breast-fed children.
+CW099,H370 - Causes damage to organs.
+CW100,H371 - May cause damage to organs.
+CW101,H372 - Causes damage to organs through prolonged or repeated exposure exposure cause the hazard>.
+CW102,H373 - May cause damage to organs through prolonged or repeated exposure.
+CW103,H400 - Very toxic to aquatic life.
+CW104,H410 - Very toxic to aquatic life with long lasting effects.
+CW105,H411 - Toxic to aquatic life with long lasting effects.
+CW106,H412 - Harmful to aquatic life with long lasting effects.
+CW107,H413 - May cause long lasting harmful effects to aquatic life.
+CW108,EUH 001 - Explosive when dry.
+CW109,EUH 006 - Explosive with or without contact with air.
+CW110,EUH 014 - Reacts violently with water.
+CW111,"EUH 018 - In use, may form flammable/explosive vapour-air mixture."
+CW112,EUH 019 - May form explosive peroxides.
+CW113,EUH 044 - Risk of explosion if heated under confinement.
+CW114,EUH 029 - Contact with water liberates toxic gas.
+CW115,EUH 031 - Contact with acids liberates toxic gas.
+CW116,EUH 032 - Contact with acids liberates very toxic gas.
+CW117,EUH 066 - Repeated exposure may cause skin dryness or cracking.
+CW118,EUH 070 - Toxic by eye contact.
+CW119,EUH 071 - Corrosive to the respiratory tract.
+CW120,EUH 059 - Hazardous to the ozone layer.
+CW121,EUH 201 - Contains lead. Should not be used on surfaces liable to be chewed or sucked by children.
+CW122,EUH 201A - Warning! Contains lead.
+CW123,EUH 202 - Cyanoacrylate. Danger. Bonds skin and eyes in seconds. Keep out of the reach of children.
+CW124,EUH 203 - Contains chromium (VI). May produce an allergic reaction.
+CW125,EUH 204 - Contains isocyanates. May produce an allergic reaction.
+CW126,EUH 205 - Contains epoxy constituents. May produce an allergic reaction.
+CW127,EUH 206 - Warning! Do not use together with other products. May release dangerous gases (chlorine)
+CW128,EUH 207 - Warning! Contains cadmium. Dangerous fumes are formed during use. See information supplied by the manufacturer. Comply with the safety instructions.
+CW129,EUH 208 - Contains (name of sensitising substance). May produce an allergic reaction.
+CW130,EUH 209 - Can become highly flammable in use.
+CW131,EUH 209A - Can become flammable in use.
+CW132,EUH 210 - Safety data sheet available on request.
+CW133,"EUH 401 - To avoid risks to human health and the environment, comply with the instructions for use."
+CW134,"P101 - If medical advice is needed, have product container or label at hand."
+CW135,P102 - Keep out of reach of children.
+CW136,P103 - Read label before use.
+CW137,P201 - Obtain special instructions before use.
+CW138,P202 - Do not handle until all safety precautions have been read and understood.
+CW139,P210 - Keep away from heat/sparks/open flames/hot surfaces. — No smoking.
+CW140,P211 - Do not spray on an open flame or other ignition source.
+CW141,P220 - Keep/Store away from clothing/…/combustible materials.
+CW142,P221 - Take any precaution to avoid mixing with combustibles…
+CW143,P222 - Do not allow contact with air.
+CW144,"P223 - Keep away from any possible contact with water, because of violent reaction and possible flash fire."
+CW146,P231 - Handle under inert gas.
+CW147,P232 - Protect from moisture.
+CW148,P233 - Keep container tightly closed.
+CW149,P234 - Keep only in original container.
+CW150,P235 - Keep cool.
+CW151,P240 - Ground/bond container and receiving equipment.
+CW152,P241 - Use explosion-proof electrical/ventilating/lighting/…/equipment.
+CW153,P242 - Use only non-sparking tools.
+CW154,P243 - Take precautionary measures against static discharge.
+CW155,P244 - Keep reduction valves free from grease and oil.
+CW156,P250 - Do not subject to grinding/shock/…/friction.
+CW157,"P251 - Pressurized container: Do not pierce or burn, even after use."
+CW158,P260 - Do not breathe dust/fume/gas/mist/vapours/spray.
+CW159,P261 - Avoid breathing dust/fume/gas/mist/vapours/spray.
+CW160,"P262 - Do not get in eyes, on skin, or on clothing."
+CW161,P263 - Avoid contact during pregnancy/while nursing.
+CW162,P264 - Wash thoroughly after handling.
+CW163,"P270 - Do not eat, drink or smoke when using this product."
+CW164,P271 - Use only outdoors or in a well-ventilated area.
+CW165,P272 - Contaminated work clothing should not be allowed out of the workplace.
+CW166,P273 - Avoid release to the environment.
+CW167,P280 - Wear protective gloves/protective clothing/eye protection/face protection.
+CW168,P281 - Use personal protective equipment as required.
+CW169,P282 - Wear cold insulating gloves/face shield/eye protection.
+CW170,P283 - Wear fire/flame resistant/retardant clothing.
+CW171,P284 - Wear respiratory protection.
+CW172,P285 - In case of inadequate ventilation wear respiratory protection.
+CW173,P231 + P232 - Handle under inert gas. Protect from moisture.
+CW175,P301 - IF SWALLOWED: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW176,P302 - IF ON SKIN: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW177,P303 - IF ON SKIN (or hair): P310 - Immediately call a POISON CENTER or doctor/physician.
+CW178,P304 - IF INHALED: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW179,P305 - IF IN EYES: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW180,P306 - IF ON CLOTHING: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW181,P307 - IF exposed: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW182,P308 - IF exposed or concerned: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW183,P309 - IF exposed or if you feel unwell: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW184,P342 - If experiencing respiratory symptoms: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW185,P342 - If experiencing respiratory symptoms: P311 - Call a POISON CENTER or doctor/physician.
+CW186,P342 - If experiencing respiratory symptoms: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW187,P342 - If experiencing respiratory symptoms: P313 - Get medical advice/attention.
+CW188,P342 - If experiencing respiratory symptoms: P314 - Get medical advice/attention if you feel unwell.
+CW189,P342 - If experiencing respiratory symptoms: P315 - Get immediate medical advice/attention.
+CW190,P342 - If experiencing respiratory symptoms: P320 - Specific treatment is urgent (see on this label).
+CW191,P342 - If experiencing respiratory symptoms: P321 - Specific treatment (see on this label).
+CW192,P342 - If experiencing respiratory symptoms: P322 - Specific measures (see on this label).
+CW193,P301 - IF SWALLOWED: P330 - Rinse mouth.
+CW194,P301 - IF SWALLOWED: P331 - Do NOT induce vomiting.
+CW195,P332 - If skin irritation occurs: P322 - Specific measures (see on this label).
+CW196,P333 - If skin irritation or rash occurs: P322 - Specific measures (see on this label).
+CW197,P332 - If skin irritation occurs: P334 - Immerse in cool water/wrap in wet bandages.
+CW198,P332 - If skin irritation occurs: P335 - Brush off loose particles from skin.
+CW199,P332 - If skin irritation occurs: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW201,"P337 - If eye irritation persists: P338 - Remove contact lenses, if present and easy to do. Continue rinsing."
+CW202,P342 - If experiencing respiratory symptoms: P340 - Remove victim to fresh air and keep at rest in a position comfortable for breathing.
+CW203,"P341 - If breathing is difficult, remove victim to fresh air and keep at rest in a position comfortable for breathing."
+CW206,P333 - If skin irritation or rash occurs: P350 - Gently wash with plenty of soap and water.
+CW207,P337 - If eye irritation persists: P351 - Rinse cautiously with water for several minutes.
+CW208,P333 - If skin irritation or rash occurs: P352 - Wash with plenty of soap and water.
+CW209,P333 - If skin irritation or rash occurs: P353 - Rinse skin with water/shower.
+CW210,P333 - If skin irritation or rash occurs: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW211,P333 - If skin irritation or rash occurs: P361 - Remove/Take off immediately all contaminated clothing.
+CW212,P333 - If skin irritation or rash occurs: P362 - Take off contaminated clothing and wash before reuse.
+CW213,P333 - If skin irritation or rash occurs: P363 - Wash contaminated clothing before reuse.
+CW216,P372 - Explosion risk in case of fire.
+CW217,P373 - DO NOT fight fire when fire reaches explosives.
+CW218,P370 - In case of fire: P374 - Fight fire with normal precautions from a reasonable distance.
+CW219,P370 - In case of fire: P375 - Fight fire remotely due to the risk of explosion.
+CW220,P376 - Stop leak if safe to do so.
+CW221,"P377 - Leaking gas fire: Do not extinguish, unless leak can be stopped safely."
+CW223,P370 - In case of fire: P380 - Evacuate area.
+CW224,P370 - In case of fire: P381 - Eliminate all ignition sources if safe to do so.
+CW225,P390 - Absorb spillage to prevent material damage.
+CW226,P391 - Collect spillage.
+CW254,Do not Use Tap Water
+CW255,Do Not use saliva
+CW257,Warning; Crushing of hands
+CW258,Warning; Hot surface
+CW259,Warning; Electricity
+CW260,Warning; Counterrotating rollers
+CW261,Warning; Optical radiation
+CW262,Single patient multiple use
+CW263,Contains human blood or plasma derivatives
+CW264,Contains a medicinal substance
+CW265,Contains hazardous substances
+CW266,Contains biological material of human origin
+CW267,Contains biological material of animal origin
+CW268,H229 Pressurized container: may burst if heated
+CW269,H230 May react explosively even in the absence of air
+CW270,H231 May react explosively even in the absence of air at elevated pressure and/or temperature
+CW271,H420 Harms public health and the environment by destroying ozone in the upper atmosphere
+CW272,P364 And wash it before reuse.
+CW273,"Caution, risk of electric shock"
+CW274,Non-ionizing electromagnetic radiation
+CW275,Ask your pharmacist or doctor for advice before using or taking the product (e.g. if pregnant or breastfeeding)
+CW276,"Potential Interactions with other products (e.g. medicines, food)"
+CW277,"If any symptoms are troublesome or last more than a few days or if you notice any side effects not mentioned, please inform your doctor or pharmacist"
+CW278,Avoid contact with non-sterile water
+CW279,P337 - If eye irritation persists: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW280,P332 - If skin irritation occurs: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW281,P333 - If skin irritation or rash occurs: P310 - Immediately call a POISON CENTER or doctor/physician.
+CW282,P337 - If eye irritation persists: P311 - Call a POISON CENTER or doctor/physician.
+CW283,P332 - If skin irritation occurs: P311 - Call a POISON CENTER or doctor/physician.
+CW284,P333 - If skin irritation or rash occurs: P311 - Call a POISON CENTER or doctor/physician.
+CW285,P301 - IF SWALLOWED: P311 - Call a POISON CENTER or doctor/physician.
+CW286,P302 - IF ON SKIN: P311 - Call a POISON CENTER or doctor/physician.
+CW287,P303 - IF ON SKIN (or hair): P311 - Call a POISON CENTER or doctor/physician.
+CW288,P304 - IF INHALED: P311 - Call a POISON CENTER or doctor/physician.
+CW289,P305 - IF IN EYES: P311 - Call a POISON CENTER or doctor/physician.
+CW290,P307 - IF exposed: P311 - Call a POISON CENTER or doctor/physician.
+CW291,P308 - IF exposed or concerned: P311 - Call a POISON CENTER or doctor/physician.
+CW292,P309 - IF exposed or if you feel unwell: P311 - Call a POISON CENTER or doctor/physician.
+CW293,P337 - If eye irritation persists: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW294,P332 - If skin irritation occurs: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW295,P333 - If skin irritation or rash occurs: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW296,P301 - IF SWALLOWED: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW297,P302 - IF ON SKIN: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW298,P303 - IF ON SKIN (or hair): P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW299,P304 - IF INHALED: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW300,P305 - IF IN EYES: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW301,P307 - IF exposed: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW302,P308 - IF exposed or concerned: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW303,P309 - IF exposed or if you feel unwell: P312 - Call a POISON CENTER or doctor/physician if you feel unwell.
+CW304,P337 - If eye irritation persists: P313 - Get medical advice/attention.
+CW305,P332 - If skin irritation occurs: P313 - Get medical advice/attention.
+CW306,P333 - If skin irritation or rash occurs: P313 - Get medical advice/attention.
+CW307,P301 - IF SWALLOWED: P313 - Get medical advice/attention.
+CW308,P302 - IF ON SKIN: P313 - Get medical advice/attention.
+CW309,P303 - IF ON SKIN (or hair): P313 - Get medical advice/attention.
+CW310,P304 - IF INHALED: P313 - Get medical advice/attention.
+CW311,P305 - IF IN EYES: P313 - Get medical advice/attention.
+CW312,P307 - IF exposed: P313 - Get medical advice/attention.
+CW313,P308 - IF exposed or concerned: P313 - Get medical advice/attention.
+CW314,P309 - IF exposed or if you feel unwell: P313 - Get medical advice/attention.
+CW315,P337 - If eye irritation persists: P314 - Get medical advice/attention if you feel unwell.
+CW316,P332 - If skin irritation occurs: P314 - Get medical advice/attention if you feel unwell.
+CW317,P333 - If skin irritation or rash occurs: P314 - Get medical advice/attention if you feel unwell.
+CW318,P301 - IF SWALLOWED: P314 - Get medical advice/attention if you feel unwell.
+CW319,P302 - IF ON SKIN: P314 - Get medical advice/attention if you feel unwell.
+CW320,P303 - IF ON SKIN (or hair): P314 - Get medical advice/attention if you feel unwell.
+CW321,P304 - IF INHALED: P314 - Get medical advice/attention if you feel unwell.
+CW322,P305 - IF IN EYES: P314 - Get medical advice/attention if you feel unwell.
+CW323,P306 - IF ON CLOTHING: P314 - Get medical advice/attention if you feel unwell.
+CW324,P307 - IF exposed: P314 - Get medical advice/attention if you feel unwell.
+CW325,P308 - IF exposed or concerned: P314 - Get medical advice/attention if you feel unwell.
+CW326,P309 - IF exposed or if you feel unwell: P314 - Get medical advice/attention if you feel unwell.
+CW327,P337 - If eye irritation persists: P315 - Get immediate medical advice/attention.
+CW328,P332 - If skin irritation occurs: P315 - Get immediate medical advice/attention.
+CW329,P333 - If skin irritation or rash occurs: P315 - Get immediate medical advice/attention.
+CW330,P301 - IF SWALLOWED: P315 - Get immediate medical advice/attention.
+CW331,P302 - IF ON SKIN: P315 - Get immediate medical advice/attention.
+CW332,P303 - IF ON SKIN (or hair): P315 - Get immediate medical advice/attention.
+CW333,P304 - IF INHALED: P315 - Get immediate medical advice/attention.
+CW334,P305 - IF IN EYES: P315 - Get immediate medical advice/attention.
+CW335,P307 - IF exposed: P315 - Get immediate medical advice/attention.
+CW336,P308 - IF exposed or concerned: P315 - Get immediate medical advice/attention.
+CW337,P309 - IF exposed or if you feel unwell: P315 - Get immediate medical advice/attention.
+CW338,P337 - If eye irritation persists: P320 - Specific treatment is urgent (see on this label).
+CW339,P332 - If skin irritation occurs: P320 - Specific treatment is urgent (see on this label).
+CW340,P333 - If skin irritation or rash occurs: P320 - Specific treatment is urgent (see on this label).
+CW341,P301 - IF SWALLOWED: P320 - Specific treatment is urgent (see on this label).
+CW342,P302 - IF ON SKIN: P320 - Specific treatment is urgent (see on this label).
+CW343,P303 - IF ON SKIN (or hair): P320 - Specific treatment is urgent (see on this label).
+CW344,P304 - IF INHALED: P320 - Specific treatment is urgent (see on this label).
+CW345,P305 - IF IN EYES: P320 - Specific treatment is urgent (see on this label).
+CW346,P306 - IF ON CLOTHING: P320 - Specific treatment is urgent (see on this label).
+CW347,P307 - IF exposed: P320 - Specific treatment is urgent (see on this label).
+CW348,P308 - IF exposed or concerned: P320 - Specific treatment is urgent (see on this label).
+CW349,P309 - IF exposed or if you feel unwell: P320 - Specific treatment is urgent (see on this label).
+CW350,P337 - If eye irritation persists: P321 - Specific treatment (see on this label).
+CW351,P332 - If skin irritation occurs: P321 - Specific treatment (see on this label).
+CW352,P333 - If skin irritation or rash occurs: P321 - Specific treatment (see on this label).
+CW353,P301 - IF SWALLOWED: P321 - Specific treatment (see on this label).
+CW354,P302 - IF ON SKIN: P321 - Specific treatment (see on this label).
+CW355,P303 - IF ON SKIN (or hair): P321 - Specific treatment (see on this label).
+CW356,P304 - IF INHALED: P321 - Specific treatment (see on this label).
+CW357,P305 - IF IN EYES: P321 - Specific treatment (see on this label).
+CW358,P306 - IF ON CLOTHING: P321 - Specific treatment (see on this label).
+CW359,P307 - IF exposed: P321 - Specific treatment (see on this label).
+CW360,P308 - IF exposed or concerned: P321 - Specific treatment (see on this label).
+CW361,P309 - IF exposed or if you feel unwell: P321 - Specific treatment (see on this label).
+CW362,P337 - If eye irritation persists: P322 - Specific measures (see on this label).
+CW363,P301 - IF SWALLOWED: P322 - Specific measures (see on this label).
+CW364,P302 - IF ON SKIN: P322 - Specific measures (see on this label).
+CW365,P303 - IF ON SKIN (or hair): P322 - Specific measures (see on this label).
+CW366,P304 - IF INHALED: P322 - Specific measures (see on this label).
+CW367,P305 - IF IN EYES: P322 - Specific measures (see on this label).
+CW368,P306 - IF ON CLOTHING: P322 - Specific measures (see on this label).
+CW369,P307 - IF exposed: P322 - Specific measures (see on this label).
+CW370,P308 - IF exposed or concerned: P322 - Specific measures (see on this label).
+CW371,P309 - IF exposed or if you feel unwell: P322 - Specific measures (see on this label).
+CW372,P307 - IF exposed: P330 - Rinse mouth.
+CW373,P308 - IF exposed or concerned: P330 - Rinse mouth.
+CW374,P309 - IF exposed or if you feel unwell: P330 - Rinse mouth.
+CW375,P307 - IF exposed: P331 - Do NOT induce vomiting.
+CW376,P308 - IF exposed or concerned: P331 - Do NOT induce vomiting.
+CW377,P309 - IF exposed or if you feel unwell: P331 - Do NOT induce vomiting.
+CW378,P333 - If skin irritation occurs or rash occurs: P334 - Immerse in cool water/wrap in wet bandages.
+CW379,P302 - IF ON SKIN: P334 - Immerse in cool water/wrap in wet bandages.
+CW380,P303 - IF ON SKIN (or hair): P334 - Immerse in cool water/wrap in wet bandages.
+CW381,P337 - If eye irritation persists: P334 - Immerse in cool water/wrap in wet bandages.
+CW382,P305 - IF IN EYES: P334 - Immerse in cool water/wrap in wet bandages.
+CW383,P333 - If skin irritation occurs or rash occurs: P335 - Brush off loose particles from skin.
+CW384,P302 - IF ON SKIN: P335 - Brush off loose particles from skin.
+CW385,P303 - IF ON SKIN (or hair): P335 - Brush off loose particles from skin.
+CW386,P306 - IF ON CLOTHING: P335 - Brush off loose particles from skin.
+CW387,P307 - IF exposed: P335 - Brush off loose particles from skin.
+CW388,P308 - IF exposed or concerned: P335 - Brush off loose particles from skin.
+CW389,P309 - IF exposed or if you feel unwell: P335 - Brush off loose particles from skin.
+CW390,P333 - If skin irritation occurs or rash occurs: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW391,P302 - IF ON SKIN: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW392,P303 - IF ON SKIN (or hair): P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW393,P305 - IF IN EYES: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW394,P307 - IF exposed: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW395,P308 - IF exposed or concerned: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW396,P309 - IF exposed or if you feel unwell: P336 - Thaw frosted parts with lukewarm water. Do no rub affected area.
+CW397,"P305 - IF IN EYES: P338 - Remove contact lenses, if present and easy to do. Continue rinsing."
+CW398,"P307 - IF exposed: P338 - Remove contact lenses, if present and easy to do. Continue rinsing."
+CW399,"P308 - IF exposed or concerned: P338 - Remove contact lenses, if present and easy to do. Continue rinsing."
+CW400,"P309 - IF exposed or if you feel unwell: P338 - Remove contact lenses, if present and easy to do. Continue rinsing."
+CW401,P304 - IF INHALED: P340 - Remove victim to fresh air and keep at rest in a position comfortable for breathing.
+CW402,P307 - IF exposed: P340 - Remove victim to fresh air and keep at rest in a position comfortable for breathing.
+CW403,P308 - IF exposed or concerned: P340 - Remove victim to fresh air and keep at rest in a position comfortable for breathing.
+CW404,P309 - IF exposed or if you feel unwell: P340 - Remove victim to fresh air and keep at rest in a position comfortable for breathing.
+CW405,P332 - If skin irritation occurs: P350 - Gently wash with plenty of soap and water.
+CW406,P302 - IF ON SKIN: P350 - Gently wash with plenty of soap and water.
+CW407,P303 - IF ON SKIN (or hair): P350 - Gently wash with plenty of soap and water.
+CW408,P306 - IF ON CLOTHING: P350 - Gently wash with plenty of soap and water.
+CW409,P307 - IF exposed: P350 - Gently wash with plenty of soap and water.
+CW410,P308 - IF exposed or concerned: P350 - Gently wash with plenty of soap and water.
+CW411,P309 - IF exposed or if you feel unwell: P350 - Gently wash with plenty of soap and water.
+CW412,P333 - If skin irritation or rash occurs: P351 - Rinse cautiously with water for several minutes.
+CW413,P332 - If skin irritation occurs: P351 - Rinse cautiously with water for several minutes.
+CW414,P302 - IF ON SKIN: P351 - Rinse cautiously with water for several minutes.
+CW415,P303 - IF ON SKIN (or hair): P351 - Rinse cautiously with water for several minutes.
+CW416,P305 - IF IN EYES: P351 - Rinse cautiously with water for several minutes.
+CW417,P306 - IF ON CLOTHING: P351 - Rinse cautiously with water for several minutes.
+CW418,P307 - IF exposed: P351 - Rinse cautiously with water for several minutes.
+CW419,P308 - IF exposed or concerned: P351 - Rinse cautiously with water for several minutes.
+CW420,P309 - IF exposed or if you feel unwell: P351 - Rinse cautiously with water for several minutes.
+CW421,P332 - If skin irritation occurs: P352 - Wash with plenty of soap and water.
+CW422,P302 - IF ON SKIN: P352 - Wash with plenty of soap and water.
+CW423,P303 - IF ON SKIN (or hair): P352 - Wash with plenty of soap and water.
+CW424,P306 - IF ON CLOTHING: P352 - Wash with plenty of soap and water.
+CW425,P307 - IF exposed: P352 - Wash with plenty of soap and water.
+CW426,P308 - IF exposed or concerned: P352 - Wash with plenty of soap and water.
+CW427,P309 - IF exposed or if you feel unwell: P352 - Wash with plenty of soap and water.
+CW428,P332 - If skin irritation occurs: P353 - Rinse skin with water/shower.
+CW429,P302 - IF ON SKIN: P353 - Rinse skin with water/shower.
+CW430,P303 - IF ON SKIN (or hair): P353 - Rinse skin with water/shower.
+CW431,P306 - IF ON CLOTHING: P353 - Rinse skin with water/shower.
+CW432,P307 - IF exposed: P353 - Rinse skin with water/shower.
+CW433,P308 - IF exposed or concerned: P353 - Rinse skin with water/shower.
+CW434,P309 - IF exposed or if you feel unwell: P353 - Rinse skin with water/shower.
+CW435,P332 - If skin irritation occurs: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW436,P302 - IF ON SKIN: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW437,P303 - IF ON SKIN (or hair): P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW438,P306 - IF ON CLOTHING: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW439,P307 - IF exposed: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW440,P308 - IF exposed or concerned: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW441,P309 - IF exposed or if you feel unwell: P360 - Rinse immediately contaminated clothing and skin with plenty of water before removing clothes.
+CW442,P332 - If skin irritation occurs: P361 - Remove/Take off immediately all contaminated clothing.
+CW443,P302 - IF ON SKIN: P361 - Remove/Take off immediately all contaminated clothing.
+CW444,P303 - IF ON SKIN (or hair): P361 - Remove/Take off immediately all contaminated clothing.
+CW445,P306 - IF ON CLOTHING: P361 - Remove/Take off immediately all contaminated clothing.
+CW446,P307 - IF exposed: P361 - Remove/Take off immediately all contaminated clothing.
+CW447,P308 - IF exposed or concerned: P361 - Remove/Take off immediately all contaminated clothing.
+CW448,P309 - IF exposed or if you feel unwell: P361 - Remove/Take off immediately all contaminated clothing.
+CW449,P332 - If skin irritation occurs: P362 - Take off contaminated clothing and wash before reuse.
+CW450,P302 - IF ON SKIN: P362 - Take off contaminated clothing and wash before reuse.
+CW451,P303 - IF ON SKIN (or hair): P362 - Take off contaminated clothing and wash before reuse.
+CW452,P306 - IF ON CLOTHING: P362 - Take off contaminated clothing and wash before reuse.
+CW453,P307 - IF exposed: P362 - Take off contaminated clothing and wash before reuse.
+CW454,P308 - IF exposed or concerned: P362 - Take off contaminated clothing and wash before reuse.
+CW455,P309 - IF exposed or if you feel unwell: P362 - Take off contaminated clothing and wash before reuse.
+CW456,P332 - If skin irritation occurs: P363 - Wash contaminated clothing before reuse.
+CW457,P302 - IF ON SKIN: P363 - Wash contaminated clothing before reuse.
+CW458,P303 - IF ON SKIN (or hair): P363 - Wash contaminated clothing before reuse.
+CW459,P306 - IF ON CLOTHING: P363 - Wash contaminated clothing before reuse.
+CW460,P307 - IF exposed: P363 - Wash contaminated clothing before reuse.
+CW461,P308 - IF exposed or concerned: P363 - Wash contaminated clothing before reuse.
+CW462,P309 - IF exposed or if you feel unwell: P363 - Wash contaminated clothing before reuse.
+CW463,P371 - In case of major fire and large quantities: P374 - Fight fire with normal precautions from a reasonable distance.
+CW464,P371 - In case of major fire and large quantities: P375 - Fight fire remotely due to the risk of explosion.
+CW465,P371 - In case of major fire and large quantities: P380 - Evacuate area.
+CW466,P371 - In case of major fire and large quantities: P381 - Eliminate all ignition sources if safe to do so.
+CW999,OTHER. It requires to provide additional free text with translations.

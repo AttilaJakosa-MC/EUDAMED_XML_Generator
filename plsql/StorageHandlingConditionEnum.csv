@@ -1,0 +1,34 @@
+value,description
+SHC001,Fragile, handle with care
+SHC002,Keep away from sunlight
+SHC003,Protect from heat and radioactive sources
+SHC004,Protect from radioactive sources
+SHC005,Keep dry
+SHC006,Lower limit of temperature *
+SHC007,Upper limit of temperature *
+SHC008,Temperature limit *
+SHC009,Humidity limitation *
+SHC010,Atmospheric pressure limitation *
+SHC012,Dangerous voltage
+SHC013,P401 – Store at… *
+SHC014,P402 – Store in a dry place.
+SHC015,P403 – Store in a well-ventilated place.
+SHC016,P404 – Store in a closed container.
+SHC017,P405 – Store locked up.
+SHC018,P406 – Store in corrosive resistant/… container with a resistant inner liner.
+SHC019,P407 – Maintain air gap between stacks/pallets.
+SHC021,P411 – Store at temperatures not exceeding … oC/…oF. *
+SHC022,P412 – Do not expose to temperatures exceeding 50 oC/122oF. *
+SHC023,P413 – Store bulk masses greater than … kg/… lbs at temperatures not exceeding … oC/…oF. *
+SHC024,P420 – Store away from other materials.
+SHC025,P422 – Store contents below … *
+SHC033,Electrostatic sensitive devices
+SHC035,Do not sterilize
+SHC036,Do not freeze
+SHC037,Do not cut
+SHC038,Do not store near magnets or magnetic devices
+SHC042,Avoid contact with water
+SHC044,This way up
+SHC045,Period-after-opening ... *
+SHC046,Special Storage Conditions (see IFU)
+SHC099,OTHER **
