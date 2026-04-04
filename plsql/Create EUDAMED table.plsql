@@ -50,7 +50,7 @@ WITH
         NULL                            AS ver,
         NULL                            AS pcode,
         NULL                            AS plant,
-        '01'                            AS distchain,
+        NULL                            AS distchain,
         NULL                            AS lang,
         NULL                            AS prver,
         'UDI_DI_LIMIT'                  AS name,
@@ -78,7 +78,7 @@ UNION ALL
         NULL                            AS ver,
         NULL                            AS pcode,
         NULL                            AS plant,
-        '01'                            AS distchain,
+        NULL                            AS distchain,
         NULL                            AS lang,
         NULL                            AS prver,
         'XSD_VERSION'                   AS name,
@@ -96,8 +96,125 @@ UNION ALL
 
 UNION ALL
 
+    -- DEVICE_BASIC_UDI_CREATE_PAYLOAD_ROOT
+    SELECT
+        'EUDAMED'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        NULL                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'DEVICE_BASIC_UDI_CREATE_PAYLOAD_ROOT'
+                                        AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        TO_CLOB('/Push/payload/Device/MDRBasicUDI')
+                                        AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
 
+UNION ALL
 
+    -- DEVICE_UDI_DI_CREATE_PAYLOAD_ROOT
+    SELECT
+        'EUDAMED'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        NULL                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'DEVICE_UDI_DI_CREATE_PAYLOAD_ROOT'
+                                        AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        TO_CLOB('/Push/payload/Device/MDRUDIDIData')
+                                        AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+    
+UNION ALL
+
+    -- BASIC_UDI_UPDATE_PAYLOAD_ROOT
+    SELECT
+        'EUDAMED'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        NULL                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'BASIC_UDI_UPDATE_PAYLOAD_ROOT'
+                                        AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        TO_CLOB('/Push/payload/BasicUDI')
+                                        AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI_DI_PAYLOAD_ROOT
+    SELECT
+        'EUDAMED'                       AS rowtype,
+        NULL                            AS semi,
+        NULL                            AS fin,
+        NULL                            AS div,
+        NULL                            AS prodgr,
+        NULL                            AS ver,
+        NULL                            AS pcode,
+        NULL                            AS plant,
+        NULL                            AS distchain,
+        NULL                            AS lang,
+        NULL                            AS prver,
+        'UDI_DI_PAYLOAD_ROOT'
+                                        AS name,
+        NULL                            AS dpt_l,
+        NULL                            AS dpt_h,
+        NULL                            AS cyl_l,
+        NULL                            AS cyl_h,
+        NULL                            AS partno,
+        TO_CLOB('/Push/payload/UDIDIData')
+                                        AS valtext,
+        NULL                            AS valnom,
+        NULL                            AS valmin,
+        NULL                            AS valmax,
+        NULL                            AS validfrom
+    FROM DUAL
+
+UNION ALL
 
     -- Device create envelope for Medicontur HQ International Distribution Channel
     SELECT
