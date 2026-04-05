@@ -797,7 +797,7 @@ UNION ALL
 
 UNION ALL
 
-    -- Risk class by division
+    -- BasicUDI/Risk class by division
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -810,7 +810,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'basicudi/MDRBasicUDI/riskClass'            AS name,
+        'basicudi/riskClass'                        AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -825,8 +825,89 @@ UNION ALL
         NULL                                        AS validfrom
     FROM divisions
 
+UNION ALL
 
+    -- BasicUDI/Issuing entity by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/identifier/issuingEntityCode'     AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('GS1')                              AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
 
+UNION ALL
+
+    -- BasicUDI/Animal Tissues Cells entity by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/animalTissuesCells'              AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('false')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
+
+UNION ALL
+
+    -- BasicUDI/Human Tissues Cells entity by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/humanTissuesCells'                AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('false')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
 
 
 
