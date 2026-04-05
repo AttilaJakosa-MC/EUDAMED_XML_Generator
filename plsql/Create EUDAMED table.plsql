@@ -945,6 +945,35 @@ UNION ALL
 
 UNION ALL
 
+    -- BasicUDI/implantable by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/implantable'                      AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB(CASE WHEN div IN ('01', '11') THEN 'true' 
+                     ELSE 'false' END)              AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
+
+UNION ALL
+
     -- BasicUDI/humanProductCheck by division
     SELECT
         'EUDAMED'                                   AS rowtype,
