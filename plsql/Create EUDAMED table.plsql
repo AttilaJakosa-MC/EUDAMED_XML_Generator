@@ -25,8 +25,8 @@ WITH
         SELECT /*+ MATERIALIZE */ DISTINCT model
         FROM transferable_parts tp
         WHERE
-            (SELECT COUNT(*) FROM model_list) = 0
-            OR tp.model IN (SELECT model FROM model_list)
+            ((SELECT COUNT(*) FROM model_list) = 0
+            OR tp.model IN (SELECT model FROM model_list)) AND tp.model not like 'PF%'
     ),
 
     filtered_models_ver AS (
@@ -1200,6 +1200,148 @@ UNION ALL
     FROM divisions d
     CROSS JOIN distchannels dc
 
+UNION ALL
+
+    -- BasicUDI/Lens Medicontur model
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/model'                            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('''=PRODGR')                        AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM dual
+
+UNION ALL
+
+    -- BasicUDI/identifier/UDICode by filtered_models
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/identifier/UDICode'               AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB(CASE fm.model
+            WHEN '640PM' THEN '599302640PMYV'
+            WHEN '677AD' THEN '599302677ADYN'
+            WHEN '677ADY' THEN '599302677ADYRD'
+            WHEN '677CMTY' THEN '599302677CMTYP3'
+            WHEN '677CMY' THEN '599302677CMYSJ'
+            WHEN '677CTAY' THEN '599302677CTAYND'
+            WHEN '677MTY' THEN '599302677MTYUR'
+            WHEN '677MY' THEN '599302677MY37'
+            WHEN '677P' THEN '599302677PE9'
+            WHEN '677PMY' THEN '599302677PMYUK'
+            WHEN '677PY' THEN '599302677PY3G'
+            WHEN '677TAY' THEN '599302677TAYU3'
+            WHEN '690AD' THEN '599302690ADXZ'
+            WHEN '690ADY' THEN '599302690ADYQJ'
+            WHEN '690CMTY' THEN '599302690CMTYMG'
+            WHEN '690CMY' THEN '599302690CMYRP'
+            WHEN '690CTAY' THEN '599302690CTAYLS'
+            WHEN '690MTY' THEN '599302690MTYTW'
+            WHEN '690MY' THEN '599302690MY2J'
+            WHEN '690TAY' THEN '599302690TAYT8'
+            WHEN '640AD' THEN '599302640ADWW'
+            WHEN '640ADY' THEN '599302640ADYNT'
+            WHEN '640CMY' THEN '599302640CMYPY'
+            WHEN '640MY' THEN '599302640MYZC'
+            WHEN '640P' THEN '599302640PD5'
+            WHEN '640PY' THEN '599302640PYZM'
+            WHEN '677CTA' THEN '599302677CTARP'
+            WHEN '677M' THEN '599302677ME3'
+            WHEN '677MT' THEN '599302677MT2V'
+            WHEN '677TA' THEN '599302677TA2C'
+            WHEN '690CM' THEN '599302690CMYR'
+            WHEN '690CTA' THEN '599302690CTAQU'
+            WHEN '690TA' THEN '599302690TAZL'
+            WHEN '860PT' THEN '599302860PT2J'
+            WHEN '860PTY' THEN '599302860PTYU6'
+            WHEN '860PETY' THEN '599302860PETYNW'
+            WHEN '877PT' THEN '599302877PT3U'
+            WHEN '877PTY' THEN '599302877PTYW2'
+            WHEN '877PETY' THEN '599302877PETYRQ'
+            WHEN 'A45DT' THEN '599302A45DT4H'
+            WHEN 'A45RD2' THEN '599302A45RD2U9'
+            WHEN 'A45RT' THEN '599302A45RT5T'
+            WHEN 'A45SML' THEN '599302A45SMLWT'
+            WHEN 'A46R' THEN '599302A46RFZ'
+            WHEN 'A4EDF1' THEN '599302A4EDF1VG'
+            WHEN 'A4EDF2' THEN '599302A4EDF2VJ'
+            WHEN '613AD' THEN '599302613ADWQ'
+            WHEN '860FAB' THEN '599302860FABPD'
+            WHEN '877FAB' THEN '599302877FABR9'
+            WHEN '860FABY' THEN '599302860FABYJE'
+            WHEN '877EBY' THEN '599302877EBYSM'
+            WHEN '877FABY' THEN '599302877FABYM8'
+            WHEN '860PA' THEN '599302860PAZ9'
+            WHEN '877PA' THEN '599302877PA2N'
+            WHEN '860PAY' THEN '599302860PAYSD'
+            WHEN '860PEY' THEN '599302860PEYSR'
+            WHEN '877PAY' THEN '599302877PAYU9'
+            WHEN '877PEY' THEN '599302877PEYUM'
+        END)                                        AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM filtered_models fm
+
+/*
+    -- BasicUDI/Lens model by filtered_models
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/model'                            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('''=PRODGR')                        AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM filtered_models fm
+*/
 
 
 --FROM portfolio_data pd
