@@ -38,6 +38,13 @@ WITH
             (SELECT COUNT(*) FROM model_list) = 0
             OR tp.model IN (SELECT model FROM model_list)
         GROUP BY model
+    ),
+
+    divisions AS (
+        SELECT '01' AS div FROM DUAL UNION ALL
+        SELECT '10' AS div FROM DUAL UNION ALL
+        SELECT '11' AS div FROM DUAL UNION ALL
+        SELECT '12' AS div FROM DUAL
     )
 
     -- UDI-DI limit for one xml file, Eudamed
@@ -790,31 +797,33 @@ UNION ALL
 
 UNION ALL
 
-    -- Actor code for 1stQ distribution channel
+    -- Risk class by division
     SELECT
-        'EUD_ENV'                       AS rowtype,
-        NULL                            AS semi,
-        NULL                            AS fin,
-        NULL                            AS div,
-        NULL                            AS prodgr,
-        NULL                            AS ver,
-        NULL                            AS pcode,
-        NULL                            AS plant,
-        '40'                            AS distchain,
-        NULL                            AS lang,
-        NULL                            AS prver,
-        'sender/node/NodeActorCode'     AS name,
-        NULL                            AS dpt_l,
-        NULL                            AS dpt_h,
-        NULL                            AS cyl_l,
-        NULL                            AS cyl_h,
-        NULL                            AS partno,
-        TO_CLOB('DE-MF-0000?????')               AS valtext,
-        NULL                            AS valnom,
-        NULL                            AS valmin,
-        NULL                            AS valmax,
-        NULL                            AS validfrom
-    FROM DUAL
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/MDRBasicUDI/riskClass'            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB(CASE WHEN div IN ('01', '10', '11') THEN 'CLASS_IIB' 
+                     ELSE 'CLASS_IIA' END)
+                                                    AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
 
 
 
