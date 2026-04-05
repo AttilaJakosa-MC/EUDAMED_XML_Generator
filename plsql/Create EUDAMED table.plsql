@@ -1170,6 +1170,35 @@ UNION ALL
 
 UNION ALL
 
+    -- BasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB(CASE WHEN div = '01' THEN '2265' 
+                     ELSE '1639' END)               AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
+
+UNION ALL
+
     -- BasicUDI/MF Actor Code entity by division and distchain
     SELECT
         'EUDAMED'                                   AS rowtype,
