@@ -50,6 +50,10 @@ WITH
     distchannels AS (
         SELECT '01' AS distchain FROM DUAL UNION ALL
         SELECT '40' AS distchain FROM DUAL
+    ),
+
+    non_iol_parts AS (
+        SELECT /*+ MATERIALIZE */ * FROM TABLE(Get_Transferable_Parts_NON_IOL_table()) WHERE eudamed = 'x'
     )
 
     -- UDI-DI limit for one xml file, Eudamed
@@ -1371,6 +1375,62 @@ UNION ALL
         NULL                                        AS valmax,
         NULL                                        AS validfrom
     FROM filtered_models fm
+
+UNION ALL
+
+    -- BasicUDI/identifier/UDICode by non_iol_parts
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        p.div                                       AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/identifier/UDICode'               AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        p.SAP_part_no                               AS partno,
+        TO_CLOB(p.Basic_UDI)                        AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM non_iol_parts p
+
+UNION ALL
+
+    -- BasicUDI/model by non_iol_parts
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        p.div                                       AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'basicudi/model'                            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        p.SAP_part_no                               AS partno,
+        TO_CLOB(p.prodgr)                           AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM non_iol_parts p
 
 /*
     -- BasicUDI/Lens model by filtered_models
