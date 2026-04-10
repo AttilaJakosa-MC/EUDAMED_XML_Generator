@@ -49,13 +49,11 @@ defaults:
 
   # Clinical Sizes - Optical Power (Dioptre)
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/clinicalSizeType: CST38
-  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/minimum: 0.0
-  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/maximum: 30.0
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/value: 20.0
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[0]/valueUnit: MU104
   # Clinical Sizes - Cylinder Power (Dioptre)
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/clinicalSizeType: CST39
-  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/minimum: 0.0
-  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/maximum: 6.0
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/value: 3.0
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/valueUnit: MU104
 
   # Storage Handling Conditions (Temperature min/max)
