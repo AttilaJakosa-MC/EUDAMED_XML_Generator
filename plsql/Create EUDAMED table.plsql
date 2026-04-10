@@ -60,7 +60,7 @@ WITH
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -74,7 +74,7 @@ WITH
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         NULL                            AS valtext,
         300                             AS valnom,
         NULL                            AS valmin,
@@ -88,7 +88,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -102,7 +102,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         TO_CLOB('3.0.28')               AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
@@ -116,7 +116,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -131,7 +131,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         TO_CLOB('/Push/payload/Device/MDRBasicUDI')
                                         AS valtext,
         NULL                            AS valnom,
@@ -146,7 +146,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -161,7 +161,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         TO_CLOB('/Push/payload/Device/MDRUDIDIData')
                                         AS valtext,
         NULL                            AS valnom,
@@ -176,7 +176,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -191,7 +191,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         TO_CLOB('/Push/payload/BasicUDI')
                                         AS valtext,
         NULL                            AS valnom,
@@ -206,7 +206,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -221,7 +221,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         TO_CLOB('/Push/payload/UDIDIData')
                                         AS valtext,
         NULL                            AS valnom,
@@ -236,7 +236,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -250,7 +250,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
@@ -311,7 +311,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -325,7 +325,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
     TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
     <m:Push
     xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
@@ -386,7 +386,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -400,7 +400,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
@@ -458,7 +458,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -472,7 +472,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
@@ -533,7 +533,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -547,7 +547,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
@@ -605,7 +605,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -619,7 +619,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
@@ -677,7 +677,7 @@ UNION ALL
     SELECT
         'EUDAMED'                       AS rowtype,
         NULL                            AS semi,
-        NULL                            AS fin,
+        'P'                             AS fin,
         NULL                            AS div,
         NULL                            AS prodgr,
         NULL                            AS ver,
@@ -691,7 +691,7 @@ UNION ALL
         NULL                            AS dpt_h,
         NULL                            AS cyl_l,
         NULL                            AS cyl_h,
-        NULL                            AS partno,
+        'EUDAMED_DRIVER_FIELD'          AS partno,
         TO_CLOB(q'~XML_OBJECT_ORDER	[
   { elementLocalName: 'Device', namespacePrefix: 'device', correctOrder: ['MDRBasicUDI', 'MDRUDIDIData'], },
   { elementLocalName: 'MDRBasicUDI', parentLocalName: 'Device', namespacePrefix: 'device', correctOrder: ['state', 'version', 'versionDate', 'riskClass', 'model', 'modelName', 'identifier', 'certificateLinks', 'lastUpdated', 'animalTissuesCells', 'ARActorCode', 'humanTissuesCells', 'MFActorCode', 'ARComments', 'clinicalInvestigationLinks', 'deviceCertificateLinks', 'humanProductCheck', 'IIb_implantable_exceptions', 'medicinalProductCheck', 'specialDevice', 'type', 'active', 'administeringMedicine', 'implantable', 'measuringFunction', 'reusable',], },
@@ -810,7 +810,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -840,7 +840,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -869,7 +869,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -897,7 +897,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -925,7 +925,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -953,7 +953,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -982,7 +982,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1010,7 +1010,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1038,7 +1038,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1066,7 +1066,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1094,7 +1094,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1122,7 +1122,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1150,7 +1150,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1178,7 +1178,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1207,7 +1207,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1235,7 +1235,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         d.div                                       AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1267,7 +1267,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1295,7 +1295,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         fm.model                                    AS prodgr,
         NULL                                        AS ver,
@@ -1382,7 +1382,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         p.div                                       AS div,
         p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
@@ -1410,7 +1410,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         p.div                                       AS div,
         p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
@@ -1438,7 +1438,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         fm.model                                    AS prodgr,
         NULL                                        AS ver,
@@ -1447,7 +1447,7 @@ UNION ALL
         '01'                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/basicUDIIdentifier/DICode'          AS name,
+        'udidi/basicUDIIdentifier/DICode'          AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1525,7 +1525,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         p.div                                       AS div,
         p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
@@ -1534,7 +1534,7 @@ UNION ALL
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/basicUDIIdentifier/DICode'          AS name,
+        'udidi/basicUDIIdentifier/DICode'          AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1553,7 +1553,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1562,7 +1562,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/basicUDIIdentifier/issuingEntityCode' AS name,
+        'udidi/basicUDIIdentifier/issuingEntityCode' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1586,7 +1586,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1595,7 +1595,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/identifier/DICode'                  AS name,
+        'udidi/identifier/DICode'                  AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1614,7 +1614,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1623,7 +1623,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/identifier/issuingEntityCode'       AS name,
+        'udidi/identifier/issuingEntityCode'       AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1640,7 +1640,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1649,7 +1649,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/referenceNumber'                    AS name,
+        'udidi/referenceNumber'                    AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1668,7 +1668,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1677,7 +1677,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/sterile'                            AS name,
+        'udidi/sterile'                            AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1696,7 +1696,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1705,7 +1705,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/sterilization'                      AS name,
+        'udidi/sterilization'                      AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1724,7 +1724,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1733,7 +1733,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/website'                            AS name,
+        'udidi/website'                            AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1752,7 +1752,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1761,7 +1761,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/numberOfReuses'                     AS name,
+        'udidi/numberOfReuses'                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1780,7 +1780,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1789,7 +1789,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/baseQuantity'                       AS name,
+        'udidi/baseQuantity'                       AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1808,7 +1808,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1817,7 +1817,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/latex'                              AS name,
+        'udidi/latex'                              AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1836,7 +1836,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         div                                         AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1845,7 +1845,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/reprocessed'                        AS name,
+        'udidi/reprocessed'                        AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1865,7 +1865,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1874,7 +1874,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/clinicalSizes/clinicalSize[0]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[0]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -1895,7 +1895,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1904,7 +1904,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/clinicalSizes/clinicalSize[0]/value'
+        'udidi/clinicalSizes/clinicalSize[0]/value'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -1925,7 +1925,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1934,7 +1934,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/clinicalSizes/clinicalSize[0]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[0]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -1956,7 +1956,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1965,7 +1965,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/clinicalSizes/clinicalSize[1]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[1]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -1986,7 +1986,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -1995,7 +1995,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/clinicalSizes/clinicalSize[1]/value'
+        'udidi/clinicalSizes/clinicalSize[1]/value'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -2016,7 +2016,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         NULL                                        AS prodgr,
         NULL                                        AS ver,
@@ -2025,7 +2025,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udi_di/clinicalSizes/clinicalSize[1]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[1]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -2045,7 +2045,7 @@ UNION ALL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
-        NULL                                        AS fin,
+        'P'                                         AS fin,
         '01'                                        AS div,
         fm.model                                    AS prodgr,
         NULL                                        AS ver,
