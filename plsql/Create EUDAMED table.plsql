@@ -1577,6 +1577,39 @@ UNION ALL
 
 UNION ALL
 
+-----------------------------------------------------------------------
+--UDI-DI section-------------------------------------------------------
+-----------------------------------------------------------------------
+
+
+    -- UDI-DI/identifier/DICode by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udi_di/identifier/DICode'                  AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB(q'[{{SAP_GTIN}}]')                  AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
+
+UNION ALL
+
     -- UDI-DI/identifier/issuingEntityCode by division
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -1597,6 +1630,32 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
         TO_CLOB('GS1')                              AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions
+
+    -- UDI-DI/referenceNumber by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        NULL                                        AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udi_di/referenceNumber'                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB(q'[{{SAP_GTIN}}]')                  AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
