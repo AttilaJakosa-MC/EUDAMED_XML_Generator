@@ -482,17 +482,19 @@ def render_input_fields(element, type_obj, parent_key, state_container, xml_path
                 # Auto-detect concrete type from config by checking extension-only fields
                 selected_derived = None
                 if config_defaults:
+                    best_match_count = 0
                     for dt in derived_types:
+                        match_count = 0
                         if dt.content:
                             for p in dt.content.iter_model():
                                 if isinstance(p, xmlschema.validators.XsdElement) and p.local_name not in base_fields:
                                     test_path = f"{current_path}/{p.local_name}"
                                     clean_test = re.sub(r'\[\d+\]', '', test_path)
                                     if test_path in config_defaults or clean_test in config_defaults:
-                                        selected_derived = dt
-                                        break
-                        if selected_derived:
-                            break
+                                        match_count += 1
+                        if match_count > best_match_count:
+                            best_match_count = match_count
+                            selected_derived = dt
 
                 if selected_derived:
                     effective_type = selected_derived
