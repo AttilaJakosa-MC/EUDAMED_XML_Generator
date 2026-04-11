@@ -1174,7 +1174,7 @@ UNION ALL
 
 UNION ALL
 
-    -- BasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode by division
+    -- BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/NBActorCode by division
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -1187,7 +1187,7 @@ UNION ALL
         '01'                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'basicudi/deviceCertificateLinks/deviceCertificateLink[0]/NBActorCode' AS name,
+        'basicudi/deviceCertificateLinks/deviceCertificateLink[1]/NBActorCode' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1203,7 +1203,7 @@ UNION ALL
 
 UNION ALL
 
-    -- BasicUDI/deviceCertificateLinks/deviceCertificateLink[0]/certificateType by division
+    -- BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/certificateType by division
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -1216,7 +1216,7 @@ UNION ALL
         '01'                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'basicudi/deviceCertificateLinks/deviceCertificateLink[0]/certificateType' AS name,
+        'basicudi/deviceCertificateLinks/deviceCertificateLink[1]/certificateType' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1862,99 +1862,8 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[0]/clinicalSizeType
-    -- Diopter clicicalSizeType
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '01'                                        AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        NULL                                        AS distchain,
-        NULL                                        AS lang,
-        NULL                                        AS prver,
-        'udidi/clinicalSizes/clinicalSize[0]/clinicalSizeType'
-                                                    AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS partno,
-        TO_CLOB('CST38')                            AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        NULL                                        AS validfrom
-    FROM DUAL
-
-UNION ALL
-
-    -- UDI-DI/clinicalSizes/clinicalSize[0]/value
-    -- Diopter clinical size value
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '01'                                        AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        NULL                                        AS distchain,
-        NULL                                        AS lang,
-        NULL                                        AS prver,
-        'udidi/clinicalSizes/clinicalSize[0]/value'
-                                                    AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS partno,
-        TO_CLOB('''=TEXT(DPT,"0.###")')             AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        NULL                                        AS validfrom
-    FROM DUAL
-
-UNION ALL
-
-    -- UDI-DI/clinicalSizes/clinicalSize[0]/valueUnit
-    -- Diopter clinical size unit
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '01'                                        AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        NULL                                        AS distchain,
-        NULL                                        AS lang,
-        NULL                                        AS prver,
-        'udidi/clinicalSizes/clinicalSize[0]/valueUnit'
-                                                    AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS partno,
-        TO_CLOB('MU104')                            AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        NULL                                        AS validfrom
-    FROM DUAL
-
-UNION ALL
-
     -- UDI-DI/clinicalSizes/clinicalSize[1]/clinicalSizeType
-    -- Cylinder clicicalSizeType
-
+    -- Diopter clicicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -1974,7 +1883,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('CST39')                            AS valtext,
+        TO_CLOB('CST38')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -1984,7 +1893,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[1]/value
-    -- Cylinder clinical size value
+    -- Diopter clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2004,7 +1913,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('''=TEXT(CYL,"0.###")')             AS valtext,
+        TO_CLOB('''=TEXT(DPT,"0.###")')             AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -2014,7 +1923,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[1]/valueUnit
-    -- Cylinder clinical size unit
+    -- Diopter clinical size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2044,7 +1953,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[2]/clinicalSizeType
-    -- Optical Zone Diameter clinicalSizeType
+    -- Cylinder clicicalSizeType
 
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -2065,7 +1974,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('CST43')                            AS valtext,
+        TO_CLOB('CST39')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -2075,7 +1984,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[2]/value
-    -- Optical Zone Diameter clinical size value
+    -- Cylinder clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2095,7 +2004,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('6.0')                              AS valtext,
+        TO_CLOB('''=TEXT(CYL,"0.###")')             AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -2105,7 +2014,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[2]/valueUnit
-    -- Optical Zone Diameter clinical size unit (mm)
+    -- Cylinder clinical size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2125,7 +2034,188 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
+        TO_CLOB('MU104')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/clinicalSizeType
+    -- Optical Zone Diameter clinicalSizeType
+
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[3]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('CST43')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/value
+    -- Optical Zone Diameter clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[3]/value'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('6.0')                              AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/valueUnit
+    -- Optical Zone Diameter clinical size unit (mm)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[3]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
         TO_CLOB('MU50')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/clinicalSizeType
+    -- Total Diameter clinicalSizeType
+
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[4]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('CST9')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/value
+    -- Total Diameter clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[4]/value' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('''=IFS(LEFT(PRODGR, 3) = "640", 11, LEFT(PRODGR, 4) = "PFIS", 12, LEFT(PRODGR, 4) = "PFIX", 14, TRUE, 13)') AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/valueUnit
+    -- Total Diameter clinical size unit
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[4]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('MU104')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
