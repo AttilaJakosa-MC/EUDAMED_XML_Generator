@@ -55,6 +55,10 @@ defaults:
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/clinicalSizeType: CST39
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/value: 3.0
   Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[1]/valueUnit: MU104
+  # Clinical Sizes - Optical Zone Diameter (mm)
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[2]/clinicalSizeType: CST43
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[2]/value: 6.0
+  Push/payload/MDRDevice/MDRUDIDIData/clinicalSizes/clinicalSize[2]/valueUnit: MU50
 
   # Storage Handling Conditions (Temperature min/max)
   Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/storageHandlingConditionValue: SHC006

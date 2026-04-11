@@ -1636,6 +1636,8 @@ UNION ALL
         NULL                                        AS validfrom
     FROM divisions
 
+UNION ALL
+
     -- UDI-DI/referenceNumber by division
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -1649,7 +1651,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/referenceNumber'                    AS name,
+        'udidi/referenceNumber'                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1677,7 +1679,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/sterile'                            AS name,
+        'udidi/sterile'                             AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1705,7 +1707,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/sterilization'                      AS name,
+        'udidi/sterilization'                       AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1733,7 +1735,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/website'                            AS name,
+        'udidi/website'                             AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1761,7 +1763,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/numberOfReuses'                     AS name,
+        'udidi/numberOfReuses'                      AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1789,7 +1791,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/baseQuantity'                       AS name,
+        'udidi/baseQuantity'                        AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1817,7 +1819,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/latex'                              AS name,
+        'udidi/latex'                               AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1845,7 +1847,7 @@ UNION ALL
         NULL                                        AS distchain,
         NULL                                        AS lang,
         NULL                                        AS prver,
-        'udidi/reprocessed'                        AS name,
+        'udidi/reprocessed'                         AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1911,7 +1913,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('=TEXT(DPT,"0.###")')               AS valtext,
+        TO_CLOB('''=TEXT(DPT,"0.###")')             AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -2002,7 +2004,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('=TEXT(CYL,"0.###")')               AS valtext,
+        TO_CLOB('''=TEXT(CYL,"0.###")')             AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -2033,6 +2035,97 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
         TO_CLOB('MU104')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[2]/clinicalSizeType
+    -- Optical Zone Diameter clinicalSizeType
+
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[2]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('CST43')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[2]/value
+    -- Optical Zone Diameter clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[2]/value'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('6.0')                              AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[2]/valueUnit
+    -- Optical Zone Diameter clinical size unit (mm)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[2]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('MU50')                             AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
