@@ -2185,7 +2185,7 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        TO_CLOB('''=IFS(LEFT(PRODGR, 3) = "640", 11, LEFT(PRODGR, 4) = "PFIS", 12, LEFT(PRODGR, 4) = "PFIX", 14, TRUE, 13)') AS valtext,
+        TO_CLOB('''=IFS(LEFT(PRODGR, 3) = "640", IF(DPT >= 15.5, 10.7, 11), LEFT(PRODGR, 4) = "PFIS", 12, LEFT(PRODGR, 4) = "PFIX", 14, TRUE, 13)') AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
