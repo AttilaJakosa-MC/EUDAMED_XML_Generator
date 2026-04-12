@@ -2275,15 +2275,15 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS partno,
-        NULL                                        AS valtext,
         CASE
-            WHEN fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY') THEN 3.5
-            WHEN fm.model IN ('860PETY', '860PEY', '877PETY', '877PEY') THEN 1.55
-            WHEN fm.model IN ('A45DT', 'A45RD2') THEN 3
-            WHEN fm.model IN ('A4EDF1') THEN 1.75
-            WHEN fm.model IN ('A4EDF2') THEN 2.25
-            WHEN fm.model IN ('A45SML') THEN 10
-        END                                         AS valnom,
+            WHEN fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY') THEN TO_CLOB('3.5')
+            WHEN fm.model IN ('860PETY', '860PEY', '877PETY', '877PEY') THEN TO_CLOB('1.55')
+            WHEN fm.model IN ('A45DT', 'A45RD2') THEN TO_CLOB('3')
+            WHEN fm.model IN ('A4EDF1') THEN TO_CLOB('1.75')
+            WHEN fm.model IN ('A4EDF2') THEN TO_CLOB('2.25')
+            WHEN fm.model IN ('A45SML') THEN TO_CLOB('10')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom
@@ -2320,6 +2320,103 @@ UNION ALL
         NULL                                        AS validfrom
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[6]/clinicalSizeType
+    -- Addition Power Intermediate, clinicalSizeType
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[6]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('CST40')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM filtered_models fm
+    WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[6]/value
+    -- Addition Power Intermediate, clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[6]/value' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        CASE
+            WHEN fm.model IN ('677CMTY', '677MT', '677MTY', '690MTY') THEN TO_CLOB('''=IFS(DPT < 15, 1.35, DPT < 25, 1.55, TRUE, 1.7)')
+            WHEN fm.model IN ('A45DT') THEN TO_CLOB('1')
+            WHEN fm.model IN ('A45RD2') THEN TO_CLOB('1.1')
+            WHEN fm.model IN ('640CMY', '640MY', '677CMY', '677MY', '690MY') THEN TO_CLOB('1.55')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM filtered_models fm
+    WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[6]/valueUnit
+    -- Addition Power Intermediate, clinical size unit
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[6]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('MU104')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM filtered_models fm
+    WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
 
 
 /*
