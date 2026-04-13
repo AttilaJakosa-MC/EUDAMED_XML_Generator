@@ -2418,6 +2418,102 @@ UNION ALL
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
 
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[7]/clinicalSizeType
+    -- Concentration clinicalSizeType
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[7]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('CST5')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[7]/value
+    -- Concentration clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        p.pcode                                     AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[7]/value' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        p.SAP_part_no                               AS partno,
+        CASE
+            WHEN p.SAP_part_no = 'TV-010-3001-B-00' THEN TO_CLOB('1.6')
+            WHEN p.SAP_part_no = 'TV-010-3002-B-00' THEN TO_CLOB('1.8')
+            WHEN p.SAP_part_no = 'TV-010-3003-B-00' THEN TO_CLOB('3.0')
+            WHEN p.SAP_part_no = 'FV-010-3100-A-B0' THEN TO_CLOB('2.0')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM non_iol_parts p
+    WHERE p.div = '10'
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[7]/valueUnit
+    -- Concentration clinical size unit (%)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[7]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('MU01')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
 
 /*
     -- BasicUDI/Lens model by filtered_models
