@@ -2569,7 +2569,7 @@ UNION ALL
         CASE
             WHEN p.SAP_part_no IN ('FJ-011-4101-A-B0', 'FJ-011-4101-A-M0') THEN TO_CLOB('13.0')
             WHEN p.SAP_part_no IN ('FJ-011-4100-A-B0', 'FJ-011-4100-A-M0') THEN TO_CLOB('14.5')
-            ELSE '??'
+            ELSE TO_CLOB('??')
         END                                         AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -2607,6 +2607,130 @@ UNION ALL
         NULL                                        AS valmax,
         NULL                                        AS validfrom
     FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/storageHandlingConditions/condition[1]/storageHandlingConditionValue
+    -- Low Temp Handling Condition Value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/storageHandlingConditions/condition[1]/storageHandlingConditionValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('SHC006')                           AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/storageHandlingConditions/condition[1]/comments/name[1]/textValue
+    -- Low Temp Handling Condition Limit
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/storageHandlingConditions/condition[1]/comments/name[1]/textValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        CASE
+            WHEN d.div IN ('01', '11', '12') THEN TO_CLOB('15')
+            WHEN d.div = '10' THEN TO_CLOB('2')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/storageHandlingConditions/condition[2]/storageHandlingConditionValue
+    -- High Temp Handling Condition Value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/storageHandlingConditions/condition[2]/storageHandlingConditionValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('SHC007')                           AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/storageHandlingConditions/condition[2]/comments/name[1]/textValue
+    -- High Temp Handling Condition Limit
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/storageHandlingConditions/condition[2]/comments/name[1]/textValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        CASE
+            WHEN d.div IN ('01', '12') THEN TO_CLOB('35')
+            WHEN d.div IN ('10', '11') THEN TO_CLOB('25')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM divisions d
 
 
 /*
