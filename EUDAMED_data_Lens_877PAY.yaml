@@ -62,9 +62,12 @@ defaults:
 
   # Storage Handling Conditions (Temperature min/max)
   Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/storageHandlingConditionValue: SHC006
-  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/comments/name[0]/textValue: 10
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[0]/comments/name[0]/textValue: 15
   Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/storageHandlingConditionValue: SHC007
   Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[1]/comments/name[0]/textValue: 25
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[2]/storageHandlingConditionValue: SHC002
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[3]/storageHandlingConditionValue: SHC005
+  Push/payload/MDRDevice/MDRUDIDIData/storageHandlingConditions/condition[4]/storageHandlingConditionValue: SHC036
 
   # Critical Warnings
   Push/payload/MDRDevice/MDRUDIDIData/criticalWarnings/warning[0]/warningValue: CW010

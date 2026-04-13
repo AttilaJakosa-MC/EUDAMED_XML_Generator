@@ -79,7 +79,8 @@ WITH
         300                             AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'UDI-DI limit for one xml file, Eudamed' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -107,7 +108,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'Eudamed XSD schema version. Mandatory for upload' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -137,7 +139,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'DEVICE_BASIC_UDI_CREATE_PAYLOAD_ROOT' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -167,7 +170,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'DEVICE_UDI_DI_CREATE_PAYLOAD_ROOT' AS "_remark"
     FROM DUAL
     
 UNION ALL
@@ -197,7 +201,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'BASIC_UDI_UPDATE_PAYLOAD_ROOT' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -227,7 +232,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'UDI_DI_PAYLOAD_ROOT'           AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -302,7 +308,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'Device create envelope for Medicontur HQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -377,7 +384,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'Device create envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -449,7 +457,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'Basic UDI Update envelope for Medicontur HQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -521,7 +530,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'Basic UDI Update envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
 
@@ -596,7 +606,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'UDI-DI envelope for Medicontur HQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -668,7 +679,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'UDI-DI envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -801,7 +813,8 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom
+        NULL                            AS validfrom,
+        'XML Object order'              AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -831,7 +844,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/Risk class by division'           AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -860,7 +874,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/type by division'                 AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -888,7 +903,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/Issuing entity by division'       AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -916,7 +932,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/Animal Tissues Cells entity by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -944,7 +961,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/Human Tissues Cells entity by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -973,7 +991,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/implantable by division'          AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1001,7 +1020,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/humanProductCheck by division'    AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1029,7 +1049,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/IIb_implantable_exceptions by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1057,7 +1078,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/medicinalProductCheck by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1085,7 +1107,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/active by division'               AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1113,7 +1136,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/administeringMedicine by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1141,7 +1165,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/measuringFunction by division'    AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1169,7 +1194,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/reusable by division'             AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1198,7 +1224,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/NBActorCode by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1226,7 +1253,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/certificateType by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1257,7 +1285,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/MF Actor Code entity by division and distchain' AS "_remark"
     FROM divisions d
     CROSS JOIN distchannels dc
 
@@ -1286,7 +1315,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/Lens Medicontur model'            AS "_remark"
     FROM dual
 
 UNION ALL
@@ -1373,7 +1403,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/identifier/UDICode by filtered_models' AS "_remark"
     FROM filtered_models fm
 
 UNION ALL
@@ -1401,7 +1432,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/identifier/UDICode by non_iol_parts' AS "_remark"
     FROM non_iol_parts p
 
 UNION ALL
@@ -1429,7 +1461,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'BasicUDI/model by non_iol_parts'           AS "_remark"
     FROM non_iol_parts p
 
 UNION ALL
@@ -1516,7 +1549,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/basicUDIIdentifier/DICode by filtered_models' AS "_remark"
     FROM filtered_models fm
 
 UNION ALL
@@ -1544,7 +1578,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/basicUDIIdentifier/DICode by non_iol_parts' AS "_remark"
     FROM non_iol_parts p
 
 UNION ALL
@@ -1572,7 +1607,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/basicUDIIdentifier/issuingEntityCode by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1605,7 +1641,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'GTIN by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1633,7 +1670,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/identifier/issuingEntityCode by division' AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1661,7 +1699,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/referenceNumber by division'        AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1689,7 +1728,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/sterile by division'                AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1717,7 +1757,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/sterilization by division'          AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1745,7 +1786,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/website by division'                AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1773,7 +1815,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/numberOfReuses by division'         AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1801,7 +1844,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/baseQuantity by division'           AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1829,7 +1873,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/latex by division'                  AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1857,7 +1902,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'UDI-DI/reprocessed by division'            AS "_remark"
     FROM divisions
 
 UNION ALL
@@ -1887,7 +1933,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Diopter clinicalSizeType' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -1917,7 +1964,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Diopter clinical size value' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -1947,7 +1995,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Diopter clinical size unit' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -1978,7 +2027,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Cylinder clicicalSizeType' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2008,7 +2058,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Cylinder clinical size value' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2038,7 +2089,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Cylinder clinical size unit' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2069,7 +2121,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Optical Zone Diameter clinicalSizeType' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2099,7 +2152,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Optical Zone Diameter clinical size value' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2129,7 +2183,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Optical Zone Diameter clinical size unit (mm)' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2160,7 +2215,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Total Diameter clinicalSizeType' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2189,7 +2245,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Total Diameter clinical size value' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2219,7 +2276,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Total Diameter clinical size unit' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2249,7 +2307,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Addition Power Near, clinicalSizeType' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
 
@@ -2286,7 +2345,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Addition Power Near, clinical size value' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
 
@@ -2317,7 +2377,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Addition Power Near, clinical size unit' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
 
@@ -2348,7 +2409,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Addition Power Intermediate, clinicalSizeType' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
 
@@ -2383,7 +2445,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Addition Power Intermediate, clinical size value' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
 
@@ -2414,7 +2477,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Addition Power Intermediate, clinical size unit' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
 
@@ -2445,7 +2509,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Concentration clinicalSizeType' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2480,7 +2545,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Concentration clinical size value' AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '10'
 
@@ -2511,7 +2577,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Concentration clinical size unit (%)' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2541,7 +2608,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Diameter CTR clinicalSizeType' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2574,7 +2642,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Diameter CTR clinical size value' AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '11'
 
@@ -2605,7 +2674,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Diameter CTR clinical size unit (mm)' AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -2634,7 +2704,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Low Temp Handling Condition Value' AS "_remark"
     FROM divisions d
 
 UNION ALL
@@ -2667,7 +2738,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'Low Temp Handling Condition Limit' AS "_remark"
     FROM divisions d
 
 UNION ALL
@@ -2696,7 +2768,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'High Temp Handling Condition Value' AS "_remark"
     FROM divisions d
 
 UNION ALL
@@ -2729,7 +2802,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'High Temp Handling Condition Limit' AS "_remark"
     FROM divisions d
 
 
@@ -2757,7 +2831,8 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom
+        NULL                                        AS validfrom,
+        'High Temp Handling Condition Limit - BasicUDI/Lens model by filtered_models' AS "_remark"
     FROM filtered_models fm
 */
 
