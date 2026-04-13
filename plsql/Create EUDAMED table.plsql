@@ -2514,6 +2514,100 @@ UNION ALL
         NULL                                        AS validfrom
     FROM DUAL
 
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[8]/clinicalSizeType
+    -- Diameter CTR clinicalSizeType
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '11'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[8]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('CST9')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[8]/value
+    -- Diameter CTR clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '11'                                        AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        p.pcode                                     AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[8]/value' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        p.SAP_part_no                               AS partno,
+        CASE
+            WHEN p.SAP_part_no IN ('FJ-011-4101-A-B0', 'FJ-011-4101-A-M0') THEN TO_CLOB('13.0')
+            WHEN p.SAP_part_no IN ('FJ-011-4100-A-B0', 'FJ-011-4100-A-M0') THEN TO_CLOB('14.5')
+            ELSE '??'
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM non_iol_parts p
+    WHERE p.div = '11'
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[8]/valueUnit
+    -- Diameter CTR clinical size unit (mm)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '11'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        NULL                                        AS prver,
+        'udidi/clinicalSizes/clinicalSize[8]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS partno,
+        TO_CLOB('MU50')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom
+    FROM DUAL
+
 
 /*
     -- BasicUDI/Lens model by filtered_models
