@@ -1637,7 +1637,7 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB(q'[{{SAP_GTIN}}]')                  AS valtext,
+        TO_CLOB(q'[<<IFS_gtin]')                  AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -1695,7 +1695,7 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB(q'[{{SAP_GTIN}}]')                  AS valtext,
+        TO_CLOB(q'[<<IFS_gtin]')                  AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -2804,6 +2804,156 @@ UNION ALL
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
         'High Temp Handling Condition Limit' AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/criticalWarnings/warning[1]/warningValue
+    -- Critical Warning CW001 (Do not resterilize)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/criticalWarnings/warning[1]/warningValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CW001')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'criticalWarning CW001 (Do not resterilize)' AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/criticalWarnings/warning[2]/warningValue
+    -- Critical Warning CW007 (Do not use if package is damaged)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/criticalWarnings/warning[2]/warningValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CW007')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'criticalWarning CW007 (Do not use if package is damaged)' AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/criticalWarnings/warning[3]/warningValue
+    -- Critical Warning CW009 (Do not re-use)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/criticalWarnings/warning[3]/warningValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CW009')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'criticalWarning CW009 (Do not re-use)'      AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/criticalWarnings/warning[4]/warningValue
+    -- Critical Warning CW010 (Consult instructions for use)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/criticalWarnings/warning[4]/warningValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CW010')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'criticalWarning CW010 (Consult instructions for use)' AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/criticalWarnings/warning[5]/warningValue
+    -- Critical Warning CW011 (Caution)
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/criticalWarnings/warning[5]/warningValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CW011')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'criticalWarning CW011 (Caution)'            AS "_remark"
     FROM divisions d
 
 
