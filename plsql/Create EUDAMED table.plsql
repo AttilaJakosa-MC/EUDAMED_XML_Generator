@@ -2190,7 +2190,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[4]/clinicalSizeType
-    -- Total Diameter clinicalSizeType
+    -- Total Diameter clinicalSizeType IOL
 
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -2222,7 +2222,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[4]/value
-    -- Total Diameter clinical size value
+    -- Total Diameter clinical size value IOL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2252,7 +2252,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[4]/valueUnit
-    -- Total Diameter clinical size unit
+    -- Total Diameter clinical size unit IOL
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2272,12 +2272,12 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('MU104')                            AS valtext,
+        TO_CLOB('MU50')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
-        'Total Diameter clinical size unit' AS "_remark"
+        'Total Diameter clinical size unit (mm)' AS "_remark"
     FROM DUAL
 
 UNION ALL
