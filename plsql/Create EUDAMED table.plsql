@@ -2808,6 +2808,97 @@ UNION ALL
 
 UNION ALL
 
+    -- UDI-DI/storageHandlingConditions/condition[3]/storageHandlingConditionValue
+    -- Storage Handling Condition: Keep away from sunlight
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/storageHandlingConditions/condition[3]/storageHandlingConditionValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('SHC002')                           AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Storage Handling Condition: Keep away from sunlight' AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/storageHandlingConditions/condition[4]/storageHandlingConditionValue
+    -- Storage Handling Condition: Keep dry
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/storageHandlingConditions/condition[4]/storageHandlingConditionValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('SHC005')                           AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Storage Handling Condition: Keep dry'      AS "_remark"
+    FROM divisions d
+
+UNION ALL
+
+    -- UDI-DI/storageHandlingConditions/condition[5]/storageHandlingConditionValue
+    -- Storage Handling Condition: Do not freeze
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/storageHandlingConditions/condition[5]/storageHandlingConditionValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('SHC036')                           AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Storage Handling Condition: Do not freeze' AS "_remark"
+    FROM divisions d
+    WHERE d.div = '11'
+
+UNION ALL
+
     -- UDI-DI/criticalWarnings/warning[1]/warningValue
     -- Critical Warning CW001 (Do not resterilize)
     SELECT
