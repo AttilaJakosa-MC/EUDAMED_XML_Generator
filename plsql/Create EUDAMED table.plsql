@@ -1467,6 +1467,193 @@ UNION ALL
 
 UNION ALL
 
+
+-----------------------------------------------------------------------
+--UDI-DI section-------------------------------------------------------
+-----------------------------------------------------------------------
+
+    -- UDI-DI/MDNCodes for non-IOL by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/MDNCodes'                            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        CASE d.div
+            WHEN '12' THEN TO_CLOB('Q021111')
+            WHEN '11' THEN TO_CLOB('Q0299')
+            WHEN '10' THEN TO_CLOB('Q02030301')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'UDI-DI/MDNCodes for non-IOL by division'   AS "_remark"
+    FROM divisions d
+    WHERE d.div IN ('10', '11', '12')
+
+UNION ALL
+
+    -- UDI-DI/identifier/DICode by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/identifier/DICode'                  AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB(q'[<<IFS_gtin]')                  AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'GTIN by division' AS "_remark"
+    FROM divisions
+
+UNION ALL
+
+    -- UDI-DI/identifier/issuingEntityCode by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/identifier/issuingEntityCode'       AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('GS1')                              AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'UDI-DI/identifier/issuingEntityCode by division' AS "_remark"
+    FROM divisions
+
+UNION ALL
+
+    -- UDI-DI/EMDNCodes IOL by filtered_models
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/MDNCodes'                            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB(CASE fm.model
+            WHEN '640PM' THEN 'P030102100202'
+            WHEN '677AD' THEN 'P030102090202'
+            WHEN '677ADY' THEN 'P030102090202'
+            WHEN '677CMTY' THEN 'P030102100302'
+            WHEN '677CMY' THEN 'P030102100202'
+            WHEN '677CTAY' THEN 'P030102090302'
+            WHEN '677MTY' THEN 'P030102100302'
+            WHEN '677MY' THEN 'P030102100202'
+            WHEN '677P' THEN 'P030102090202'
+            WHEN '677PMY' THEN 'P030102100202'
+            WHEN '677PY' THEN 'P030102090202'
+            WHEN '677TAY' THEN 'P030102090302'
+            WHEN '690AD' THEN 'P030102090202'
+            WHEN '690ADY' THEN 'P030102090202'
+            WHEN '690CMTY' THEN 'P030102100302'
+            WHEN '690CMY' THEN 'P030102100202'
+            WHEN '690CTAY' THEN 'P030102090302'
+            WHEN '690MTY' THEN 'P030102100302'
+            WHEN '690MY' THEN 'P030102100202'
+            WHEN '690TAY' THEN 'P030102090302'
+            WHEN '640AD' THEN 'P030102090202'
+            WHEN '640ADY' THEN 'P030102090202'
+            WHEN '640CMY' THEN 'P030102100202'
+            WHEN '640MY' THEN 'P030102100202'
+            WHEN '640P' THEN 'P030102090202'
+            WHEN '640PY' THEN 'P030102090202'
+            WHEN '677CTA' THEN 'P030102090302'
+            WHEN '677M' THEN 'P030102100202'
+            WHEN '677MT' THEN 'P030102100302'
+            WHEN '677TA' THEN 'P030102090302'
+            WHEN '690CM' THEN 'P030102100202'
+            WHEN '690CTA' THEN 'P030102090302'
+            WHEN '690TA' THEN 'P030102090302'
+            WHEN '860PT' THEN 'P030102090301'
+            WHEN '860PTY' THEN 'P030102090301'
+            WHEN '860PETY' THEN 'P030102090301'
+            WHEN '877PT' THEN 'P030102090301'
+            WHEN '877PTY' THEN 'P030102090301'
+            WHEN '877PETY' THEN 'P030102090301'
+            WHEN 'A45DT' THEN 'P030102100302'
+            WHEN 'A45RD2' THEN 'P030102100202'
+            WHEN 'A45RT' THEN 'P030102090302'
+            WHEN 'A45SML' THEN 'P030102100202'
+            WHEN 'A46R' THEN 'P030102090202'
+            WHEN 'A4EDF1' THEN 'P030102100202'
+            WHEN 'A4EDF2' THEN 'P030102100202'
+            WHEN '613CL' THEN 'P030102090202'
+            WHEN '860FAB' THEN 'P030102090201'
+            WHEN '877FAB' THEN 'P030102090201'
+            WHEN '860FABY' THEN 'P030102090201'
+            WHEN '877EBY' THEN 'P030102090201'
+            WHEN '877FABY' THEN 'P030102090201'
+            WHEN '860PA' THEN 'P030102090201'
+            WHEN '877PA' THEN 'P030102090201'
+            WHEN '860PAY' THEN 'P030102090201'
+            WHEN '860PEY' THEN 'P030102090201'
+            WHEN '877PAY' THEN 'P030102090201'
+            WHEN '877PEY' THEN 'P030102090201'
+            ELSE '??'
+        END)                                        AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'UDI-DI/EMDNCodes'                          AS "_remark"
+    FROM filtered_models fm
+
+UNION ALL
+
     -- UDI-DI/basicUDIIdentifier/DICode by filtered_models
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -1479,7 +1666,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/basicUDIIdentifier/DICode'          AS name,
+        'udidi/basicUDIIdentifier/DICode'           AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1545,6 +1732,7 @@ UNION ALL
             WHEN '860PEY' THEN '599302860PEYSR'
             WHEN '877PAY' THEN '599302877PAYU9'
             WHEN '877PEY' THEN '599302877PEYUM'
+            ELSE '??'
         END)                                        AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -1567,7 +1755,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/basicUDIIdentifier/DICode'          AS name,
+        'udidi/basicUDIIdentifier/DICode'           AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -1613,69 +1801,6 @@ UNION ALL
 
 UNION ALL
 
------------------------------------------------------------------------
---UDI-DI section-------------------------------------------------------
------------------------------------------------------------------------
-
-
-    -- UDI-DI/identifier/DICode by division
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        div                                         AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        NULL                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/identifier/DICode'                  AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
-        TO_CLOB(q'[<<IFS_gtin]')                  AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        NULL                                        AS validfrom,
-        'GTIN by division' AS "_remark"
-    FROM divisions
-
-UNION ALL
-
-    -- UDI-DI/identifier/issuingEntityCode by division
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        div                                         AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        NULL                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/identifier/issuingEntityCode'       AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
-        TO_CLOB('GS1')                              AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        NULL                                        AS validfrom,
-        'UDI-DI/identifier/issuingEntityCode by division' AS "_remark"
-    FROM divisions
-
-UNION ALL
-
     -- UDI-DI/referenceNumber by division
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -1695,7 +1820,7 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB(q'[<<IFS_gtin]')                  AS valtext,
+        TO_CLOB(q'[<<IFS_gtin]')                    AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
