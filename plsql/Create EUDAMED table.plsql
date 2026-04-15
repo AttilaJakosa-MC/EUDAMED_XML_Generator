@@ -3031,7 +3031,7 @@ UNION ALL
         NULL                                        AS validfrom,
         'Injector incision size value'              AS "_remark"
     FROM non_iol_parts p
-    WHERE p.div = '12'
+    WHERE p.div = '12' and p.prodgr IN ('INP-MDJ-2.4', 'INP-MDJ-1.8', 'INP-MDJ-2.2')
 
 UNION ALL
 
