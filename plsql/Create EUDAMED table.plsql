@@ -2735,7 +2735,7 @@ UNION ALL
             WHEN p.SAP_part_no IN ('TV-010-3001-B-00', 'TV-010-3002-B-00') THEN TO_CLOB('0.40')
             WHEN p.SAP_part_no = 'TV-010-3003-B-00' THEN TO_CLOB('0.5')
             WHEN p.SAP_part_no = 'FV-010-3100-A-B0' THEN TO_CLOB('0.64')
-            ELSE '??'
+            ELSE TO_CLOB('??')
         END                                         AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -2833,7 +2833,7 @@ UNION ALL
             WHEN p.SAP_part_no IN ('TV-010-3001-B-00', 'TV-010-3002-B-00') THEN TO_CLOB('27G')
             WHEN p.SAP_part_no = 'TV-010-3003-B-00' THEN TO_CLOB('25G')
             WHEN p.SAP_part_no = 'FV-010-3100-A-B0' THEN TO_CLOB('23G')
-            ELSE '??'
+            ELSE TO_CLOB('??')
         END                                         AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -2964,6 +2964,104 @@ UNION ALL
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
         'Length Non-IOL clinical size unit (mm)'    AS "_remark"
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[12]/clinicalSizeType
+    -- Injector incision size
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '12'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[12]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CST27')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Injector incision size clinicalSizeType'   AS "_remark"
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[12]/value
+    -- Injector incision size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '12'                                        AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        p.pcode                                     AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[12]/value' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        p.SAP_part_no                               AS partno,
+        CASE
+            WHEN p.prodgr = 'INP-MDJ-2.4' THEN TO_CLOB('2.4')
+            WHEN p.prodgr = 'INP-MDJ-1.8' THEN TO_CLOB('1.8')
+            WHEN p.prodgr IN ('INP-MDJ-2.2', 'IPR-PIL-2.2') THEN TO_CLOB('2.2')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Injector incision size value'              AS "_remark"
+    FROM non_iol_parts p
+    WHERE p.div = '12'
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[12]/valueUnit
+    -- Injector incision size unit
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '12'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[12]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('MU50')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Injector incision size unit (mm)'          AS "_remark"
     FROM DUAL
 
 UNION ALL
@@ -3369,3 +3467,5 @@ UNION ALL
 --FROM portfolio_data pd
 --WHERE pd.model IN (SELECT model FROM filtered_models)
 ;
+
+
