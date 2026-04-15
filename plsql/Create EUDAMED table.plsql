@@ -3067,7 +3067,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[13]/clinicalSizeType
-    -- Volume Non-IOL clinicalSizeType
+    -- Volume OVD clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -3092,13 +3092,13 @@ UNION ALL
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
-        'Volume Non-IOL clinicalSizeType'           AS "_remark"
+        'Volume OVD clinicalSizeType'           AS "_remark"
     FROM DUAL
 
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[13]/value
-    -- Volume Non-IOL clinical size value
+    -- Volume OVD clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -3126,14 +3126,14 @@ UNION ALL
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
-        'Volume Non-IOL clinical size value'        AS "_remark"
+        'Volume OVD clinical size value'        AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '10'
 
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[13]/valueUnit
-    -- Volume Non-IOL clinical size unit
+    -- Volume OVD clinical size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -3158,7 +3158,7 @@ UNION ALL
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
-        'Volume Non-IOL clinical size unit'         AS "_remark"
+        'Volume OVD clinical size unit'         AS "_remark"
     FROM DUAL
 
 UNION ALL
