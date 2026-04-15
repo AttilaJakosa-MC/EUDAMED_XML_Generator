@@ -1472,41 +1472,6 @@ UNION ALL
 --UDI-DI section-------------------------------------------------------
 -----------------------------------------------------------------------
 
-    -- UDI-DI/MDNCodes for non-IOL by division
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        d.div                                       AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        NULL                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/MDNCodes'                            AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
-        CASE d.div
-            WHEN '12' THEN TO_CLOB('Q021111')
-            WHEN '11' THEN TO_CLOB('Q0299')
-            WHEN '10' THEN TO_CLOB('Q02030301')
-            ELSE TO_CLOB('??')
-        END                                         AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        NULL                                        AS validfrom,
-        'UDI-DI/MDNCodes for non-IOL by division'   AS "_remark"
-    FROM divisions d
-    WHERE d.div IN ('10', '11', '12')
-
-UNION ALL
-
     -- UDI-DI/identifier/DICode by division
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -1649,8 +1614,43 @@ UNION ALL
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
-        'UDI-DI/EMDNCodes'                          AS "_remark"
+        'UDI-DI/EMDNCodes IOL'                          AS "_remark"
     FROM filtered_models fm
+
+UNION ALL
+
+    -- UDI-DI/EMDNCodes for non-IOL by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        d.div                                       AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/MDNCodes'                            AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        CASE d.div
+            WHEN '12' THEN TO_CLOB('Q021111')
+            WHEN '11' THEN TO_CLOB('Q0299')
+            WHEN '10' THEN TO_CLOB('Q02030301')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'UDI-DI/EMDNCodes non-IOL'              AS "_remark"
+    FROM divisions d
+    WHERE d.div IN ('10', '11', '12')
 
 UNION ALL
 
