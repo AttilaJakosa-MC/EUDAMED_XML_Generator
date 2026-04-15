@@ -3066,6 +3066,103 @@ UNION ALL
 
 UNION ALL
 
+    -- UDI-DI/clinicalSizes/clinicalSize[13]/clinicalSizeType
+    -- Volume Non-IOL clinicalSizeType
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[13]/clinicalSizeType'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('CST32')                            AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Volume Non-IOL clinicalSizeType'           AS "_remark"
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[13]/value
+    -- Volume Non-IOL clinical size value
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        p.pcode                                     AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[13]/value' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        p.SAP_part_no                               AS partno,
+        CASE
+            WHEN p.SAP_part_no IN ('TV-010-3001-B-00', 'TV-010-3002-B-00', 'TV-010-3003-B-00') THEN TO_CLOB('1.1')
+            WHEN p.SAP_part_no = 'FV-010-3100-A-B0' THEN TO_CLOB('2.0')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Volume Non-IOL clinical size value'        AS "_remark"
+    FROM non_iol_parts p
+    WHERE p.div = '10'
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[13]/valueUnit
+    -- Volume Non-IOL clinical size unit
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[13]/valueUnit'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('MU03')                             AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Volume Non-IOL clinical size unit'         AS "_remark"
+    FROM DUAL
+
+UNION ALL
+
     -- UDI-DI/storageHandlingConditions/condition[1]/storageHandlingConditionValue
     -- Low Temp Handling Condition Value
     SELECT
