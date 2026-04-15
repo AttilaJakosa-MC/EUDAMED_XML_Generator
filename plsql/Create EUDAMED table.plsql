@@ -2735,6 +2735,7 @@ UNION ALL
             WHEN p.SAP_part_no IN ('TV-010-3001-B-00', 'TV-010-3002-B-00') THEN TO_CLOB('0.40')
             WHEN p.SAP_part_no = 'TV-010-3003-B-00' THEN TO_CLOB('0.5')
             WHEN p.SAP_part_no = 'FV-010-3100-A-B0' THEN TO_CLOB('0.64')
+            ELSE '??'
         END                                         AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -2742,7 +2743,7 @@ UNION ALL
         NULL                                        AS validfrom,
         'Diameter Non-IOL clinical size value'      AS "_remark"
     FROM non_iol_parts p
-    WHERE p.SAP_part_no IN ('TV-010-3001-B-00', 'TV-010-3002-B-00', 'TV-010-3003-B-00', 'FV-010-3100-A-B0') AND p.div = '10'
+    WHERE p.div = '10'
 
 UNION ALL
 
