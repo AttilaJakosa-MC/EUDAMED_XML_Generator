@@ -79,7 +79,7 @@ WITH
         300                             AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI limit for one xml file, Eudamed' AS "_remark"
     FROM DUAL
 
@@ -108,7 +108,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Eudamed XSD schema version. Mandatory for upload' AS "_remark"
     FROM DUAL
 
@@ -139,7 +139,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'DEVICE_BASIC_UDI_CREATE_PAYLOAD_ROOT' AS "_remark"
     FROM DUAL
 
@@ -170,7 +170,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'DEVICE_UDI_DI_CREATE_PAYLOAD_ROOT' AS "_remark"
     FROM DUAL
     
@@ -201,7 +201,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BASIC_UDI_UPDATE_PAYLOAD_ROOT' AS "_remark"
     FROM DUAL
 
@@ -232,7 +232,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI_DI_PAYLOAD_ROOT'           AS "_remark"
     FROM DUAL
 
@@ -308,7 +308,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Device create envelope for Medicontur HQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
@@ -384,7 +384,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Device create envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
@@ -457,7 +457,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Basic UDI Update envelope for Medicontur HQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
@@ -530,7 +530,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Basic UDI Update envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
@@ -606,7 +606,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI envelope for Medicontur HQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
@@ -679,7 +679,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
@@ -813,7 +813,7 @@ UNION ALL
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
-        NULL                            AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'XML Object order'              AS "_remark"
     FROM DUAL
 
@@ -844,7 +844,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/Risk class by division'           AS "_remark"
     FROM divisions
 
@@ -874,7 +874,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/type by division'                 AS "_remark"
     FROM divisions
 
@@ -903,7 +903,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/Issuing entity by division'       AS "_remark"
     FROM divisions
 
@@ -932,7 +932,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/Animal Tissues Cells entity by division' AS "_remark"
     FROM divisions
 
@@ -961,7 +961,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/Human Tissues Cells entity by division' AS "_remark"
     FROM divisions
 
@@ -991,7 +991,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/implantable by division'          AS "_remark"
     FROM divisions
 
@@ -1020,7 +1020,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/humanProductCheck by division'    AS "_remark"
     FROM divisions
 
@@ -1049,7 +1049,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/IIb_implantable_exceptions by division' AS "_remark"
     FROM divisions
 
@@ -1078,7 +1078,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/medicinalProductCheck by division' AS "_remark"
     FROM divisions
 
@@ -1107,7 +1107,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/active by division'               AS "_remark"
     FROM divisions
 
@@ -1136,7 +1136,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/administeringMedicine by division' AS "_remark"
     FROM divisions
 
@@ -1165,7 +1165,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/measuringFunction by division'    AS "_remark"
     FROM divisions
 
@@ -1194,7 +1194,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/reusable by division'             AS "_remark"
     FROM divisions
 
@@ -1224,7 +1224,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/NBActorCode by division' AS "_remark"
     FROM divisions
 
@@ -1253,7 +1253,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/certificateType by division' AS "_remark"
     FROM divisions
 
@@ -1285,7 +1285,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/MF Actor Code entity by division and distchain' AS "_remark"
     FROM divisions d
     CROSS JOIN distchannels dc
@@ -1315,7 +1315,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/Lens Medicontur model'            AS "_remark"
     FROM dual
 
@@ -1403,7 +1403,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/identifier/UDICode by filtered_models' AS "_remark"
     FROM filtered_models fm
 
@@ -1432,7 +1432,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/identifier/UDICode by non_iol_parts' AS "_remark"
     FROM non_iol_parts p
 
@@ -1461,7 +1461,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/model by non_iol_parts'           AS "_remark"
     FROM non_iol_parts p
 
@@ -1495,7 +1495,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'GTIN by division' AS "_remark"
     FROM divisions
 
@@ -1524,7 +1524,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/identifier/issuingEntityCode by division' AS "_remark"
     FROM divisions
 
@@ -1613,7 +1613,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/EMDNCodes IOL'                          AS "_remark"
     FROM filtered_models fm
 
@@ -1647,7 +1647,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/EMDNCodes non-IOL'              AS "_remark"
     FROM divisions d
     WHERE d.div IN ('10', '11', '12')
@@ -1737,7 +1737,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/basicUDIIdentifier/DICode by filtered_models' AS "_remark"
     FROM filtered_models fm
 
@@ -1766,7 +1766,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/basicUDIIdentifier/DICode by non_iol_parts' AS "_remark"
     FROM non_iol_parts p
 
@@ -1795,7 +1795,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/basicUDIIdentifier/issuingEntityCode by division' AS "_remark"
     FROM divisions
 
@@ -1824,7 +1824,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/referenceNumber by division'        AS "_remark"
     FROM divisions
 
@@ -1853,7 +1853,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/sterile by division'                AS "_remark"
     FROM divisions
 
@@ -1882,7 +1882,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/sterilization by division'          AS "_remark"
     FROM divisions
 
@@ -1911,7 +1911,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/website by division'                AS "_remark"
     FROM divisions
 
@@ -1940,7 +1940,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/numberOfReuses by division'         AS "_remark"
     FROM divisions
 
@@ -1969,7 +1969,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/baseQuantity by division'           AS "_remark"
     FROM divisions
 
@@ -1998,7 +1998,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/latex by division'                  AS "_remark"
     FROM divisions
 
@@ -2027,7 +2027,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/reprocessed by division'            AS "_remark"
     FROM divisions
 
@@ -2062,7 +2062,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/productionIdentifier by division'   AS "_remark"
     FROM divisions
 
@@ -2091,7 +2091,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/status/code by division'            AS "_remark"
     FROM divisions
 
@@ -2122,7 +2122,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diopter clinicalSizeType' AS "_remark"
     FROM DUAL
 
@@ -2153,7 +2153,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diopter clinical size value' AS "_remark"
     FROM DUAL
 
@@ -2184,7 +2184,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diopter clinical size unit' AS "_remark"
     FROM DUAL
 
@@ -2216,7 +2216,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Cylinder clicicalSizeType' AS "_remark"
     FROM DUAL
 
@@ -2247,7 +2247,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Cylinder clinical size value' AS "_remark"
     FROM DUAL
 
@@ -2278,7 +2278,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Cylinder clinical size unit' AS "_remark"
     FROM DUAL
 
@@ -2310,7 +2310,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Optical Zone Diameter clinicalSizeType' AS "_remark"
     FROM DUAL
 
@@ -2341,7 +2341,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Optical Zone Diameter clinical size value' AS "_remark"
     FROM DUAL
 
@@ -2372,7 +2372,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Optical Zone Diameter clinical size unit (mm)' AS "_remark"
     FROM DUAL
 
@@ -2404,7 +2404,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Total Diameter clinicalSizeType' AS "_remark"
     FROM DUAL
 
@@ -2434,7 +2434,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Total Diameter clinical size value' AS "_remark"
     FROM DUAL
 
@@ -2465,7 +2465,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Total Diameter clinical size unit (mm)' AS "_remark"
     FROM DUAL
 
@@ -2496,7 +2496,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Near, clinicalSizeType' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
@@ -2534,7 +2534,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Near, clinical size value' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
@@ -2566,7 +2566,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Near, clinical size unit' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY', '860PETY', '860PEY', '877PETY', '877PEY', 'A45DT', 'A45RD2', 'A45SML', 'A4EDF1', 'A4EDF2')
@@ -2598,7 +2598,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Intermediate, clinicalSizeType' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
@@ -2634,7 +2634,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Intermediate, clinical size value' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
@@ -2666,7 +2666,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Intermediate, clinical size unit' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
@@ -2698,7 +2698,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Concentration clinicalSizeType' AS "_remark"
     FROM DUAL
 
@@ -2734,7 +2734,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Concentration clinical size value' AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '10'
@@ -2766,7 +2766,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Concentration clinical size unit (%)' AS "_remark"
     FROM DUAL
 
@@ -2797,7 +2797,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diameter CTR clinicalSizeType' AS "_remark"
     FROM DUAL
 
@@ -2831,7 +2831,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diameter CTR clinical size value' AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '11'
@@ -2863,7 +2863,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diameter CTR clinical size unit (mm)' AS "_remark"
     FROM DUAL
 
@@ -2894,7 +2894,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diameter Non-IOL clinicalSizeType'         AS "_remark"
     FROM DUAL
 
@@ -2929,7 +2929,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diameter Non-IOL clinical size value'      AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '10'
@@ -2961,7 +2961,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Diameter Non-IOL clinical size unit (mm)'  AS "_remark"
     FROM DUAL
 
@@ -2992,7 +2992,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Gauge Non-IOL clinicalSizeType'            AS "_remark"
     FROM DUAL
 
@@ -3027,7 +3027,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Gauge Non-IOL clinical size value'         AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '10'
@@ -3059,7 +3059,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Gauge Non-IOL clinical size unit'          AS "_remark"
     FROM DUAL
 
@@ -3090,7 +3090,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Length Non-IOL clinicalSizeType'           AS "_remark"
     FROM DUAL
 
@@ -3120,7 +3120,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Length Non-IOL clinical size value'        AS "_remark"
     FROM DUAL
 
@@ -3151,7 +3151,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Length Non-IOL clinical size unit (mm)'    AS "_remark"
     FROM DUAL
 
@@ -3182,7 +3182,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Injector incision size clinicalSizeType'   AS "_remark"
     FROM DUAL
 
@@ -3217,7 +3217,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Injector incision size value'              AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '12' and p.prodgr IN ('INP-MDJ-2.4', 'INP-MDJ-1.8', 'INP-MDJ-2.2')
@@ -3249,7 +3249,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Injector incision size unit (mm)'          AS "_remark"
     FROM DUAL
 
@@ -3280,7 +3280,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Volume OVD clinicalSizeType'           AS "_remark"
     FROM DUAL
 
@@ -3314,7 +3314,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Volume OVD clinical size value'        AS "_remark"
     FROM non_iol_parts p
     WHERE p.div = '10'
@@ -3346,7 +3346,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Volume OVD clinical size unit'         AS "_remark"
     FROM DUAL
 
@@ -3376,7 +3376,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Low Temp Handling Condition Value' AS "_remark"
     FROM divisions d
 
@@ -3410,7 +3410,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Low Temp Handling Condition Limit' AS "_remark"
     FROM divisions d
 
@@ -3440,7 +3440,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'High Temp Handling Condition Value' AS "_remark"
     FROM divisions d
 
@@ -3474,7 +3474,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'High Temp Handling Condition Limit' AS "_remark"
     FROM divisions d
 
@@ -3504,7 +3504,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Storage Handling Condition: Keep away from sunlight' AS "_remark"
     FROM divisions d
 
@@ -3534,7 +3534,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Storage Handling Condition: Keep dry'      AS "_remark"
     FROM divisions d
 
@@ -3564,7 +3564,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Storage Handling Condition: Do not freeze' AS "_remark"
     FROM divisions d
     WHERE d.div = '11'
@@ -3595,7 +3595,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'criticalWarning CW001 (Do not resterilize)' AS "_remark"
     FROM divisions d
 
@@ -3625,7 +3625,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'criticalWarning CW007 (Do not use if package is damaged)' AS "_remark"
     FROM divisions d
 
@@ -3655,7 +3655,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'criticalWarning CW009 (Do not re-use)'      AS "_remark"
     FROM divisions d
 
@@ -3685,7 +3685,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'criticalWarning CW010 (Consult instructions for use)' AS "_remark"
     FROM divisions d
 
@@ -3715,7 +3715,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'criticalWarning CW011 (Caution)'            AS "_remark"
     FROM divisions d
 
@@ -3744,7 +3744,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Market info available on this market'      AS "_remark"
     FROM filtered_models fm
     JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
@@ -3774,7 +3774,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Marketinfo if it is placed first on this market' AS "_remark"
     FROM filtered_models fm
     JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
@@ -3786,7 +3786,7 @@ UNION ALL
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
         'P'                                         AS fin,
-        '01'                                        AS div,
+        p.div                                       AS div,
         p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
         p.pcode                                     AS pcode,
@@ -3799,12 +3799,12 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
-        p.ifs_part_no                               AS partno,
+        p.sap_part_no                               AS partno,
         TO_CLOB(mi.country_code)                    AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Market info available on this market'      AS "_remark"
     FROM non_iol_parts p
     JOIN TABLE(Get_marketinfo_non_IOL()) mi ON p.ifs_part_no = mi.part_no
@@ -3816,7 +3816,7 @@ UNION ALL
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
         'P'                                         AS fin,
-        '01'                                        AS div,
+        p.div                                       AS div,
         p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
         p.pcode                                     AS pcode,
@@ -3829,12 +3829,12 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
-        p.ifs_part_no                               AS partno,
+        p.sap_part_no                               AS partno,
         TO_CLOB(CASE WHEN mi.firstonmarket = 'X' THEN 'true' ELSE 'false' END) AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Marketinfo if it is placed first on this market' AS "_remark"
     FROM non_iol_parts p
     JOIN TABLE(Get_marketinfo_non_IOL()) mi ON p.ifs_part_no = mi.part_no
@@ -3864,7 +3864,7 @@ UNION ALL
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
-        NULL                                        AS validfrom,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'High Temp Handling Condition Limit - BasicUDI/Lens model by filtered_models' AS "_remark"
     FROM filtered_models fm
 */
