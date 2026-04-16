@@ -3719,6 +3719,66 @@ UNION ALL
         'criticalWarning CW011 (Caution)'            AS "_remark"
     FROM divisions d
 
+UNION ALL
+
+    -- MarketInfo Country
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/marketInfos/marketInfo[' || TO_CHAR(ROW_NUMBER() OVER (PARTITION BY fm.model ORDER BY mi.country_code)) || ']/country' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB(mi.country_code)                    AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Market info country from Get_marketinfo_IOL()' AS "_remark"
+    FROM filtered_models fm
+    JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
+
+UNION ALL
+
+    -- MarketInfo Original Placed On The Market
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/marketInfos/marketInfo[' || TO_CHAR(ROW_NUMBER() OVER (PARTITION BY fm.model ORDER BY mi.country_code)) || ']/originalPlacedOnTheMarket' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB(CASE WHEN mi.firstonmarket = 'X' THEN 'true' ELSE 'false' END) AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'Market info original placed on market from Get_marketinfo_IOL()' AS "_remark"
+    FROM filtered_models fm
+    JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
+
 
 /*
     -- BasicUDI/Lens model by filtered_models
