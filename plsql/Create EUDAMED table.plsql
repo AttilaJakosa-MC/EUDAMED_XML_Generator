@@ -3721,124 +3721,89 @@ UNION ALL
 
 UNION ALL
 
-    -- MarketInfo Country IOL
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '01'                                        AS div,
-        fm.model                                    AS prodgr,
-        NULL                                        AS ver,
-        SUBSTR(mi.suffix, 2)                        AS pcode,
-        NULL                                        AS plant,
-        '01'                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/marketInfos/marketInfo[' || TO_CHAR(ROW_NUMBER() OVER (PARTITION BY fm.model ORDER BY mi.country_code)) || ']/country' AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
-        TO_CLOB(mi.country_code)                    AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Market info available on this market'      AS "_remark"
-    FROM filtered_models fm
-    JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
+    -- MarketInfo Interleaved (IOL)
+    SELECT * FROM (
+        SELECT
+            'EUDAMED'                                   AS rowtype,
+            NULL                                        AS semi,
+            'P'                                         AS fin,
+            '01'                                        AS div,
+            fm.model                                    AS prodgr,
+            NULL                                        AS ver,
+            SUBSTR(mi.suffix, 2)                        AS pcode,
+            NULL                                        AS plant,
+            '01'                                        AS distchain,
+            NULL                                        AS lang,
+            'udidi/marketInfos/marketInfo[' || TO_CHAR(DENSE_RANK() OVER (PARTITION BY fm.model ORDER BY mi.country_code)) || ']/' || f.field
+                                                                                        AS name,
+            NULL                                        AS dpt_l,
+            NULL                                        AS dpt_h,
+            NULL                                        AS cyl_l,
+            NULL                                        AS cyl_h,
+            NULL                                        AS prver,
+            NULL                                        AS partno,
+            CASE WHEN f.field = 'country' THEN TO_CLOB(mi.country_code)
+                 ELSE TO_CLOB(CASE WHEN mi.firstonmarket = 'X' THEN 'true' ELSE 'false' END)
+            END                                         AS valtext,
+            NULL                                        AS valnom,
+            NULL                                        AS valmin,
+            NULL                                        AS valmax,
+            TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+            CASE WHEN f.field = 'country' THEN 'Market info country'
+                 ELSE 'Market info original placed on market'
+            END                                         AS "_remark"
+        FROM filtered_models fm
+        JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
+        CROSS JOIN (
+            SELECT 'country' AS field, 1 AS ord FROM DUAL
+            UNION ALL
+            SELECT 'originalPlacedOnTheMarket' AS field, 2 AS ord FROM DUAL
+        ) f
+        ORDER BY fm.model, mi.country_code, f.ord
+    )
 
 UNION ALL
 
-    -- MarketInfo Original Placed On The Market IOL
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '01'                                        AS div,
-        fm.model                                    AS prodgr,
-        NULL                                        AS ver,
-        SUBSTR(mi.suffix, 2)                        AS pcode,
-        NULL                                        AS plant,
-        '01'                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/marketInfos/marketInfo[' || TO_CHAR(ROW_NUMBER() OVER (PARTITION BY fm.model ORDER BY mi.country_code)) || ']/originalPlacedOnTheMarket' AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
-        TO_CLOB(CASE WHEN mi.firstonmarket = 'X' THEN 'true' ELSE 'false' END) AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Marketinfo if it is placed first on this market' AS "_remark"
-    FROM filtered_models fm
-    JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
-
-UNION ALL
-
-    -- MarketInfo Country Non-IOL
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        p.div                                       AS div,
-        p.prodgr                                    AS prodgr,
-        NULL                                        AS ver,
-        p.pcode                                     AS pcode,
-        NULL                                        AS plant,
-        '01'                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/marketInfos/marketInfo[' || TO_CHAR(ROW_NUMBER() OVER (PARTITION BY p.ifs_part_no ORDER BY mi.country_code)) || ']/country' AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        p.sap_part_no                               AS partno,
-        TO_CLOB(mi.country_code)                    AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Market info available on this market'      AS "_remark"
-    FROM non_iol_parts p
-    JOIN TABLE(Get_marketinfo_non_IOL()) mi ON p.ifs_part_no = mi.part_no
-
-UNION ALL
-
-    -- MarketInfo Original Placed On The Market Non-IOL
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        p.div                                       AS div,
-        p.prodgr                                    AS prodgr,
-        NULL                                        AS ver,
-        p.pcode                                     AS pcode,
-        NULL                                        AS plant,
-        '01'                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/marketInfos/marketInfo[' || TO_CHAR(ROW_NUMBER() OVER (PARTITION BY p.ifs_part_no ORDER BY mi.country_code)) || ']/originalPlacedOnTheMarket' AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        p.sap_part_no                               AS partno,
-        TO_CLOB(CASE WHEN mi.firstonmarket = 'X' THEN 'true' ELSE 'false' END) AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Marketinfo if it is placed first on this market' AS "_remark"
-    FROM non_iol_parts p
-    JOIN TABLE(Get_marketinfo_non_IOL()) mi ON p.ifs_part_no = mi.part_no
-
+    -- MarketInfo Interleaved (Non-IOL)
+    SELECT * FROM (
+        SELECT
+            'EUDAMED'                                   AS rowtype,
+            NULL                                        AS semi,
+            'P'                                         AS fin,
+            p.div                                       AS div,
+            p.prodgr                                    AS prodgr,
+            NULL                                        AS ver,
+            p.pcode                                     AS pcode,
+            NULL                                        AS plant,
+            '01'                                        AS distchain,
+            NULL                                        AS lang,
+            'udidi/marketInfos/marketInfo[' || TO_CHAR(DENSE_RANK() OVER (PARTITION BY p.sap_part_no ORDER BY mi.country_code)) || ']/' || f.field
+                                                                                        AS name,
+            NULL                                        AS dpt_l,
+            NULL                                        AS dpt_h,
+            NULL                                        AS cyl_l,
+            NULL                                        AS cyl_h,
+            NULL                                        AS prver,
+            p.sap_part_no                               AS partno,
+            CASE WHEN f.field = 'country' THEN TO_CLOB(mi.country_code)
+                 ELSE TO_CLOB(CASE WHEN mi.firstonmarket = 'X' THEN 'true' ELSE 'false' END)
+            END                                         AS valtext,
+            NULL                                        AS valnom,
+            NULL                                        AS valmin,
+            NULL                                        AS valmax,
+            TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+            CASE WHEN f.field = 'country' THEN 'Market info country'
+                 ELSE 'Market info original placed on market'
+            END                                         AS "_remark"
+        FROM non_iol_parts p
+        JOIN TABLE(Get_marketinfo_non_IOL()) mi ON p.ifs_part_no = mi.part_no
+        CROSS JOIN (
+            SELECT 'country' AS field, 1 AS ord FROM DUAL
+            UNION ALL
+            SELECT 'originalPlacedOnTheMarket' AS field, 2 AS ord FROM DUAL
+        ) f
+        ORDER BY p.sap_part_no, mi.country_code, f.ord
+    )
 
 /*
     -- BasicUDI/Lens model by filtered_models
