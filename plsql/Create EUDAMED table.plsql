@@ -2023,12 +2023,76 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('false')                             AS valtext,
+        TO_CLOB('false')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         NULL                                        AS validfrom,
         'UDI-DI/reprocessed by division'            AS "_remark"
+    FROM divisions
+
+UNION ALL
+
+    -- UDI-DI/productionIdentifier by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/productionIdentifier'                AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        CASE div
+            WHEN '01' THEN TO_CLOB('SERIALISATION_NUMBER EXPIRATION_DATE')
+            WHEN '11' THEN TO_CLOB('SERIALISATION_NUMBER EXPIRATION_DATE')
+            WHEN '10' THEN TO_CLOB('BATCH_NUMBER EXPIRATION_DATE')
+            WHEN '12' THEN TO_CLOB('BATCH_NUMBER EXPIRATION_DATE')
+            ELSE TO_CLOB('??')
+        END                                         AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'UDI-DI/productionIdentifier by division'   AS "_remark"
+    FROM divisions
+
+UNION ALL
+
+    -- UDI-DI/status/code by division
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        div                                         AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        '01'                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/status/code'                         AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('ON_THE_MARKET')                    AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        NULL                                        AS validfrom,
+        'UDI-DI/status/code by division'            AS "_remark"
     FROM divisions
 
 UNION ALL
