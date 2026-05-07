@@ -1,5 +1,11 @@
 SET DEFINE OFF;
 
+-- TODO: Check model for IOL and non IOL products (Kriszti's table)
+-- TODO: Handle distachain in the APP
+-- TODO: Handle 1stQ
+-- TODO: Total Diamater excel formula wrong
+-- TODO: EMDN codes of mixed lens: mono+, 7mm
+
 WITH
     model_list AS (
         -- SELECT column_value AS model FROM TABLE(SYS.ODCIVARCHAR2LIST('860FAB','PFIM4'))
@@ -104,7 +110,7 @@ UNION ALL
         NULL                            AS cyl_h,
         NULL                            AS prver,
         'EUDAMED_DRIVER_FIELD'          AS partno,
-        TO_CLOB('3.0.28')               AS valtext,
+        TO_CLOB('3.0.30')               AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
@@ -276,8 +282,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:recipient>
     <m:node>
-      <s:nodeActorCode>{RECIPIENT_NODE_ACTOR_CODE}</s:nodeActorCode>
-      <s:nodeID>{RECIPIENT_NODE_ID}</s:nodeID>
+      <s:nodeActorCode>EUDAMED</s:nodeActorCode>
+      <s:nodeID>eDelivery:EUDAMED</s:nodeID>
     </m:node>
     <m:service>
       <s:serviceAccessToken>{RECIPIENT_SERVICE_ACCESS_TOKEN}</s:serviceAccessToken>
@@ -288,14 +294,16 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:payload>
   <device:Device xsi:type="device:MDRDeviceType">
-      <device:MDRBasicUDI xsi:type="device:MDRBasicUDIType"></device:MDRBasicUDI>
-      <device:MDRUDIDIData></device:MDRUDIDIData>
+      <device:MDRBasicUDI xsi:type="device:MDRBasicUDIType">
+      </device:MDRBasicUDI>
+      <device:MDRUDIDIData>
+      </device:MDRUDIDIData>
     </device:Device>
   </m:payload>
 
   <m:sender>
     <m:node>
-      <s:nodeActorCode>HU-MF-000026801</s:nodeActorCode>
+      <s:nodeActorCode>{SENDER_NODE_ACTOR_CODE}</s:nodeActorCode>
       <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
     </m:node>
     <m:service>
@@ -314,6 +322,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
 UNION ALL
 
+/*
 -- Device create envelope for 1STQ International Distribution Channel
     SELECT
         'EUDAMED'                       AS rowtype,
@@ -333,54 +342,8 @@ UNION ALL
         NULL                            AS cyl_h,
         NULL                            AS prver,
         'EUDAMED_DRIVER_FIELD'          AS partno,
-    TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
-    <m:Push
-    xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
-    xmlns:commondi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/CommonDevice/v1"
-    xmlns:device="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/v1"
-    xmlns:lsn="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Common/LanguageSpecific/v1"
-    xmlns:m="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1"
-    xmlns:s="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1"
-    xmlns:udidi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/UDIDI/v1"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    version="{VERSION}">
-
-    <m:conversationID>{CONVERSATION_ID}</m:conversationID>
-    <m:correlationID>{CORRELATION_ID}</m:correlationID>
-    <m:creationDateTime>{CREATION_DATE_TIME}</m:creationDateTime>
-    <m:messageID>{MESSAGE_ID}</m:messageID>
-
-    <m:recipient>
-        <m:node>
-        <s:nodeActorCode>{RECIPIENT_NODE_ACTOR_CODE}</s:nodeActorCode>
-        <s:nodeID>{RECIPIENT_NODE_ID}</s:nodeID>
-        </m:node>
-        <m:service>
-        <s:serviceAccessToken>{RECIPIENT_SERVICE_ACCESS_TOKEN}</s:serviceAccessToken>
-        <s:serviceID>{RECIPIENT_SERVICE_ID}</s:serviceID>
-        <s:serviceOperation>{RECIPIENT_SERVICE_OPERATION}</s:serviceOperation>
-        </m:service>
-    </m:recipient>
-
-    <m:payload>
-    <device:Device xsi:type="device:MDRDeviceType">
-        <device:MDRBasicUDI xsi:type="device:MDRBasicUDIType"></device:MDRBasicUDI>
-        <device:MDRUDIDIData></device:MDRUDIDIData>
-        </device:Device>
-    </m:payload>
-
-    <m:sender>
-        <m:node>
-        <s:nodeActorCode>DE-MF-0000?????</s:nodeActorCode>
-        <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
-        </m:node>
-        <m:service>
-        <s:serviceID>{SENDER_SERVICE_ID}</s:serviceID>
-        <s:serviceOperation>{SENDER_SERVICE_OPERATION}</s:serviceOperation>
-        </m:service>
-    </m:sender>
-    </m:Push>
-    ~')                                 AS valtext,
+    TO_CLOB(q'~
+        ~')                                 AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
@@ -389,6 +352,8 @@ UNION ALL
     FROM DUAL
 
 UNION ALL
+
+*/
 
     -- Basic UDI Update envelope for Medicontur HQ International Distribution Channel
     SELECT
@@ -428,8 +393,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:recipient>
     <m:node>
-      <s:nodeActorCode>{RECIPIENT_NODE_ACTOR_CODE}</s:nodeActorCode>
-      <s:nodeID>{RECIPIENT_NODE_ID}</s:nodeID>
+      <s:nodeActorCode>EUDAMED</s:nodeActorCode>
+      <s:nodeID>eDelivery:EUDAMED</s:nodeID>
     </m:node>
     <m:service>
       <s:serviceAccessToken>{RECIPIENT_SERVICE_ACCESS_TOKEN}</s:serviceAccessToken>
@@ -439,12 +404,14 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
   </m:recipient>
 
   <m:payload>
-      <device:BasicUDI xsi:type="device:MDRBasicUDIType"></device:BasicUDI>
+      <device:BasicUDI xsi:type="device:MDRBasicUDIType">
+      </device:BasicUDI>
+
   </m:payload>
 
   <m:sender>
     <m:node>
-      <s:nodeActorCode>HU-MF-000026801</s:nodeActorCode>
+      <s:nodeActorCode>{SENDER_NODE_ACTOR_CODE}</s:nodeActorCode>
       <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
     </m:node>
     <m:service>
@@ -463,6 +430,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
 UNION ALL
 
+/*
 -- Basic UDI Update envelope for 1STQ International Distribution Channel
     SELECT
         'EUDAMED'                       AS rowtype,
@@ -482,50 +450,7 @@ UNION ALL
         NULL                            AS cyl_h,
         NULL                            AS prver,
         'EUDAMED_DRIVER_FIELD'          AS partno,
-TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
-<m:Push
-  xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
-  xmlns:commondi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/CommonDevice/v1"
-  xmlns:device="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/v1"
-  xmlns:lsn="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Common/LanguageSpecific/v1"
-  xmlns:m="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1"
-  xmlns:s="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1"
-  xmlns:udidi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/UDIDI/v1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  version="{VERSION}">
-
-  <m:conversationID>{CONVERSATION_ID}</m:conversationID>
-  <m:correlationID>{CORRELATION_ID}</m:correlationID>
-  <m:creationDateTime>{CREATION_DATE_TIME}</m:creationDateTime>
-  <m:messageID>{MESSAGE_ID}</m:messageID>
-
-  <m:recipient>
-    <m:node>
-      <s:nodeActorCode>{RECIPIENT_NODE_ACTOR_CODE}</s:nodeActorCode>
-      <s:nodeID>{RECIPIENT_NODE_ID}</s:nodeID>
-    </m:node>
-    <m:service>
-      <s:serviceAccessToken>{RECIPIENT_SERVICE_ACCESS_TOKEN}</s:serviceAccessToken>
-      <s:serviceID>{RECIPIENT_SERVICE_ID}</s:serviceID>
-      <s:serviceOperation>{RECIPIENT_SERVICE_OPERATION}</s:serviceOperation>
-    </m:service>
-  </m:recipient>
-
-  <m:payload>
-      <device:BasicUDI xsi:type="device:MDRBasicUDIType"></device:BasicUDI>
-  </m:payload>
-
-  <m:sender>
-    <m:node>
-      <s:nodeActorCode>DE-MF-0000?????</s:nodeActorCode>
-      <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
-    </m:node>
-    <m:service>
-      <s:serviceID>{SENDER_SERVICE_ID}</s:serviceID>
-      <s:serviceOperation>{SENDER_SERVICE_OPERATION}</s:serviceOperation>
-    </m:service>
-  </m:sender>
-</m:Push>
+TO_CLOB(q'~
 ~')                                     AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
@@ -534,10 +459,9 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
         'Basic UDI Update envelope for 1STQ International Distribution Channel' AS "_remark"
     FROM DUAL
 
-
-
-
 UNION ALL
+
+*/
 
     -- UDI-DI envelope for Medicontur HQ International Distribution Channel
     SELECT
@@ -577,8 +501,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:recipient>
     <m:node>
-      <s:nodeActorCode>{RECIPIENT_NODE_ACTOR_CODE}</s:nodeActorCode>
-      <s:nodeID>{RECIPIENT_NODE_ID}</s:nodeID>
+      <s:nodeActorCode>EUDAMED</s:nodeActorCode>
+      <s:nodeID>eDelivery:EUDAMED</s:nodeID>
     </m:node>
     <m:service>
       <s:serviceAccessToken>{RECIPIENT_SERVICE_ACCESS_TOKEN}</s:serviceAccessToken>
@@ -588,12 +512,13 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
   </m:recipient>
 
   <m:payload>
-      <device:BasicUDI xsi:type="device:MDRBasicUDIType"></device:BasicUDI>
+      <device:UDIDIData xsi:type="device:MDRUDIDIDataType">
+      </device:UDIDIData>
   </m:payload>
 
   <m:sender>
     <m:node>
-      <s:nodeActorCode>HU-MF-000026801</s:nodeActorCode>
+      <s:nodeActorCode>{SENDER_NODE_ACTOR_CODE}</s:nodeActorCode>
       <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
     </m:node>
     <m:service>
@@ -612,6 +537,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
 UNION ALL
 
+/*
 -- UDI-DI envelope for 1STQ International Distribution Channel
     SELECT
         'EUDAMED'                       AS rowtype,
@@ -631,50 +557,7 @@ UNION ALL
         NULL                            AS cyl_h,
         NULL                            AS prver,
         'EUDAMED_DRIVER_FIELD'          AS partno,
-TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
-<m:Push
-  xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
-  xmlns:commondi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/CommonDevice/v1"
-  xmlns:device="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/v1"
-  xmlns:lsn="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Common/LanguageSpecific/v1"
-  xmlns:m="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1"
-  xmlns:s="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1"
-  xmlns:udidi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/UDIDI/v1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  version="{VERSION}">
-
-  <m:conversationID>{CONVERSATION_ID}</m:conversationID>
-  <m:correlationID>{CORRELATION_ID}</m:correlationID>
-  <m:creationDateTime>{CREATION_DATE_TIME}</m:creationDateTime>
-  <m:messageID>{MESSAGE_ID}</m:messageID>
-
-  <m:recipient>
-    <m:node>
-      <s:nodeActorCode>{RECIPIENT_NODE_ACTOR_CODE}</s:nodeActorCode>
-      <s:nodeID>{RECIPIENT_NODE_ID}</s:nodeID>
-    </m:node>
-    <m:service>
-      <s:serviceAccessToken>{RECIPIENT_SERVICE_ACCESS_TOKEN}</s:serviceAccessToken>
-      <s:serviceID>{RECIPIENT_SERVICE_ID}</s:serviceID>
-      <s:serviceOperation>{RECIPIENT_SERVICE_OPERATION}</s:serviceOperation>
-    </m:service>
-  </m:recipient>
-
-  <m:payload>
-      <device:BasicUDI xsi:type="device:MDRBasicUDIType"></device:BasicUDI>
-  </m:payload>
-
-  <m:sender>
-    <m:node>
-      <s:nodeActorCode>DE-MF-0000?????</s:nodeActorCode>
-      <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
-    </m:node>
-    <m:service>
-      <s:serviceID>{SENDER_SERVICE_ID}</s:serviceID>
-      <s:serviceOperation>{SENDER_SERVICE_OPERATION}</s:serviceOperation>
-    </m:service>
-  </m:sender>
-</m:Push>
+TO_CLOB(q'~
 ~')                                     AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
@@ -684,6 +567,8 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
     FROM DUAL
 
 UNION ALL
+
+*/
 
 -- XML Object order
     SELECT
@@ -704,111 +589,1106 @@ UNION ALL
         NULL                            AS cyl_h,
         NULL                            AS prver,
         'EUDAMED_DRIVER_FIELD'          AS partno,
-        TO_CLOB(q'~XML_OBJECT_ORDER	[
-  { elementLocalName: 'Device', namespacePrefix: 'device', correctOrder: ['MDRBasicUDI', 'MDRUDIDIData'], },
-  { elementLocalName: 'MDRBasicUDI', parentLocalName: 'Device', namespacePrefix: 'device', correctOrder: ['state', 'version', 'versionDate', 'riskClass', 'model', 'modelName', 'identifier', 'certificateLinks', 'lastUpdated', 'animalTissuesCells', 'ARActorCode', 'humanTissuesCells', 'MFActorCode', 'ARComments', 'clinicalInvestigationLinks', 'deviceCertificateLinks', 'humanProductCheck', 'IIb_implantable_exceptions', 'medicinalProductCheck', 'specialDevice', 'type', 'active', 'administeringMedicine', 'implantable', 'measuringFunction', 'reusable',], },
-  { elementLocalName: 'BasicUDI', parentLocalName: 'payload', namespacePrefix: 'device', correctOrder: ['riskClass', 'modelName', 'identifier', 'animalTissuesCells', 'humanTissuesCells', 'MFActorCode', 'humanProductCheck', 'medicinalProductCheck', 'type', 'active', 'administeringMedicine', 'implantable', 'measuringFunction', 'reusable',], },
-  { elementLocalName: 'MDRUDIDIData', parentLocalName: 'Device', namespacePrefix: 'device', correctOrder: ['state', 'version', 'versionDate', 'identifier', 'status', 'lastUpdated', 'additionalDescription', 'basicUDIIdentifier', 'MDNCodes', 'productionIdentifier', 'referenceNumber', 'secondaryIdentifier', 'sterile', 'sterilization', 'tradeNames', 'website', 'storageHandlingConditions', 'packages', 'criticalWarnings', 'substatuses', 'numberOfReuses', 'relatedUDILink', 'marketInfos', 'deviceMarking', 'baseQuantity', 'productDesignerActor', 'annexXVINonMedicalDeviceTypes', 'annexXVIApplicable', 'latex', 'reprocessed', 'substances', 'clinicalSizes',], },
-  { elementLocalName: 'UDIDIData', parentLocalName: 'payload', namespacePrefix: 'device', correctOrder: ['state', 'version', 'versionDate', 'identifier', 'status', 'lastUpdated', 'additionalDescription', 'basicUDIIdentifier', 'MDNCodes', 'productionIdentifier', 'referenceNumber', 'secondaryIdentifier', 'sterile', 'sterilization', 'tradeNames', 'website', 'storageHandlingConditions', 'packages', 'criticalWarnings', 'substatuses', 'numberOfReuses', 'relatedUDILink', 'marketInfos', 'deviceMarking', 'baseQuantity', 'productDesignerActor', 'annexXVINonMedicalDeviceTypes', 'annexXVIApplicable', 'latex', 'reprocessed', 'substances', 'clinicalSizes',], },
-  { elementLocalName: 'modelName', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', correctOrder: ['model', 'name'], },
-  { elementLocalName: 'modelName', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', correctOrder: ['model', 'name'], },
-  { elementLocalName: 'identifier', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'identifier', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'identifier', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-]~')
-      || TO_CLOB(q'~[
-  { elementLocalName: 'identifier', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'basicUDIIdentifier', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'basicUDIIdentifier', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'secondaryIdentifier', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'secondaryIdentifier', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'directMarkingDI', parentLocalName: 'deviceMarking', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'unitOfUseIdentifier', parentLocalName: 'deviceMarking', namespacePrefix: 'udidi', correctOrder: ['DICode', 'issuingEntityCode'], },
-  { elementLocalName: 'status', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['code'], },
-  { elementLocalName: 'status', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['code'], },
-  { elementLocalName: 'storageHandlingConditions', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['condition'], },
-]~')
-      || TO_CLOB(q'~[
-  { elementLocalName: 'storageHandlingConditions', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['condition'], },
-  { elementLocalName: 'criticalWarnings', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['warning'], },
-  { elementLocalName: 'criticalWarnings', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['warning'], },
-  { elementLocalName: 'substatuses', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['substatus'], },
-  { elementLocalName: 'substatuses', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['substatus'], },
-  { elementLocalName: 'deviceMarking', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['directMarkingDI', 'unitOfUseIdentifier'], },
-  { elementLocalName: 'deviceMarking', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['directMarkingDI', 'unitOfUseIdentifier'], },
-  { elementLocalName: 'condition', parentLocalName: 'storageHandlingConditions', namespacePrefix: 'udidi', correctOrder: ['comments', 'storageHandlingConditionValue'], },
-  { elementLocalName: 'warning', parentLocalName: 'criticalWarnings', namespacePrefix: 'udidi', correctOrder: ['comments', 'warningValue'], },
-  { elementLocalName: 'tradeNames', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', correctOrder: ['name'], },
-  { elementLocalName: 'tradeNames', parentLocalName: 'UDIDIData', namespacePrefix: 'udidi', correctOrder: ['name'], },
-  { elementLocalName: 'comments', parentLocalName: 'condition', namespacePrefix: 'commondi', correctOrder: ['name'], },
-  { elementLocalName: 'comments', parentLocalName: 'warning', namespacePrefix: 'commondi', correctOrder: ['name'], },
-  { elementLocalName: 'name', parentLocalName: 'tradeNames', namespacePrefix: 'lsn', correctOrder: ['language', 'textValue'], },
-  { elementLocalName: 'name', parentLocalName: 'comments', namespacePrefix: 'lsn', correctOrder: ['language', 'textValue'], },
-  { elementLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'conversationID', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'correlationID', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'creationDateTime', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'messageID', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'recipient', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'payload', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'sender', parentLocalName: 'Push', namespacePrefix: 'm', },
-  { elementLocalName: 'node', parentLocalName: 'recipient', namespacePrefix: 'm', },
-  { elementLocalName: 'service', parentLocalName: 'recipient', namespacePrefix: 'm', },
-  { elementLocalName: 'node', parentLocalName: 'sender', namespacePrefix: 'm', },
-  { elementLocalName: 'service', parentLocalName: 'sender', namespacePrefix: 'm', },
-  { elementLocalName: 'nodeActorCode', parentLocalName: 'node', namespacePrefix: 's', },
-  { elementLocalName: 'nodeID', parentLocalName: 'node', namespacePrefix: 's', },
-  { elementLocalName: 'serviceAccessToken', parentLocalName: 'service', namespacePrefix: 's', },
-  { elementLocalName: 'serviceID', parentLocalName: 'service', namespacePrefix: 's', },
-  { elementLocalName: 'serviceOperation', parentLocalName: 'service', namespacePrefix: 's', },
-  { elementLocalName: 'riskClass', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'animalTissuesCells', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'humanTissuesCells', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'MFActorCode', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'humanProductCheck', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-]~')
-      || TO_CLOB(q'~[
-  { elementLocalName: 'medicinalProductCheck', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'type', parentLocalName: 'BasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'riskClass', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'animalTissuesCells', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'humanTissuesCells', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'MFActorCode', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'humanProductCheck', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'medicinalProductCheck', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'type', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'basicudi', },
-  { elementLocalName: 'model', parentLocalName: 'modelName', namespacePrefix: 'commondi', },
-  { elementLocalName: 'name', parentLocalName: 'modelName', namespacePrefix: 'commondi', },
-  { elementLocalName: 'DICode', parentLocalName: 'identifier', namespacePrefix: 'commondi', },
-  { elementLocalName: 'issuingEntityCode', parentLocalName: 'identifier', namespacePrefix: 'commondi', },
-  { elementLocalName: 'active', parentLocalName: 'BasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'administeringMedicine', parentLocalName: 'BasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'implantable', parentLocalName: 'BasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'measuringFunction', parentLocalName: 'BasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'reusable', parentLocalName: 'BasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'active', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'administeringMedicine', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'implantable', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'measuringFunction', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'reusable', parentLocalName: 'MDRBasicUDI', namespacePrefix: 'commondi', },
-  { elementLocalName: 'MDNCodes', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'productionIdentifier', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'referenceNumber', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'sterile', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'sterilization', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'website', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'numberOfReuses', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'baseQuantity', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'latex', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'reprocessed', parentLocalName: 'MDRUDIDIData', namespacePrefix: 'udidi', },
-  { elementLocalName: 'code', parentLocalName: 'status', namespacePrefix: 'commondi', },
-  { elementLocalName: 'comments', parentLocalName: 'condition', namespacePrefix: 'commondi', },
-  { elementLocalName: 'storageHandlingConditionValue', parentLocalName: 'condition', namespacePrefix: 'commondi', },
-  { elementLocalName: 'comments', parentLocalName: 'warning', namespacePrefix: 'commondi', },
-  { elementLocalName: 'warningValue', parentLocalName: 'warning', namespacePrefix: 'commondi', },
-  { elementLocalName: 'language', parentLocalName: 'name', namespacePrefix: 'lsn', },
-  { elementLocalName: 'textValue', parentLocalName: 'name', namespacePrefix: 'lsn', },
-]
+        TO_CLOB(q'~[
+  {
+    "elementLocalName": "Device",
+    "parentLocalName": "payload",
+    "namespacePrefix": "device",
+    "correctOrder": [
+      "MDRBasicUDI",
+      "MDRUDIDIData"
+    ]
+  },
+  {
+    "elementLocalName": "BasicUDI",
+    "parentLocalName": "payload",
+    "namespacePrefix": "device",
+    "correctOrder": [
+      "state",
+      "version",
+      "versionDate",
+      "riskClass",
+      "model",
+      "modelName",
+      "identifier",
+      "certificateLinks",
+      "lastUpdated",
+      "animalTissuesCells",
+      "ARActorCode",
+      "humanTissuesCells",
+      "MFActorCode",
+      "ARComments",
+      "clinicalInvestigationLinks",
+      "deviceCertificateLinks",
+      "humanProductCheck",
+      "IIb_implantable_exceptions",
+      "medicinalProductCheck",
+      "specialDevice",
+      "type",
+      "active",
+      "administeringMedicine",
+      "implantable",
+      "measuringFunction",
+      "reusable"
+    ]
+  },
+  {
+    "elementLocalName": "UDIDIData",
+    "parentLocalName": "payload",
+    "namespacePrefix": "device",
+    "correctOrder": [
+      "state",
+      "version",
+      "versionDate",
+      "identifier",
+      "status",
+      "lastUpdated",
+      "additionalDescription",
+      "basicUDIIdentifier",
+      "MDNCodes",
+      "productionIdentifier",
+      "referenceNumber",
+      "secondaryIdentifier",
+      "sterile",
+      "sterilization",
+      "tradeNames",
+      "website",
+      "storageHandlingConditions",
+      "packages",
+      "criticalWarnings",
+      "substatuses",
+      "numberOfReuses",
+      "relatedUDILink",
+      "marketInfos",
+      "deviceMarking",
+      "baseQuantity",
+      "productDesignerActor",
+      "annexXVINonMedicalDeviceTypes",
+      "annexXVIApplicable",
+      "latex",
+      "reprocessed",
+      "substances",
+      "clinicalSizes"
+    ]
+  },
+  {
+    "elementLocalName": "MDRBasicUDI",
+    "parentLocalName": "Device",
+    "namespacePrefix": "device",
+    "correctOrder": [
+      "state",
+      "version",
+      "versionDate",
+      "riskClass",
+      "model",
+      "modelName",
+      "identifier",
+      "certificateLinks",
+      "lastUpdated",
+      "animalTissuesCells",
+      "ARActorCode",
+      "humanTissuesCells",
+      "MFActorCode",
+      "ARComments",
+      "clinicalInvestigationLinks",
+      "deviceCertificateLinks",
+      "humanProductCheck",
+      "IIb_implantable_exceptions",
+      "medicinalProductCheck",
+      "specialDevice",
+      "type",
+      "active",
+      "administeringMedicine",
+      "implantable",
+      "measuringFunction",
+      "reusable"
+    ]
+  },
+  {
+    "elementLocalName": "MDRUDIDIData",
+    "parentLocalName": "Device",
+    "namespacePrefix": "device",
+    "correctOrder": [
+      "state",
+      "version",
+      "versionDate",
+      "identifier",
+      "status",
+      "lastUpdated",
+      "additionalDescription",
+      "basicUDIIdentifier",
+      "MDNCodes",
+      "productionIdentifier",
+      "referenceNumber",
+      "secondaryIdentifier",
+      "sterile",
+      "sterilization",
+      "tradeNames",
+      "website",
+      "storageHandlingConditions",
+      "packages",
+      "criticalWarnings",
+      "substatuses",
+      "numberOfReuses",
+      "relatedUDILink",
+      "marketInfos",
+      "deviceMarking",
+      "baseQuantity",
+      "productDesignerActor",
+      "annexXVINonMedicalDeviceTypes",
+      "annexXVIApplicable",
+      "latex",
+      "reprocessed",
+      "substances",
+      "clinicalSizes"
+    ]
+  },
+~')
+      || TO_CLOB(q'~  {
+    "elementLocalName": "modelName",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi",
+    "correctOrder": [
+      "model",
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "modelName",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi",
+    "correctOrder": [
+      "model",
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "model",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+    {
+    "elementLocalName": "model",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "identifier",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "identifier",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "state",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "version",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "versionDate",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "riskClass",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "certificateLinks",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "lastUpdated",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "animalTissuesCells",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "ARActorCode",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "humanTissuesCells",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "MFActorCode",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "ARComments",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "clinicalInvestigationLinks",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "humanProductCheck",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "IIb_implantable_exceptions",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "medicinalProductCheck",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "specialDevice",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "type",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "active",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "administeringMedicine",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "implantable",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "measuringFunction",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "commondi"
+  },
+~')
+      || TO_CLOB(q'~  {
+    "elementLocalName": "reusable",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "state",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "version",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "versionDate",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "riskClass",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "certificateLinks",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "lastUpdated",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "animalTissuesCells",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "ARActorCode",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "humanTissuesCells",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "MFActorCode",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "ARComments",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "clinicalInvestigationLinks",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "humanProductCheck",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "IIb_implantable_exceptions",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "medicinalProductCheck",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "specialDevice",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "type",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi"
+  },
+  {
+    "elementLocalName": "active",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "administeringMedicine",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "implantable",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "measuringFunction",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "reusable",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "model",
+    "parentLocalName": "modelName",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "name",
+    "parentLocalName": "modelName",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "DICode",
+    "parentLocalName": "identifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "issuingEntityCode",
+    "parentLocalName": "identifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "identifier",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+~')
+      || TO_CLOB(q'~  {
+    "elementLocalName": "identifier",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "basicUDIIdentifier",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "basicUDIIdentifier",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "secondaryIdentifier",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "secondaryIdentifier",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "status",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "code"
+    ]
+  },
+  {
+    "elementLocalName": "status",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "code"
+    ]
+  },
+  {
+    "elementLocalName": "tradeNames",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "tradeNames",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "storageHandlingConditions",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "condition"
+    ]
+  },
+  {
+    "elementLocalName": "storageHandlingConditions",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "condition"
+    ]
+  },
+  {
+    "elementLocalName": "criticalWarnings",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "warning"
+    ]
+  },
+  {
+    "elementLocalName": "criticalWarnings",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "warning"
+    ]
+  },
+  {
+    "elementLocalName": "substatuses",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "substatus"
+    ]
+  },
+  {
+    "elementLocalName": "substatuses",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "substatus"
+    ]
+  },
+  {
+    "elementLocalName": "deviceMarking",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "directMarkingDI",
+      "unitOfUseIdentifier"
+    ]
+  },
+  {
+    "elementLocalName": "deviceMarking",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "directMarkingDI",
+      "unitOfUseIdentifier"
+    ]
+  },
+  {
+    "elementLocalName": "packages",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "package"
+    ]
+  },
+~')
+      || TO_CLOB(q'~  {
+    "elementLocalName": "packages",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "package"
+    ]
+  },
+  {
+    "elementLocalName": "additionalDescription",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "additionalDescription",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "state",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "version",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "versionDate",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "lastUpdated",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "MDNCodes",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "productionIdentifier",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "referenceNumber",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "sterile",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "sterilization",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "website",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "numberOfReuses",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "relatedUDILink",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "marketInfos",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "baseQuantity",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "productDesignerActor",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "annexXVINonMedicalDeviceTypes",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "annexXVIApplicable",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "latex",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "reprocessed",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "substances",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "state",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "version",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "versionDate",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "e"
+  },
+  {
+    "elementLocalName": "lastUpdated",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "MDNCodes",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "productionIdentifier",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+~')
+      || TO_CLOB(q'~  {
+    "elementLocalName": "referenceNumber",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "sterile",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "sterilization",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "website",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "numberOfReuses",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "relatedUDILink",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "marketInfos",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "baseQuantity",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "productDesignerActor",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "annexXVINonMedicalDeviceTypes",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "annexXVIApplicable",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "latex",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "reprocessed",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "substances",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "DICode",
+    "parentLocalName": "basicUDIIdentifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "issuingEntityCode",
+    "parentLocalName": "basicUDIIdentifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "DICode",
+    "parentLocalName": "secondaryIdentifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "issuingEntityCode",
+    "parentLocalName": "secondaryIdentifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "code",
+    "parentLocalName": "status",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "package",
+    "parentLocalName": "packages",
+    "namespacePrefix": "udidi"
+  },
+  {
+    "elementLocalName": "condition",
+    "parentLocalName": "storageHandlingConditions",
+    "namespacePrefix": "commondi",
+    "correctOrder": [
+      "comments",
+      "storageHandlingConditionValue"
+    ]
+  },
+  {
+    "elementLocalName": "warning",
+    "parentLocalName": "criticalWarnings",
+    "namespacePrefix": "commondi",
+    "correctOrder": [
+      "comments",
+      "warningValue"
+    ]
+  },
+  {
+    "elementLocalName": "comments",
+    "parentLocalName": "condition",
+    "namespacePrefix": "commondi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "comments",
+    "parentLocalName": "warning",
+    "namespacePrefix": "commondi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "substatus",
+    "parentLocalName": "substatuses",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "storageHandlingConditionValue",
+    "parentLocalName": "condition",
+    "namespacePrefix": "commondi"
+  },
+~')
+      || TO_CLOB(q'~  {
+    "elementLocalName": "warningValue",
+    "parentLocalName": "warning",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "name",
+    "parentLocalName": "tradeNames",
+    "namespacePrefix": "lsn",
+    "correctOrder": [
+      "language",
+      "textValue"
+    ]
+  },
+  {
+    "elementLocalName": "name",
+    "parentLocalName": "comments",
+    "namespacePrefix": "lsn",
+    "correctOrder": [
+      "language",
+      "textValue"
+    ]
+  },
+  {
+    "elementLocalName": "name",
+    "parentLocalName": "additionalDescription",
+    "namespacePrefix": "lsn",
+    "correctOrder": [
+      "language",
+      "textValue"
+    ]
+  },
+  {
+    "elementLocalName": "language",
+    "parentLocalName": "name",
+    "namespacePrefix": "lsn"
+  },
+  {
+    "elementLocalName": "textValue",
+    "parentLocalName": "name",
+    "namespacePrefix": "lsn"
+  },
+  {
+    "elementLocalName": "directMarkingDI",
+    "parentLocalName": "deviceMarking",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "unitOfUseIdentifier",
+    "parentLocalName": "deviceMarking",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "DICode",
+      "issuingEntityCode"
+    ]
+  },
+  {
+    "elementLocalName": "DICode",
+    "parentLocalName": "directMarkingDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "issuingEntityCode",
+    "parentLocalName": "directMarkingDI",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "DICode",
+    "parentLocalName": "unitOfUseIdentifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "issuingEntityCode",
+    "parentLocalName": "unitOfUseIdentifier",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "deviceCertificateLinks",
+    "parentLocalName": "BasicUDI",
+    "namespacePrefix": "basicudi",
+    "correctOrder": [
+      "deviceCertificateLink"
+    ]
+  },
+  {
+    "elementLocalName": "deviceCertificateLinks",
+    "parentLocalName": "MDRBasicUDI",
+    "namespacePrefix": "basicudi",
+    "correctOrder": [
+      "deviceCertificateLink"
+    ]
+  },
+  {
+    "elementLocalName": "deviceCertificateLink",
+    "parentLocalName": "deviceCertificateLinks",
+    "namespacePrefix": "links",
+    "correctOrder": [
+      "certificateNumber",
+      "expiryDate",
+      "NBActorCode",
+      "certificateRevisionNumber",
+      "certificateType"
+    ]
+  },
+  ~')
+      || TO_CLOB(q'~  {
+  {
+    "elementLocalName": "certificateNumber",
+    "parentLocalName": "deviceCertificateLink",
+    "namespacePrefix": "links"
+  },
+  {
+    "elementLocalName": "expiryDate",
+    "parentLocalName": "deviceCertificateLink",
+    "namespacePrefix": "links"
+  },
+  {
+    "elementLocalName": "NBActorCode",
+    "parentLocalName": "deviceCertificateLink",
+    "namespacePrefix": "links"
+  },
+  {
+    "elementLocalName": "certificateRevisionNumber",
+    "parentLocalName": "deviceCertificateLink",
+    "namespacePrefix": "links"
+  },
+  {
+    "elementLocalName": "certificateType",
+    "parentLocalName": "deviceCertificateLink",
+    "namespacePrefix": "links"
+  },
+ {
+    "elementLocalName": "clinicalSizes",
+    "parentLocalName": "MDRUDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "clinicalSize"
+    ]
+  },
+  {
+    "elementLocalName": "clinicalSizes",
+    "parentLocalName": "UDIDIData",
+    "namespacePrefix": "udidi",
+    "correctOrder": [
+      "clinicalSize"
+    ]
+  },
+  {
+    "elementLocalName": "clinicalSize",
+    "parentLocalName": "clinicalSizes",
+    "namespacePrefix": "commondi",
+	"type": "commondi:ValueClinicalSizeType",
+    "correctOrder": [
+      "clinicalSizeType",
+      "clinicalSizeDescription",
+      "value",
+      "valueUnit"	
+    ]
+  },
+{
+    "elementLocalName": "clinicalSizeType",
+    "parentLocalName": "clinicalSize",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "clinicalSizeDescription",
+    "parentLocalName": "clinicalSize",
+    "namespacePrefix": "commondi",
+    "correctOrder": [
+      "name"
+    ]
+  },
+  {
+    "elementLocalName": "value",
+    "parentLocalName": "clinicalSize",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "valueUnit",
+    "parentLocalName": "clinicalSize",
+    "namespacePrefix": "commondi"
+  },
+  {
+    "elementLocalName": "name",
+    "parentLocalName": "clinicalSizeDescription",
+    "namespacePrefix": "lsn",
+    "correctOrder": [
+      "language",
+      "textValue"
+    ]
+  }
+ ]
 ~')                                     AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
@@ -1457,7 +2337,7 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         p.SAP_part_no                               AS partno,
-        TO_CLOB(p.prodgr)                           AS valtext,
+        TO_CLOB(p.model_eud)                        AS valtext, -- We use the DOC/BasicUDI model here, not the SAP product group
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -1550,6 +2430,7 @@ UNION ALL
         NULL                                        AS prver,
         NULL                                        AS partno,
         TO_CLOB(CASE fm.model
+            WHEN '613AD' THEN 'P030102090202'
             WHEN '640PM' THEN 'P030102100202'
             WHEN '677AD' THEN 'P030102090202'
             WHEN '677ADY' THEN 'P030102090202'
@@ -2430,7 +3311,7 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('''=IFS(LEFT(PRODGR, 3) = "640", IF(DPT >= 15.5, 10.7, 11), LEFT(PRODGR, 4) = "PFIS", 12, LEFT(PRODGR, 4) = "PFIX", 14, TRUE, 13)') AS valtext,
+        TO_CLOB('''=IFS(LEFT(PRODGR, 5) = "640AD", IF(DPT >= 15.5, 10.7, 11), PRODGR = "640P", 11, PRODGR = "640PY", 11, TRUE, 13)') AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
