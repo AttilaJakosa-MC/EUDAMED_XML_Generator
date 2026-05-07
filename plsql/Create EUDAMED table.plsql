@@ -5,6 +5,7 @@ SET DEFINE OFF;
 -- TODO: Handle 1stQ
 -- TODO: Total Diamater excel formula wrong
 -- TODO: EMDN codes of mixed lens: mono+, 7mm
+-- TODO: Placed on market review
 
 WITH
     model_list AS (
@@ -16,11 +17,14 @@ WITH
     ),
 
     transferable_parts AS (
-        SELECT /*+ MATERIALIZE */ * FROM TABLE(get_transferable_parts_lens_table('ALL'))
+        -- Only pull the STD range into Eudamed
+        SELECT /*+ MATERIALIZE */ * FROM TABLE(get_transferable_parts_lens_table('STD'))
+        WHERE model NOT LIKE 'PFI%'
     ),
 
     transferable_parts_std AS (
         SELECT /*+ MATERIALIZE */ part_no, model, ver FROM TABLE(get_transferable_parts_lens_table('STD'))
+        WHERE model NOT LIKE 'PFI%'
     ),
 
     portfolio_data AS (
@@ -36,14 +40,10 @@ WITH
     ),
 
     filtered_models_ver AS (
-        SELECT /*+ MATERIALIZE */
-            model,
-            MIN(ver) AS ver
+        SELECT /*+ MATERIALIZE */ model, ver, ifsver, sapmodel
         FROM transferable_parts tp
-        WHERE
-            (SELECT COUNT(*) FROM model_list) = 0
-            OR tp.model IN (SELECT model FROM model_list)
-        GROUP BY model
+        WHERE (SELECT COUNT(*) FROM model_list) = 0 OR tp.model IN (SELECT model FROM model_list)
+        GROUP BY model, ver, ifsver, sapmodel
     ),
 
     divisions AS (
@@ -54,8 +54,9 @@ WITH
     ),
 
     distchannels AS (
-        SELECT '01' AS distchain FROM DUAL UNION ALL
-        SELECT '40' AS distchain FROM DUAL
+        -- 1stQ later
+        SELECT '01' AS distchain FROM DUAL -- UNION ALL
+        -- SELECT '40' AS distchain FROM DUAL
     ),
 
     non_iol_parts AS (
@@ -1602,8 +1603,7 @@ UNION ALL
     ]
   },
   ~')
-      || TO_CLOB(q'~  {
-  {
+      || TO_CLOB(q'~{
     "elementLocalName": "certificateNumber",
     "parentLocalName": "deviceCertificateLink",
     "namespacePrefix": "links"
@@ -2160,7 +2160,8 @@ UNION ALL
         NULL                                        AS partno,
         TO_CLOB(CASE dc.distchain 
                      WHEN '01' THEN 'HU-MF-000026801'
-                     WHEN '40' THEN 'DE-MF-0000?????' 
+                     -- 1stQ at a later stage
+                     -- WHEN '40' THEN 'DE-MF-0000?????' 
                 END)                                AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -2410,14 +2411,14 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/EMDNCodes IOL by filtered_models
+    -- UDI-DI/EMDNCodes IOL by filtered_models_ver
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
         'P'                                         AS fin,
         '01'                                        AS div,
         fm.model                                    AS prodgr,
-        NULL                                        AS ver,
+        CASE WHEN fm.model = '860PTY' THEN fm.ver ELSE NULL END AS ver,
         NULL                                        AS pcode,
         NULL                                        AS plant,
         NULL                                        AS distchain,
@@ -2465,7 +2466,11 @@ UNION ALL
             WHEN '690CTA' THEN 'P030102090302'
             WHEN '690TA' THEN 'P030102090302'
             WHEN '860PT' THEN 'P030102090301'
-            WHEN '860PTY' THEN 'P030102090301'
+            WHEN '860PTY' THEN 
+                CASE MAX(fm.ver)
+                    WHEN 'A' THEN 'P030102090201' -- Mono+ non-toric
+                    WHEN 'B' THEN 'P030102090301' -- Mono+ toric
+                END
             WHEN '860PETY' THEN 'P030102090301'
             WHEN '877PT' THEN 'P030102090301'
             WHEN '877PTY' THEN 'P030102090301'
@@ -2496,7 +2501,8 @@ UNION ALL
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'UDI-DI/EMDNCodes IOL'                          AS "_remark"
-    FROM filtered_models fm
+    FROM filtered_models_ver fm
+    GROUP BY fm.model, CASE WHEN fm.model = '860PTY' THEN fm.ver ELSE NULL END
 
 UNION ALL
 
