@@ -19,12 +19,12 @@ WITH
     transferable_parts AS (
         -- Only pull the STD range into Eudamed
         SELECT /*+ MATERIALIZE */ * FROM TABLE(get_transferable_parts_lens_table('STD'))
-        WHERE model NOT LIKE 'PFI%'
+        WHERE model NOT LIKE 'PFI%' AND PCODE IN ('B0', 'B1', 'M0')
     ),
 
     transferable_parts_std AS (
         SELECT /*+ MATERIALIZE */ part_no, model, ver FROM TABLE(get_transferable_parts_lens_table('STD'))
-        WHERE model NOT LIKE 'PFI%'
+        WHERE model NOT LIKE 'PFI%' AND PCODE IN ('B0', 'B1', 'M0')
     ),
 
     portfolio_data AS (
@@ -3560,7 +3560,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[7]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/clinicalSizeType
     -- Concentration clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3573,7 +3573,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[7]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[1]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3591,7 +3591,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[7]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/value
     -- Concentration clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3604,7 +3604,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[7]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[1]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -3628,7 +3628,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[7]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/valueUnit
     -- Concentration clinical size unit (%)
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3641,7 +3641,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[7]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[1]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3659,7 +3659,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[8]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/clinicalSizeType
     -- Diameter CTR clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3672,7 +3672,7 @@ UNION ALL
         NULL                                        AS plant,
         NULL                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[8]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[1]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3690,7 +3690,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[8]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/value
     -- Diameter CTR clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3703,7 +3703,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[8]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[1]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -3725,7 +3725,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[8]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/valueUnit
     -- Diameter CTR clinical size unit (mm)
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3738,7 +3738,7 @@ UNION ALL
         NULL                                        AS plant,
         NULL                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[8]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[1]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3756,7 +3756,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[9]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[2]/clinicalSizeType
     -- Diameter Non-IOL clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3769,7 +3769,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[9]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[2]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3787,7 +3787,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[9]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[2]/value
     -- Diameter Non-IOL clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3800,7 +3800,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[9]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[2]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -3823,7 +3823,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[9]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[2]/valueUnit
     -- Diameter Non-IOL clinical size unit (mm)
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3836,7 +3836,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[9]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[2]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3854,7 +3854,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[10]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/clinicalSizeType
     -- Gauge Non-IOL clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3867,7 +3867,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[10]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[3]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3885,7 +3885,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[10]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/value
     -- Gauge Non-IOL clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3898,7 +3898,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[10]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[3]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -3921,7 +3921,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[10]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/valueUnit
     -- Gauge Non-IOL clinical size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3934,7 +3934,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[10]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[3]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3952,7 +3952,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[11]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/clinicalSizeType
     -- Length Non-IOL clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3965,7 +3965,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[11]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[4]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -3983,7 +3983,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[11]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/value
     -- Length Non-IOL clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -3996,7 +3996,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[11]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[4]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -4013,7 +4013,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[11]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/valueUnit
     -- Length Non-IOL clinical size unit (mm)
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4026,7 +4026,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[11]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[4]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -4044,7 +4044,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[12]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/clinicalSizeType
     -- Injector incision size
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4057,7 +4057,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[12]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[1]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -4075,7 +4075,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[12]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/value
     -- Injector incision size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4088,7 +4088,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[12]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[1]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -4111,7 +4111,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[12]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[1]/valueUnit
     -- Injector incision size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4124,7 +4124,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[12]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[1]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -4142,7 +4142,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[13]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[5]/clinicalSizeType
     -- Volume OVD clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4155,7 +4155,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[13]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[5]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -4173,7 +4173,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[13]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[5]/value
     -- Volume OVD clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4186,7 +4186,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[13]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[5]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -4208,7 +4208,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[13]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[5]/valueUnit
     -- Volume OVD clinical size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4221,7 +4221,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[13]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[5]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
