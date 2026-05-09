@@ -2202,7 +2202,7 @@ UNION ALL
 
 UNION ALL
 
-    -- BasicUDI/identifier/UDICode by filtered_models
+    -- BasicUDI/identifier/DICode by filtered_models
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2214,7 +2214,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'basicudi/identifier/UDICode'               AS name,
+        'basicudi/identifier/DICode'               AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -2285,12 +2285,12 @@ UNION ALL
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'BasicUDI/identifier/UDICode by filtered_models' AS "_remark"
+        'BasicUDI/identifier/DICode by filtered_models' AS "_remark"
     FROM filtered_models fm
 
 UNION ALL
 
-    -- BasicUDI/identifier/UDICode by non_iol_parts
+    -- BasicUDI/identifier/DICode by non_iol_parts
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -2302,7 +2302,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'basicudi/identifier/UDICode'               AS name,
+        'basicudi/identifier/DICode'               AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -2314,7 +2314,7 @@ UNION ALL
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'BasicUDI/identifier/UDICode by non_iol_parts' AS "_remark"
+        'BasicUDI/identifier/DICode by non_iol_parts' AS "_remark"
     FROM non_iol_parts p
 
 UNION ALL
@@ -4621,7 +4621,7 @@ UNION ALL
             NULL                                        AS plant,
             '01'                                        AS distchain,
             NULL                                        AS lang,
-            'udidi/marketInfos/marketInfo[' || TO_CHAR(DENSE_RANK() OVER (PARTITION BY fm.model ORDER BY mi.country_code)) || ']/' || f.field
+            'udidi/marketInfos/marketInfo[' || TO_CHAR(DENSE_RANK() OVER (PARTITION BY fm.model, SUBSTR(mi.suffix, 2) ORDER BY mi.country_code)) || ']/' || f.field
                                                                                         AS name,
             NULL                                        AS dpt_l,
             NULL                                        AS dpt_h,
