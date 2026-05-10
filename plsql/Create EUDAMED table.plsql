@@ -111,7 +111,7 @@ UNION ALL
         NULL                            AS cyl_h,
         NULL                            AS prver,
         'EUDAMED_DRIVER_FIELD'          AS partno,
-        TO_CLOB('3.0.30')               AS valtext,
+        TO_CLOB('3.0.31')               AS valtext,
         NULL                            AS valnom,
         NULL                            AS valmin,
         NULL                            AS valmax,
@@ -266,6 +266,8 @@ UNION ALL
         'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
+  xmlns:links="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Links/v1"
+  xmlns:marketinfo="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/MktInfo/MarketInfo/v1"
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
   xmlns:commondi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/CommonDevice/v1"
   xmlns:device="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/v1"
@@ -377,6 +379,8 @@ UNION ALL
         'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
+  xmlns:links="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Links/v1"
+  xmlns:marketinfo="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/MktInfo/MarketInfo/v1"
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
   xmlns:commondi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/CommonDevice/v1"
   xmlns:device="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/v1"
@@ -485,6 +489,8 @@ UNION ALL
         'EUDAMED_DRIVER_FIELD'          AS partno,
 TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 <m:Push
+  xmlns:links="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Links/v1"
+  xmlns:marketinfo="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/MktInfo/MarketInfo/v1"
   xmlns:basicudi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/BasicUDI/v1"
   xmlns:commondi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/CommonDevice/v1"
   xmlns:device="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/Device/v1"
@@ -1687,7 +1693,38 @@ UNION ALL
       "language",
       "textValue"
     ]
-  }
+  },
+   {
+        "elementLocalName": "marketInfo",
+        "parentLocalName": "marketInfos",
+        "namespacePrefix": "marketinfo",
+        "correctOrder": [
+            "country",
+            "endDate",
+            "originalPlacedOnTheMarket",
+            "startDate"
+        ]
+    },
+    {
+        "elementLocalName": "country",
+        "parentLocalName": "marketInfo",
+        "namespacePrefix": "marketinfo"
+    },
+    {
+        "elementLocalName": "endDate",
+        "parentLocalName": "marketInfo",
+        "namespacePrefix": "marketinfo"
+    },
+    {
+        "elementLocalName": "originalPlacedOnTheMarket",
+        "parentLocalName": "marketInfo",
+        "namespacePrefix": "marketinfo"
+    },
+    {
+        "elementLocalName": "startDate",
+        "parentLocalName": "marketInfo",
+        "namespacePrefix": "marketinfo"
+    }
  ]
 ~')                                     AS valtext,
         NULL                            AS valnom,
