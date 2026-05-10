@@ -3354,12 +3354,28 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('''=IFS(LEFT(PRODGR, 5) = "640AD", IF(DPT >= 15.5, 10.7, 11), PRODGR = "640P", 11, PRODGR = "640PY", 11, TRUE, 13)') AS valtext,
+        TO_CLOB('13')                               AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Total Diameter clinical size value' AS "_remark"
+    FROM DUAL
+
+UNION ALL
+
+    SELECT 'EUDAMED', NULL, 'P', '01', '611HPS', NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', NULL,   NULL, NULL, NULL, NULL, NULL, TO_CLOB('12'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640AD',  NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 0.00,  15.00, NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640AD',  NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 15.50, 35.00, NULL, NULL, NULL, NULL, TO_CLOB('10.7'), NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640ADY', NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 0.00,  15.00, NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640ADY', NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 15.50, 35.00, NULL, NULL, NULL, NULL, TO_CLOB('10.7'), NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640CMY', NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 8.00,  15.00, NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640CMY', NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 15.50, 35.00, NULL, NULL, NULL, NULL, TO_CLOB('10.7'), NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640MY',  NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 8.00,  15.00, NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640MY',  NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', 15.50, 35.00, NULL, NULL, NULL, NULL, TO_CLOB('10.7'), NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640P',   NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', NULL,  NULL,  NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640PM',  NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', NULL,  NULL,  NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value' FROM DUAL UNION ALL
+    SELECT 'EUDAMED', NULL, 'P', '01', '640PY',  NULL, NULL, NULL, NULL, NULL, 'udidi/clinicalSizes/clinicalSize[4]/value', NULL,  NULL,  NULL, NULL, NULL, NULL, TO_CLOB('11'),   NULL, NULL, NULL, TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST', 'Total Diameter clinical size value'
     FROM DUAL
 
 UNION ALL
