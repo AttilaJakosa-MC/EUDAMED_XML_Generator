@@ -6,7 +6,9 @@ SET DEFINE OFF;
 -- TODO: Total Diamater excel formula wrong
 -- TODO: EMDN codes of mixed lens: mono+, 7mm
 -- TODO: Placed on market review
-
+-- TODO: INCR VER aware HANDLING
+--       Workaround1: clear version for row 860FABY 10-30
+--       Workaround2: Clear complete incr row for 860PTY cyl=0 
 WITH
     model_list AS (
         -- SELECT column_value AS model FROM TABLE(SYS.ODCIVARCHAR2LIST('860FAB','PFIM4'))
@@ -306,7 +308,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:sender>
     <m:node>
-      <s:nodeActorCode>{SENDER_NODE_ACTOR_CODE}</s:nodeActorCode>
+      <s:nodeActorCode>HU-MF-000026801</s:nodeActorCode>
       <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
     </m:node>
     <m:service>
@@ -416,7 +418,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:sender>
     <m:node>
-      <s:nodeActorCode>{SENDER_NODE_ACTOR_CODE}</s:nodeActorCode>
+      <s:nodeActorCode>HU-MF-000026801</s:nodeActorCode>
       <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
     </m:node>
     <m:service>
@@ -525,7 +527,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
 
   <m:sender>
     <m:node>
-      <s:nodeActorCode>{SENDER_NODE_ACTOR_CODE}</s:nodeActorCode>
+      <s:nodeActorCode>HU-MF-000026801</s:nodeActorCode>
       <s:nodeID>{SENDER_NODE_ID}</s:nodeID>
     </m:node>
     <m:service>
