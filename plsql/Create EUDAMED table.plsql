@@ -9,6 +9,7 @@ SET DEFINE OFF;
 -- TODO: INCR VER aware HANDLING
 --       Workaround1: clear version for row 860FABY 10-30
 --       Workaround2: Clear complete incr row for 860PTY cyl=0 
+--       Workaround3: All distchain cells should be deleted in the EUDAMED tables
 WITH
     model_list AS (
         -- SELECT column_value AS model FROM TABLE(SYS.ODCIVARCHAR2LIST('860FAB','PFIM4'))
@@ -2168,7 +2169,7 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('MDR_TECHNICAL_DOCUMENTATION')      AS valtext,
+        TO_CLOB(CASE WHEN div IN ('01','11') THEN 'MDR_TECHNICAL_DOCUMENTATION' ELSE 'MDR_TYPE_EXAMINATION' END) AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
@@ -3612,6 +3613,64 @@ UNION ALL
         'Addition Power Intermediate, clinical size unit' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
+
+UNION ALL
+
+    -- UDI-DI/additionalDescription language
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/additionalDescription/name[1]/language' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('EN')                               AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'Additional description language'           AS "_remark"
+    FROM DUAL
+
+UNION ALL
+
+    -- UDI-DI/additionalDescription textValue
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '10'                                        AS div,
+        NULL                                        AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/additionalDescription/name[1]/textValue' AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('Viscoelastic solution system with injection syringe') AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'Additional description text'               AS "_remark"
+    FROM DUAL
 
 UNION ALL
 
