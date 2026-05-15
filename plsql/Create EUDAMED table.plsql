@@ -49,6 +49,13 @@ WITH
         GROUP BY model, ver, ifsver, sapmodel
     ),
 
+    filtered_models_ver_pcode AS (
+        SELECT /*+ MATERIALIZE */ model, ver, pcode, ifsver, sapmodel
+        FROM transferable_parts tp
+        WHERE (SELECT COUNT(*) FROM model_list) = 0 OR tp.model IN (SELECT model FROM model_list)
+        GROUP BY model, ver, pcode, ifsver, sapmodel
+    ),
+
     divisions AS (
         SELECT '01' AS div FROM DUAL UNION ALL
         SELECT '10' AS div FROM DUAL UNION ALL
@@ -278,6 +285,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
   xmlns:m="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1"
   xmlns:s="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1"
   xmlns:udidi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/UDIDI/v1"
+  xmlns:e="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/v1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   version="{VERSION}">
 
@@ -391,6 +399,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
   xmlns:m="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1"
   xmlns:s="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1"
   xmlns:udidi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/UDIDI/v1"
+  xmlns:e="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/v1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   version="{VERSION}">
 
@@ -501,6 +510,7 @@ TO_CLOB(q'~<?xml version="1.0" encoding="UTF-8"?>
   xmlns:m="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Message/v1"
   xmlns:s="https://ec.europa.eu/tools/eudamed/dtx/servicemodel/Service/v1"
   xmlns:udidi="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/UDIDI/v1"
+  xmlns:e="https://ec.europa.eu/tools/eudamed/dtx/datamodel/Entity/v1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   version="{VERSION}">
 
@@ -4805,6 +4815,122 @@ UNION ALL
         ) f
         ORDER BY p.sap_part_no, mi.country_code, f.ord
     )
+
+UNION ALL
+
+    -- BASICUDI/version for update service
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        fm.ver                                      AS ver,
+        fm.pcode                                    AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'basicudi/version'                          AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('1')                                AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'basicudi version info' AS "_remark"
+    FROM filtered_models_ver_pcode fm
+
+UNION ALL
+
+    -- UDI-DI/version for update service
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        fm.ver                                      AS ver,
+        fm.pcode                                    AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/version'                             AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('1')                                AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'udidi version info' AS "_remark"
+    FROM filtered_models_ver_pcode fm
+
+UNION all
+
+    -- BASICUDI/version for non_iol_parts
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        p.div                                       AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        p.pcode                                     AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        'basicudi/version'                          AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        p.SAP_part_no                               AS partno,
+        TO_CLOB('1')                                AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'basicudi version info' AS "_remark"
+    FROM non_iol_parts p
+
+UNION ALL
+
+    -- UDI_DI/version for non_iol_parts
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        p.div                                       AS div,
+        p.prodgr                                    AS prodgr,
+        NULL                                        AS ver,
+        p.pcode                                     AS pcode,
+        NULL                                        AS plant,
+        p.distchan                                  AS distchain,
+        NULL                                        AS lang,
+        'udidi/version'                             AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        p.SAP_part_no                               AS partno,
+        TO_CLOB('1')                                AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'udidi version info' AS "_remark"
+    FROM non_iol_parts p
 
 /*
     -- BasicUDI/Lens model by filtered_models
