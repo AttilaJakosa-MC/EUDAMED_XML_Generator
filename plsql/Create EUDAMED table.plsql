@@ -3979,7 +3979,7 @@ UNION ALL
 UNION ALL
 
     -- UDI-DI/clinicalSizes/clinicalSize[3]/clinicalSizeType
-    -- Gauge Non-IOL clinicalSizeType
+    -- Length Non-IOL clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
         NULL                                        AS semi,
@@ -3999,104 +3999,6 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('CST14')                            AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Gauge Non-IOL clinicalSizeType'            AS "_remark"
-    FROM DUAL
-
-UNION ALL
-
-    -- UDI-DI/clinicalSizes/clinicalSize[3]/value
-    -- Gauge Non-IOL clinical size value
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '10'                                        AS div,
-        p.prodgr                                    AS prodgr,
-        NULL                                        AS ver,
-        p.pcode                                     AS pcode,
-        NULL                                        AS plant,
-        p.distchan                                  AS distchain,
-        NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[3]/value' AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        p.SAP_part_no                               AS partno,
-        CASE
-            WHEN p.SAP_part_no IN ('TV-010-3001-B-00', 'TV-010-3002-B-00') THEN TO_CLOB('27G')
-            WHEN p.SAP_part_no = 'TV-010-3003-B-00' THEN TO_CLOB('25G')
-            WHEN p.SAP_part_no = 'FV-010-3100-A-B0' THEN TO_CLOB('23G')
-            ELSE TO_CLOB('??')
-        END                                         AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Gauge Non-IOL clinical size value'         AS "_remark"
-    FROM non_iol_parts p
-    WHERE p.div = '10'
-
-UNION ALL
-
-    -- UDI-DI/clinicalSizes/clinicalSize[3]/valueUnit
-    -- Gauge Non-IOL clinical size unit
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '10'                                        AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        '01'                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[3]/valueUnit'
-                                                    AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
-        TO_CLOB('MU999')                            AS valtext,
-        NULL                                        AS valnom,
-        NULL                                        AS valmin,
-        NULL                                        AS valmax,
-        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
-        'Gauge Non-IOL clinical size unit'          AS "_remark"
-    FROM DUAL
-
-UNION ALL
-
-    -- UDI-DI/clinicalSizes/clinicalSize[4]/clinicalSizeType
-    -- Length Non-IOL clinicalSizeType
-    SELECT
-        'EUDAMED'                                   AS rowtype,
-        NULL                                        AS semi,
-        'P'                                         AS fin,
-        '10'                                        AS div,
-        NULL                                        AS prodgr,
-        NULL                                        AS ver,
-        NULL                                        AS pcode,
-        NULL                                        AS plant,
-        '01'                                        AS distchain,
-        NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[4]/clinicalSizeType'
-                                                    AS name,
-        NULL                                        AS dpt_l,
-        NULL                                        AS dpt_h,
-        NULL                                        AS cyl_l,
-        NULL                                        AS cyl_h,
-        NULL                                        AS prver,
-        NULL                                        AS partno,
         TO_CLOB('CST19')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
@@ -4107,7 +4009,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[4]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/value
     -- Length Non-IOL clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4120,7 +4022,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[4]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[3]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -4137,7 +4039,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[4]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[3]/valueUnit
     -- Length Non-IOL clinical size unit (mm)
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4150,7 +4052,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[4]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[3]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -4175,11 +4077,11 @@ UNION ALL
         NULL                                        AS semi,
         'P'                                         AS fin,
         '12'                                        AS div,
-        NULL                                        AS prodgr,
+        p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
-        NULL                                        AS pcode,
+        p.pcode                                     AS pcode,
         NULL                                        AS plant,
-        '01'                                        AS distchain,
+        p.distchan                                  AS distchain,
         NULL                                        AS lang,
         'udidi/clinicalSizes/clinicalSize[1]/clinicalSizeType'
                                                     AS name,
@@ -4188,14 +4090,16 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
-        NULL                                        AS partno,
+        p.SAP_part_no                               AS partno,
         TO_CLOB('CST27')                            AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Injector incision size clinicalSizeType'   AS "_remark"
-    FROM DUAL
+    FROM non_iol_parts p
+    -- We skip this for PILMA
+    WHERE p.div = '12' and p.prodgr IN ('INP-MDJ-2.4', 'INP-MDJ-1.8', 'INP-MDJ-2.2')
 
 UNION ALL
 
@@ -4242,11 +4146,11 @@ UNION ALL
         NULL                                        AS semi,
         'P'                                         AS fin,
         '12'                                        AS div,
-        NULL                                        AS prodgr,
+        p.prodgr                                    AS prodgr,
         NULL                                        AS ver,
-        NULL                                        AS pcode,
+        p.pcode                                     AS pcode,
         NULL                                        AS plant,
-        '01'                                        AS distchain,
+        p.distchan                                  AS distchain,
         NULL                                        AS lang,
         'udidi/clinicalSizes/clinicalSize[1]/valueUnit'
                                                     AS name,
@@ -4255,18 +4159,20 @@ UNION ALL
         NULL                                        AS cyl_l,
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
-        NULL                                        AS partno,
+        p.SAP_part_no                               AS partno,
         TO_CLOB('MU50')                             AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Injector incision size unit (mm)'          AS "_remark"
-    FROM DUAL
+    FROM non_iol_parts p
+    -- We skip this for PILMA
+    WHERE p.div = '12' and p.prodgr IN ('INP-MDJ-2.4', 'INP-MDJ-1.8', 'INP-MDJ-2.2')
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[5]/clinicalSizeType
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/clinicalSizeType
     -- Volume OVD clinicalSizeType
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4279,7 +4185,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[5]/clinicalSizeType'
+        'udidi/clinicalSizes/clinicalSize[4]/clinicalSizeType'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
@@ -4297,7 +4203,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[5]/value
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/value
     -- Volume OVD clinical size value
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4310,7 +4216,7 @@ UNION ALL
         NULL                                        AS plant,
         p.distchan                                  AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[5]/value' AS name,
+        'udidi/clinicalSizes/clinicalSize[4]/value' AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
         NULL                                        AS cyl_l,
@@ -4332,7 +4238,7 @@ UNION ALL
 
 UNION ALL
 
-    -- UDI-DI/clinicalSizes/clinicalSize[5]/valueUnit
+    -- UDI-DI/clinicalSizes/clinicalSize[4]/valueUnit
     -- Volume OVD clinical size unit
     SELECT
         'EUDAMED'                                   AS rowtype,
@@ -4345,7 +4251,7 @@ UNION ALL
         NULL                                        AS plant,
         '01'                                        AS distchain,
         NULL                                        AS lang,
-        'udidi/clinicalSizes/clinicalSize[5]/valueUnit'
+        'udidi/clinicalSizes/clinicalSize[4]/valueUnit'
                                                     AS name,
         NULL                                        AS dpt_l,
         NULL                                        AS dpt_h,
