@@ -2157,6 +2157,7 @@ UNION ALL
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/NBActorCode by division' AS "_remark"
     FROM divisions
+    WHERE div <> '12'
 
 UNION ALL
 
@@ -2186,6 +2187,7 @@ UNION ALL
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'BasicUDI/deviceCertificateLinks/deviceCertificateLink[1]/certificateType by division' AS "_remark"
     FROM divisions
+    WHERE div <> '12'
 
 UNION ALL
 
