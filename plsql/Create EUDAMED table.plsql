@@ -4647,13 +4647,13 @@ UNION ALL
             NULL                                        AS semi,
             'P'                                         AS fin,
             '01'                                        AS div,
-            fm.model                                    AS prodgr,
-            NULL                                        AS ver,
-            SUBSTR(mi.suffix, 2)                        AS pcode,
+            fmvp.model                                  AS prodgr,
+            fmvp.ver                                    AS ver,
+            fmvp.pcode                                  AS pcode,
             NULL                                        AS plant,
             '01'                                        AS distchain,
             NULL                                        AS lang,
-            'udidi/marketInfos/marketInfo[' || TO_CHAR(DENSE_RANK() OVER (PARTITION BY fm.model, SUBSTR(mi.suffix, 2) ORDER BY mi.country_code)) || ']/' || f.field
+            'udidi/marketInfos/marketInfo[' || TO_CHAR(DENSE_RANK() OVER (PARTITION BY fmvp.model, fmvp.ver, fmvp.pcode ORDER BY mi.country_code)) || ']/' || f.field
                                                                                         AS name,
             NULL                                        AS dpt_l,
             NULL                                        AS dpt_h,
@@ -4671,14 +4671,14 @@ UNION ALL
             CASE WHEN f.field = 'country' THEN 'Market info country'
                  ELSE 'Market info original placed on market'
             END                                         AS "_remark"
-        FROM filtered_models fm
-        JOIN TABLE(Get_marketinfo_IOL()) mi ON fm.model = mi.model
+        FROM filtered_models_ver_pcode fmvp
+        JOIN TABLE(Get_marketinfo_IOL()) mi ON fmvp.model = mi.model AND fmvp.ver = mi.ver AND fmvp.pcode = mi.pcode
         CROSS JOIN (
             SELECT 'country' AS field, 1 AS ord FROM DUAL
             UNION ALL
             SELECT 'originalPlacedOnTheMarket' AS field, 2 AS ord FROM DUAL
         ) f
-        ORDER BY fm.model, mi.country_code, f.ord
+        ORDER BY fmvp.model, fmvp.ver, fmvp.pcode, mi.country_code, f.ord
     )
 
 UNION ALL
