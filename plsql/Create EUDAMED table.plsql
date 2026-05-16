@@ -2520,8 +2520,8 @@ UNION ALL
             WHEN '860PT' THEN 'P030102090301'
             WHEN '860PTY' THEN 
                 CASE MAX(fm.ver)
-                    WHEN 'A' THEN 'P030102090201' -- Mono+ non-toric
-                    WHEN 'B' THEN 'P030102090301' -- Mono+ toric
+                    WHEN 'C' THEN 'P030102090201' -- Mono+ non-toric
+                    WHEN 'D' THEN 'P030102090301' -- Mono+ toric
                 END
             WHEN '860PETY' THEN 'P030102090301'
             WHEN '877PT' THEN 'P030102090301'
