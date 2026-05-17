@@ -3552,12 +3552,76 @@ UNION ALL
         NULL                                        AS cyl_h,
         NULL                                        AS prver,
         NULL                                        AS partno,
-        TO_CLOB('CST40')                            AS valtext,
+        TO_CLOB('CST999')                           AS valtext,
         NULL                                        AS valnom,
         NULL                                        AS valmin,
         NULL                                        AS valmax,
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'Addition Power Intermediate, clinicalSizeType' AS "_remark"
+    FROM filtered_models fm
+    WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[6]/clinicalSizeDescription/name/language
+    -- Addition Power Intermediate, description language
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[6]/clinicalSizeDescription/name/language'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('EN')                               AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'Addition Power Intermediate, description language' AS "_remark"
+    FROM filtered_models fm
+    WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
+
+UNION ALL
+
+    -- UDI-DI/clinicalSizes/clinicalSize[6]/clinicalSizeDescription/name/textValue
+    -- Addition Power Intermediate, description text
+    SELECT
+        'EUDAMED'                                   AS rowtype,
+        NULL                                        AS semi,
+        'P'                                         AS fin,
+        '01'                                        AS div,
+        fm.model                                    AS prodgr,
+        NULL                                        AS ver,
+        NULL                                        AS pcode,
+        NULL                                        AS plant,
+        NULL                                        AS distchain,
+        NULL                                        AS lang,
+        'udidi/clinicalSizes/clinicalSize[6]/clinicalSizeDescription/name/textValue'
+                                                    AS name,
+        NULL                                        AS dpt_l,
+        NULL                                        AS dpt_h,
+        NULL                                        AS cyl_l,
+        NULL                                        AS cyl_h,
+        NULL                                        AS prver,
+        NULL                                        AS partno,
+        TO_CLOB('Addition Power Intermediate')      AS valtext,
+        NULL                                        AS valnom,
+        NULL                                        AS valmin,
+        NULL                                        AS valmax,
+        TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
+        'Addition Power Intermediate, description text' AS "_remark"
     FROM filtered_models fm
     WHERE fm.model IN ('A45DT', 'A45RD2', '640CMY', '640MY', '677CMTY', '677CMY', '677MT', '677MTY', '677MY', '690MTY', '690MY')
 
