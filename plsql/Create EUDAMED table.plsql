@@ -22,12 +22,12 @@ WITH
     transferable_parts AS (
         -- Only pull the STD range into Eudamed
         SELECT /*+ MATERIALIZE */ * FROM TABLE(get_transferable_parts_lens_table('STD'))
-        WHERE model NOT LIKE 'PFI%' AND PCODE IN ('B0', 'B1', 'M0')
+        WHERE model NOT LIKE 'PFI%' AND PCODE IN ('B0', 'M0') -- B1 has no cross reference
     ),
 
     transferable_parts_std AS (
         SELECT /*+ MATERIALIZE */ part_no, model, ver FROM TABLE(get_transferable_parts_lens_table('STD'))
-        WHERE model NOT LIKE 'PFI%' AND PCODE IN ('B0', 'B1', 'M0')
+        WHERE model NOT LIKE 'PFI%' AND PCODE IN ('B0', 'M0') -- B1 has no cross reference
     ),
 
     portfolio_data AS (
@@ -40,6 +40,7 @@ WITH
         WHERE
             ((SELECT COUNT(*) FROM model_list) = 0
             OR tp.model IN (SELECT model FROM model_list)) AND tp.model not like 'PF%'
+        ORDER BY model
     ),
 
     filtered_models_ver AS (
@@ -47,6 +48,7 @@ WITH
         FROM transferable_parts tp
         WHERE (SELECT COUNT(*) FROM model_list) = 0 OR tp.model IN (SELECT model FROM model_list)
         GROUP BY model, ver, ifsver, sapmodel
+        ORDER BY model,ver
     ),
 
     filtered_models_ver_pcode AS (
@@ -54,6 +56,7 @@ WITH
         FROM transferable_parts tp
         WHERE (SELECT COUNT(*) FROM model_list) = 0 OR tp.model IN (SELECT model FROM model_list)
         GROUP BY model, ver, pcode, ifsver, sapmodel
+        ORDER BY model, ver, pcode
     ),
 
     divisions AS (
