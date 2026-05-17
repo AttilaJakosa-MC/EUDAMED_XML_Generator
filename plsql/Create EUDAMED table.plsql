@@ -4819,7 +4819,6 @@ UNION ALL
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'basicudi version info' AS "_remark"
     FROM filtered_models_ver_pcode fm
-    ORDER BY fm.model, fm.ver, fm.pcode
 
 UNION ALL
 
@@ -4849,7 +4848,6 @@ UNION ALL
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'udidi version info' AS "_remark"
     FROM filtered_models_ver_pcode fm
-    ORDER BY fm.model, fm.ver, fm.pcode
 
 UNION all
 
@@ -4879,8 +4877,6 @@ UNION all
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'basicudi version info' AS "_remark"
     FROM non_iol_parts p
-    ORDER BY p.div, p.prodgr, p.pcode
-
 
 UNION ALL
 
@@ -4910,7 +4906,6 @@ UNION ALL
         TO_CHAR(LOCALTIMESTAMP, 'RR/MM/DD HH24:MI:SS') || '.000000000 EUROPE/BUDAPEST' AS validfrom,
         'udidi version info' AS "_remark"
     FROM non_iol_parts p
-    ORDER BY p.div, p.prodgr, p.pcode
 
 /*
     -- BasicUDI/Lens model by filtered_models
