@@ -3904,8 +3904,8 @@ UNION ALL
         NULL                                        AS prver,
         p.SAP_part_no                               AS partno,
         CASE
-            WHEN p.SAP_part_no IN ('FJ-011-4101-A-B0', 'FJ-011-4101-A-M0') THEN TO_CLOB('13.0')
-            WHEN p.SAP_part_no IN ('FJ-011-4100-A-B0', 'FJ-011-4100-A-M0') THEN TO_CLOB('14.5')
+            WHEN p.SAP_part_no IN ('FJ-011-4101-A-B0','FJ-011-4101-A-B1','FJ-011-4101-A-M0') THEN TO_CLOB('13.0')
+            WHEN p.SAP_part_no IN ('FJ-011-4100-A-B0','FJ-011-4100-A-B1','FJ-011-4100-A-M0') THEN TO_CLOB('14.5')
             ELSE TO_CLOB('??')
         END                                         AS valtext,
         NULL                                        AS valnom,
